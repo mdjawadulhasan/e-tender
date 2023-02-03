@@ -1,11 +1,14 @@
-import {IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty } from "class-validator";
 
-export class TendermanagerForm {   
-    @IsNotEmpty({message: "Please enter your Id"}) 
+export class TendermanagerForm {
+    @IsNotEmpty({ message: "Please enter your Id" })
     id: number;
 
-    @IsNotEmpty()
+    @IsNotEmpty({ message: "Please enter your Name" })
     name: string;
+
+    @IsEmail()
+    email: string
 
 
 
