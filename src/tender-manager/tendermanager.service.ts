@@ -18,10 +18,6 @@ export class TendermanagerService {
         return "Tender Manager Profile";
     }
 
-    getUserByIDName(qry): any {
-
-        return "the id is " + qry.id + " and name is " + qry.name;
-    }
 
     insert(Tmdto: TendermanagerForm): any {
 
@@ -56,9 +52,7 @@ export class TendermanagerService {
         return "All tender List";
     }
 
-    updateUserbyid(name, id): any {
-        return "Update admin where id " + id + " and change name to " + name;
-    }
+    
    
     findtenderById(id): any {
 
