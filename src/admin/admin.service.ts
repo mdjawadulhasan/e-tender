@@ -13,14 +13,13 @@ export class AdminService {
         return "Tender Admin Profile";
     }
 
-
     insert(admindto: AdminForm): any {
 
         return "Name: " + admindto.name + " \n id is " + admindto.id + " \n emai: " + admindto.email;
     }
 
     update(admindto: AdminForm): any {
-        return "Profile Updated";
+        return "Profile Updated for : "+admindto.name;
     }
 
     userCount(qry): any {

@@ -50,7 +50,7 @@ export class AdminController {
     } 
 
 
-    @Get("/deleteuser/:id")
+    @Delete("/deleteuser/:id")
     delteuserById( @Param("id", ParseIntPipe) id: number): any {
         return this.adminService.delteuserById(id);
     } 
