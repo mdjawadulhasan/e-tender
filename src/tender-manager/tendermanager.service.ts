@@ -18,10 +18,6 @@ export class TendermanagerService {
         return "Tender Manager Profile";
     }
 
-    getUserByIDName(qry): any {
-
-        return "the id is " + qry.id + " and name is " + qry.name;
-    }
 
     insert(Tmdto: TendermanagerForm): any {
 
@@ -32,7 +28,7 @@ export class TendermanagerService {
         return "Profile Updated";
     }
 
-    viewAllAgency():any{
+    viewAllAgency(): any {
         return "Agency List";
     }
 
@@ -52,17 +48,20 @@ export class TendermanagerService {
     }
 
 
-    getAllTender():any{
+    getAllTender(): any {
         return "All tender List";
     }
 
-    updateUserbyid(name, id): any {
-        return "Update admin where id " + id + " and change name to " + name;
-    }
-   
+
+
     findtenderById(id): any {
 
         return "Tender Id is : " + id;
+    }
+
+    findtenderByTenderAmount(amount): any {
+
+        return "All the tender > : " + amount;
     }
 
     viewagencyById(id): any {
@@ -70,8 +69,8 @@ export class TendermanagerService {
         return "Agency Id is : " + id;
     }
 
-    viewagencyByArea(qry):any{
-        return "Location : "+qry.location;
+    viewagencyByArea(qry): any {
+        return "Location : " + qry.location;
     }
 
 }
