@@ -62,6 +62,13 @@ export class AdminService {
         return "User Name : " + qry.name + " and |  User ID : " + qry.id;
     }
 
+   
+
+
+    checkstatus(stat): any {
+
+        return "Status :  " + stat;
+    }
 
 
 }

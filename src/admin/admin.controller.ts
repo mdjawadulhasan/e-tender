@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AdminForm } from "./admindto";
 import { AdminService } from "./admin.service";
 
@@ -59,6 +59,11 @@ export class AdminController {
     @Get("/userstatus/:id")
     userStatusById( @Param("id", ParseIntPipe) id: number): any {
         return this.adminService.userStatusById(id);
+    } 
+
+    @Get("/checkstatus/:stat")
+    checkstatus( @Param("stat", ParseBoolPipe) stat: boolean): any {
+        return this.adminService.checkstatus(stat);
     } 
 
     @Get("/sentmsg")
