@@ -59,7 +59,7 @@ export class TendermanagerController {
         return this.tendermanagerService.findtenderById(id);
     } 
 
-    @Get("/findtenderById/:amount")
+    @Get("/findtenderByTenderAmount/:amount")
     findtenderByTenderAmount( @Param("amount", ParseFloatPipe) amount: number): any {
         return this.tendermanagerService.findtenderByTenderAmount(amount);
     } 
