@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TenderForm } from "./tender.dto";
 import { TendermanagerForm } from "./tendermanager.dto";
-
 import { TendermanagerService } from "./tendermanager.service";
 
 
@@ -58,6 +57,11 @@ export class TendermanagerController {
     @Get("/findtenderById/:id")
     findtenderById( @Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.findtenderById(id);
+    } 
+
+    @Get("/findtenderById/:amount")
+    findtenderByTenderAmount( @Param("amount", ParseFloatPipe) amount: number): any {
+        return this.tendermanagerService.findtenderByTenderAmount(amount);
     } 
 
 

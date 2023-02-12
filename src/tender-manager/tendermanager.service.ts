@@ -28,7 +28,7 @@ export class TendermanagerService {
         return "Profile Updated";
     }
 
-    viewAllAgency():any{
+    viewAllAgency(): any {
         return "Agency List";
     }
 
@@ -48,15 +48,20 @@ export class TendermanagerService {
     }
 
 
-    getAllTender():any{
+    getAllTender(): any {
         return "All tender List";
     }
 
-    
-   
+
+
     findtenderById(id): any {
 
         return "Tender Id is : " + id;
+    }
+
+    findtenderByTenderAmount(amount): any {
+
+        return "All the tender > : " + amount;
     }
 
     viewagencyById(id): any {
@@ -64,8 +69,8 @@ export class TendermanagerService {
         return "Agency Id is : " + id;
     }
 
-    viewagencyByArea(qry):any{
-        return "Location : "+qry.location;
+    viewagencyByArea(qry): any {
+        return "Location : " + qry.location;
     }
 
 }
