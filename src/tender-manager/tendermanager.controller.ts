@@ -44,45 +44,45 @@ export class TendermanagerController {
 
 
     @Delete("/deletetender/:id")
-    deleteTenderById( @Param("id", ParseIntPipe) id: number): any {
+    deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.deleteTenderById(id);
     }
 
     @Get("/viewalltender")
     getAllTender(): any {
-      return this.tendermanagerService.getAllTender();
-    }  
+        return this.tendermanagerService.getAllTender();
+    }
 
-
+    //Patch is used for to update single data .
     @Get("/findtenderById/:id")
-    findtenderById( @Param("id", ParseIntPipe) id: number): any {
+    findtenderById(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.findtenderById(id);
-    } 
+    }
 
     @Get("/findtenderByTenderAmount/:amount")
-    findtenderByTenderAmount( @Param("amount", ParseFloatPipe) amount: number): any {
+    findtenderByTenderAmount(@Param("amount", ParseFloatPipe) amount: number): any {
         return this.tendermanagerService.findtenderByTenderAmount(amount);
-    } 
+    }
 
 
     @Get("/viewallagency")
     viewAllAgency(): any {
         return this.tendermanagerService.viewAllAgency();
-    } 
+    }
 
     @Get("/viewagencyById/:id")
     viewagencyById(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.viewagencyById(id);
-    } 
+    }
 
     @Get("/viewagencyByArea")
-    viewagencyByArea(@Query() qry:any): any {
-      return this.tendermanagerService.viewagencyByArea(qry);
-    } 
+    viewagencyByArea(@Query() qry: any): any {
+        return this.tendermanagerService.viewagencyByArea(qry);
+    }
 
 
-    
 
-   
+
+
 
 }
