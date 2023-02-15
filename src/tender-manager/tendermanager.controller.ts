@@ -12,9 +12,9 @@ export class TendermanagerController {
     getAdmin(): any {
         return this.tendermanagerService.getIndex();
     }
-    @Get("/viewprofile")
-    getUserByID(): any {
-        return this.tendermanagerService.getTmanagerProfile();
+    @Get("/viewprofile/:id")
+    getUserByID(@Param("id", ParseIntPipe) id: number): any{
+        return this.tendermanagerService.getTmanagerProfile(id);
     }
 
     @Post("/create")

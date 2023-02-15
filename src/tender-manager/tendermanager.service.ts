@@ -22,9 +22,9 @@ export class TendermanagerService {
         return "Welcome to Tender Manager Home Page";
 
     }
-    getTmanagerProfile(): any {
+     getTmanagerProfile(id): any {
 
-        return "Tender Manager Profile";
+        return this.tendermanagerRepo.findOneBy({id});
     }
 
 
