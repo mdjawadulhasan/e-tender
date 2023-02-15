@@ -19,8 +19,8 @@ export class TendermanagerController {
 
     @Post("/create")
     @UsePipes(new ValidationPipe())
-    create(@Body() tmdto: TendermanagerForm): any {
-        return this.tendermanagerService.insert(tmdto);
+    async create(@Body() tmdto: TendermanagerForm) {
+        return await this.tendermanagerService.insert(tmdto);
     }
 
     @Put("/update/")

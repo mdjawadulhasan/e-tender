@@ -16,6 +16,9 @@ export class TendermanagerForm {
     @IsEmail()
     email: string;
 
+    @IsNotEmpty()
+    isActive:boolean;
+
 
 
 
