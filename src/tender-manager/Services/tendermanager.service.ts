@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { TenderForm } from "./tender.dto";
+import { TenderForm } from "../DTOs/tender.dto";
 import { TendermanagerForm } from "../DTOs/tendermanager.dto";
 import { TendermanagerEntity } from "../entities/tendermanager.entity";
 

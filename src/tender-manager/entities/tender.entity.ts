@@ -6,4 +6,16 @@ export class TenderEntity extends BaseEntity{
     id: number;
     @Column()
     name: string;
+
+    @Column()
+    location: string;
+
+    @Column()
+    budget: number;
+
+    @Column()
+    Startyear: number;
+
+    @Column()
+    Completeyear: number;
 }

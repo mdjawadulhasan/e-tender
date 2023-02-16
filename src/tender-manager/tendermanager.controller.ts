@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
-import { TenderForm } from "./Services/tender.dto";
+import { TenderForm } from "./DTOs/tender.dto";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
 import { TendermanagerService } from "./Services/tendermanager.service";
 
