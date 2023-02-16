@@ -28,15 +28,20 @@ export class TendermanagerService {
     }
 
 
-    async insert(Tmdto: TendermanagerForm) {
+    insert(Tmdto: TendermanagerForm) {
 
-        return await this.tendermanagerRepo.save(Tmdto);
+        return  this.tendermanagerRepo.save(Tmdto);
     }
 
     update(Tmdto: TendermanagerForm, id): any {
         return this.tendermanagerRepo.update(id, Tmdto);
     }
 
+    
+    
+    
+    
+    
     viewAllAgency(): any {
         return "Agency List";
     }
