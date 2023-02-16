@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
-import { TenderForm } from "./tender.dto";
-import { TendermanagerForm } from "./tendermanager.dto";
-import { TendermanagerService } from "./tendermanager.service";
+import { TenderForm } from "./Services/tender.dto";
+import { TendermanagerForm } from "./DTOs/tendermanager.dto";
+import { TendermanagerService } from "./Services/tendermanager.service";
 
 
 @Controller("/TenderManager")
@@ -13,7 +13,7 @@ export class TendermanagerController {
         return this.tendermanagerService.getIndex();
     }
     @Get("/viewprofile/:id")
-    getUserByID(@Param("id", ParseIntPipe) id: number): any{
+    getUserByID(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.getTmanagerProfile(id);
     }
 
@@ -23,10 +23,10 @@ export class TendermanagerController {
         return await this.tendermanagerService.insert(tmdto);
     }
 
-    @Put("/update/")
+    @Put("/update/:id")
     @UsePipes(new ValidationPipe())
-    update(@Body() tmdto: TendermanagerForm): any {
-        return this.tendermanagerService.update(tmdto);
+    async update(@Body() tmdto: TendermanagerForm, @Param('id') id: number) {
+        return this.tendermanagerService.update(tmdto, id);
     }
 
 
@@ -36,7 +36,7 @@ export class TendermanagerController {
         return this.tendermanagerService.createTender(tenderdto);
     }
 
-    @Put("/updatetender")
+    @Put("/updatetender/:id")
     @UsePipes(new ValidationPipe())
     updateTender(@Body() tenderdto: TenderForm): any {
         return this.tendermanagerService.updateTender(tenderdto);

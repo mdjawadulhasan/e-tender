@@ -1,7 +1,6 @@
-import { IsEmail, IsNotEmpty, MinLength, MaxLength, IsInt, IsAlpha } from "class-validator";
+import { IsEmail, IsInt, IsNotEmpty, MaxLength, MinLength } from "class-validator";
 
-export class TendermanagerForm {
-
+export class TenderForm {
     @IsNotEmpty({ message: "ID is required." })
     @IsInt({ message: "Id must be an integer." })
     id: number;
@@ -9,17 +8,16 @@ export class TendermanagerForm {
     @IsNotEmpty({ message: "Name is required." })
     @MinLength(5, { message: "Name must be at least 5 characters long." })
     @MaxLength(15, { message: "Name cannot be more than 15 characters long." })
-    @IsAlpha()
+
     name: string;
 
-    @IsNotEmpty({ message: "Email is required." })
-    @IsEmail()
-    email: string;
+    @IsNotEmpty({ message: "Please enter Tender location" })
+    location: string;
 
-    @IsNotEmpty()
-    isActive:boolean;
+    budget: number;
 
-
+    Startyear: number;
+    Completeyear: number;
 
 
 
