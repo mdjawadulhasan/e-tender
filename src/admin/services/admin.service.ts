@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { AdminForm } from "./admindto";
+import { AdminForm } from "../DTOs/admindto";
 
 @Injectable()
 export class AdminService {
@@ -19,7 +19,7 @@ export class AdminService {
     }
 
     update(admindto: AdminForm): any {
-        return "Profile Updated for : "+admindto.name;
+        return "Profile Updated for : " + admindto.name;
     }
 
     userCount(qry): any {
@@ -62,7 +62,7 @@ export class AdminService {
         return "User Name : " + qry.name + " and |  User ID : " + qry.id;
     }
 
-   
+
 
 
     checkstatus(stat): any {

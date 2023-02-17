@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
-import { AdminForm } from "./admindto";
-import { AdminService } from "./admin.service";
+import { AdminForm } from "./DTOs/admindto";
+import { AdminService } from "./services/admin.service";
 
 
 @Controller("/Admin")
@@ -29,52 +29,52 @@ export class AdminController {
     }
 
     @Get("/usercount")
-    userCount(@Query() qry:any): any {
-      return this.adminService.userCount(qry);
-    } 
+    userCount(@Query() qry: any): any {
+        return this.adminService.userCount(qry);
+    }
 
 
     @Get("/adduser")
-    adduser(@Query() qry:any): any {
-      return this.adminService.adduser(qry);
-    } 
-    
+    adduser(@Query() qry: any): any {
+        return this.adminService.adduser(qry);
+    }
+
     @Get("/blockuser/:id")
-    blockuserById( @Param("id", ParseIntPipe) id: number): any {
+    blockuserById(@Param("id", ParseIntPipe) id: number): any {
         return this.adminService.blockuserById(id);
-    } 
+    }
 
     @Get("/activeuser/:id")
-    activeuserById( @Param("id", ParseIntPipe) id: number): any {
+    activeuserById(@Param("id", ParseIntPipe) id: number): any {
         return this.adminService.activeuserById(id);
-    } 
+    }
 
 
     @Delete("/deleteuser/:id")
-    delteuserById( @Param("id", ParseIntPipe) id: number): any {
+    delteuserById(@Param("id", ParseIntPipe) id: number): any {
         return this.adminService.delteuserById(id);
-    } 
+    }
 
 
     @Get("/userstatus/:id")
-    userStatusById( @Param("id", ParseIntPipe) id: number): any {
+    userStatusById(@Param("id", ParseIntPipe) id: number): any {
         return this.adminService.userStatusById(id);
-    } 
+    }
 
     @Get("/checkstatus/:stat")
-    checkstatus( @Param("stat", ParseBoolPipe) stat: boolean): any {
+    checkstatus(@Param("stat", ParseBoolPipe) stat: boolean): any {
         return this.adminService.checkstatus(stat);
-    } 
+    }
 
     @Get("/sentmsg")
-    sentMsg(@Query() qry:any): any {
-      return this.adminService.sentMsg(qry);
-    } 
+    sentMsg(@Query() qry: any): any {
+        return this.adminService.sentMsg(qry);
+    }
 
     @Get("/userlog/:id")
-    userLog( @Param("id", ParseIntPipe) id: number): any {
+    userLog(@Param("id", ParseIntPipe) id: number): any {
         return this.adminService.userLog(id);
-    } 
+    }
 
 
 
