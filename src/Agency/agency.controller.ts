@@ -19,6 +19,28 @@ export class AgencyController {
   getAgencyById(@Param("id", ParseIntPipe ) id:number):any  {
     return this.agencyService.getAgencyById(id) ;
   }
+  @Get('/FindAgencyByName/:AgencyName')
+  getAgencyByName(@Param("AgencyName") AgencyName:string):any  {
+    return this.agencyService.getAgencyByName(AgencyName) ;
+  }
+   //localhost:3000/agency/FindAgency?AgencyName=joy& id=3
+  @Get('/FindAgency')
+  getAgencyByIDName(@Query() qry: any): any {
+    return this.agencyService.getAgencyByIDName(qry);
+  }
+
+  //search part 
+  @Get('/search/:id')
+  SearchAgency(@Param("id") id:number):any  {
+    return this.agencyService.SearchAgency(id) ;
+  }
+  @Get('/searchByName/:agencyName')
+  getAgencybyname(@Param("agencyName" ) AgencyName:string):any  {
+    return this.agencyService.getAgencybyname(AgencyName) ;
+  }
+
+  
+  
 
   @Get('ALL')
   getAllAgency(): Agency[]  {
@@ -45,14 +67,6 @@ export class AgencyController {
 
  
 
-  @Get('/searchById/:id')
-  search(@Param("id") id:number):Agency  {
-    return this.agencyService.search(id) ;
-  }
-  @Get('/searchByName/:agencyName')
-  getAgencybyname(@Param("agencyName" ) AgencyName:string):Agency  {
-    return this.agencyService.getAgencybyname(AgencyName) ;
-  }
 
 
  
@@ -60,8 +74,9 @@ export class AgencyController {
  
 
   @Delete("/DeleteById/:id")
-  deleteAgency(@Param("id") id:number):Agency[]{
-    return this.agencyService.deleteAgency(id);
+  deleteAgencyByid(@Param('id', ParseIntPipe) id: number): any {
+    return this.agencyService.deleteAgencyByid(id);
+   
   }
 
   @Delete("/DeleteByName/:AgencyName")

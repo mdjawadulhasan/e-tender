@@ -22,6 +22,27 @@ export class AgencyService {
 
         return this.agencyRepo.findOneBy({ id });
     }
+    getAgencyByName(AgencyName) {
+
+        return this.agencyRepo.findOneBy({ AgencyName });
+    }
+    getAgencyByIDName(qry):any {
+        return this.agencyRepo.findOneBy({ id:qry.id,AgencyName:qry.AgencyName });
+    }
+
+    SearchAgency(id) {
+        return this.agencyRepo.findOneBy({ id });
+    
+       }
+       SearchAgencybyname(AgencyName)
+       {
+        return this.agencyRepo.findOneBy({ AgencyName });
+       }
+
+
+
+
+
 
   getAllAgency(): Agency[] {
       return this.agencys;
@@ -38,9 +59,7 @@ Nextproject():any {
 }
 
 
-   getAgencybylocation(location:string
-    
-): Agency {
+   getAgencybylocation(location:string): Agency {
    return this.agencys.filter(i=>i.location==location)[0];
 
    
@@ -48,13 +67,6 @@ Nextproject():any {
 
 
 
-   search(id:number
-    // / @Query('id', ParseIntPipe) id:number
-    ): Agency {
-   return this.agencys.filter(i=>i.id==id)[0];
-
-   
-   }
 
    getAgencybyname(AgencyName:string): Agency {
     return this.agencys.filter(i=>i.AgencyName==AgencyName)[0];
@@ -62,10 +74,9 @@ Nextproject():any {
     
     }
    
-   deleteAgency(id:number):Agency []{
-    const remainingAgency =this.agencys.filter(i=>i.id !== id);
-    this.agencys=remainingAgency;
-    return remainingAgency || [];
+   deleteAgencyByid(id){
+    return this.agencyRepo.delete(id);
+    
    }
    deleteAgencybyname(AgencyName:string):Agency []{
     const remainingAgency =this.agencys.filter(i=>i.AgencyName !== AgencyName);
