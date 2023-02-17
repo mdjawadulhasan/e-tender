@@ -19,6 +19,10 @@ export class TenderForm {
     Startyear: number;
     Completeyear: number;
 
+    @IsNotEmpty()
+    Status: number;
+    
+
 
 
 }

@@ -13,7 +13,7 @@ import { TenderEntity } from './tender-manager/entities/tender.entity';
     port: 5432,
     username: 'postgres',
     password: '123',
-    database: 'temp',
+    database: 'e-tender',
     entities: [TendermanagerEntity,TenderEntity],
     autoLoadEntities: true,
     synchronize: true,

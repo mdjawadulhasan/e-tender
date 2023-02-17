@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity("Tenders")
-export class TenderEntity extends BaseEntity{
+export class TenderEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
@@ -18,4 +18,12 @@ export class TenderEntity extends BaseEntity{
 
     @Column()
     Completeyear: number;
+
+    @Column()
+    Status: number;
+
+    //1 open
+    //2 running
+    //3 Blocked
+    //4 Completed
 }

@@ -36,11 +36,6 @@ export class TenderService {
         return this.tenderRepo.find();
     }
 
-    deleteTenderById(id: number): any {
-        return this.tenderRepo.delete(id);
-    }
-
-
     findtenderById(id): any {
 
         return this.tenderRepo.findOneBy({ id });
@@ -53,4 +48,22 @@ export class TenderService {
             },
         });
     }
+
+    async updateTenderStatus(id: number, Status: number): Promise<void> {
+        const tender = await this.tenderRepo.findOneBy({ id });
+        if (!tender) {
+            throw new Error(`Tender with id ${id} not found`);
+        }
+        tender.Status = Status;
+        await this.tenderRepo.save(tender);
+    }
+
+
+    async deleteTenderById(id: number): Promise<void> {
+        const admin: TenderForm = await this.tenderRepo.findOneBy({ id });
+        if (!admin) {
+          throw new Error(`Admin with id ${id} not found.`);
+        }
+        await this.tenderRepo.delete(admin);
+      }
 }

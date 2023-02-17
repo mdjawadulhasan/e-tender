@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Patch, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TenderForm } from "./DTOs/tender.dto";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
 import { TenderService } from "./Services/tender.service";
@@ -31,7 +31,7 @@ export class TendermanagerController {
         return this.tendermanagerService.update(tmdto, id);
     }
 
-//-----------Tender CRUD
+    //-----------Tender CRUD
 
     @Post("/createtender")
     @UsePipes(new ValidationPipe())
@@ -68,12 +68,19 @@ export class TendermanagerController {
     }
 
 
+    @Patch("/Tender/changestatus/:id")
+    updateTenderIsActive(
+        @Query('id') id: number,
+        @Query('Status') Status: number,
+    ): any {
+        return this.tenderService.updateTenderStatus(id, Status);
+    }
 
-    //Patch is used for to update single data .
-    
-    
-//----------------------
    
+
+
+    //----------------------
+
 
 
     @Get("/viewallagency")
