@@ -1,7 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
-@Entity("Tendermanager")
-export class TendermanagerEntity extends BaseEntity{
+ @Entity("Tendermanager")
+ export class TendermanagerEntity extends BaseEntity{
     
     @PrimaryGeneratedColumn()
     id: number;
@@ -16,6 +16,8 @@ export class TendermanagerEntity extends BaseEntity{
     })
     isActive:boolean;
 
-    @Column()
-    email2: string;
+
+
+
+
 }

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { TenderForm } from "./tender.dto";
-import { TendermanagerForm } from "./tendermanager.dto";
-import { TendermanagerEntity } from "./tendermanager.entity";
+import { TenderForm } from "../DTOs/tender.dto";
+import { TendermanagerForm } from "../DTOs/tendermanager.dto";
+import { TendermanagerEntity } from "../entities/tendermanager.entity";
 
 
 
@@ -22,21 +22,26 @@ export class TendermanagerService {
         return "Welcome to Tender Manager Home Page";
 
     }
-     getTmanagerProfile(id): any {
+    getTmanagerProfile(id): any {
 
-        return this.tendermanagerRepo.findOneBy({id});
+        return this.tendermanagerRepo.findOneBy({ id });
     }
 
 
-    async insert(Tmdto: TendermanagerForm) {
+    insert(Tmdto: TendermanagerForm) {
 
-        return await this.tendermanagerRepo.save(Tmdto);
+        return  this.tendermanagerRepo.save(Tmdto);
     }
 
-    update(Tmdto: TendermanagerForm): any {
-        return "Profile Updated";
+    update(Tmdto: TendermanagerForm, id): any {
+        return this.tendermanagerRepo.update(id, Tmdto);
     }
 
+    
+    
+    
+    
+    
     viewAllAgency(): any {
         return "Agency List";
     }
