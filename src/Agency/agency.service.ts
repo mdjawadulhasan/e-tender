@@ -1,9 +1,23 @@
 import { Injectable, Param, Put, Query } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { AgencyEntity } from './agency.entity';
 import { Agency } from './AgencyInterface/agency';
+import { AgencyDto } from './dtos/agency.dto';
 
 @Injectable()
 export class AgencyService {
+    constructor(
+        @InjectRepository(AgencyEntity)
+        private agencyRepo: Repository<AgencyEntity>,
+    ){}
     public agencys: Agency []=[];  // globel agency object
+    
+    //Inserting 
+    insert(agency:AgencyDto){
+        return this.agencyRepo.save(agency);
+       }
+
   getAllAgency(): Agency[] {
       return this.agencys;
   }
@@ -48,10 +62,7 @@ Nextproject():any {
  
     
     }
-   addAgency(agency:Agency):Agency{
-    this.agencys.push(agency);
-    return agency;
-   }
+   
    deleteAgency(id:number):Agency []{
     const remainingAgency =this.agencys.filter(i=>i.id !== id);
     this.agencys=remainingAgency;

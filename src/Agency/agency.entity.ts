@@ -10,11 +10,7 @@ export class AgencyEntity extends BaseEntity{
     @Column()
     Email: string;
     @Column()
-    Location: string;
+    location: string;
 
-    @Column({
-        type:'boolean',
-        default:1,
-    })
-    isActive:boolean;
+  
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AgencyEntity } from './Agency/agenci.entity';
+import { AgencyEntity } from './Agency/agency.entity';
 import { AgencyModule } from './Agency/agency.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';

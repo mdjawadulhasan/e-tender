@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { AgencyEntity } from './agency.entity';
 import { AgencyService } from './agency.service';
 import { Agency } from './AgencyInterface/agency';
 import { AgencyDto } from './dtos/agency.dto';
@@ -7,6 +8,12 @@ import { AgencyDto } from './dtos/agency.dto';
 @Controller("Agency")
 export class AgencyController {
   constructor(private readonly agencyService: AgencyService) {}
+
+   @Post("add")
+  @UsePipes(new ValidationPipe())
+   insert(@Body() agency:AgencyDto):any{
+    return this.agencyService.insert(agency);
+  }
 
   @Get('ALL')
   getAllAgency(): Agency[]  {
@@ -44,12 +51,11 @@ export class AgencyController {
     return this.agencyService.getAgencybyname(AgencyName) ;
   }
 
-//testinfg
-  @Post("add")
-  @UsePipes(new ValidationPipe())
-  addAgency(@Body() agency:AgencyDto):Agency{
-    return this.agencyService.addAgency(agency);
-  }
+
+ 
+
+ 
+
   @Delete("/DeleteById/:id")
   deleteAgency(@Param("id") id:number):Agency[]{
     return this.agencyService.deleteAgency(id);
