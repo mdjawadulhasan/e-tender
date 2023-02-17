@@ -85,20 +85,28 @@ export class AgencyController {
   }
 
 
-  @Put("/UpdateById/:id")
+  @Put("/UpdateBy")
+  @UsePipes(new ValidationPipe())
   updateAgencybyid(
-      @Param("id") id: number,
-      
+    @Body() AgencyDto:AgencyEntity,
+    @Param('id',ParseIntPipe) id:number
+
   ): any {
-      return this.agencyService.updateAgencybyid(id);
+    return this.agencyService.updateAgencybyid(AgencyDto,id)
   }
 
-  @Put("/UpdateByName/:name")
-  updateAgencybyname(
-      @Param("name") name: string,
+
+  @Put("/UpdateAgency")
+  @UsePipes(new ValidationPipe())
+  updateAgency(
+    @Body("AgencyName") AgencyName:string, 
+    @Body("location") location:string, 
+    @Body("Email") Email:string, 
+
+    @Body("id") id: number,
       
   ): any {
-      return this.agencyService.updateAgencybyname(name);
+      return this.agencyService.updateAgency(AgencyName,location,Email,id);
   }
 
   @Get("/viewagencyArea")

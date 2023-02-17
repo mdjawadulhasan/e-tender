@@ -85,11 +85,12 @@ Nextproject():any {
    }
 
 
-   updateAgencybyid(id):any{
-   return "update   Agency id "+id;
+   updateAgencybyid(AgencyDto:AgencyEntity, id):any{
+    return this.agencyRepo.update(id,AgencyDto)
+   
    }
-   updateAgencybyname(AgencyName):any{
-    return "update Agency  Agency name "+AgencyName;
+   updateAgency(AgencyName,location,Email,id):any{
+    return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
     }
 
     viewagencyArea(q):string{
