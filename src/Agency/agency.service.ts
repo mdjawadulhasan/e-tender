@@ -12,11 +12,16 @@ export class AgencyService {
         private agencyRepo: Repository<AgencyEntity>,
     ){}
     public agencys: Agency []=[];  // globel agency object
-    
+
     //Inserting 
     insert(agency:AgencyDto){
         return this.agencyRepo.save(agency);
        }
+
+    getAgencyById(id) {
+
+        return this.agencyRepo.findOneBy({ id });
+    }
 
   getAllAgency(): Agency[] {
       return this.agencys;
@@ -32,13 +37,7 @@ Nextproject():any {
     return "next project name padma setu";
 }
 
-  getAgencyById(id:number
-    
-    ): Agency {
-   return this.agencys.filter(i=>i.id==id)[0];
 
-   
-   }
    getAgencybylocation(location:string
     
 ): Agency {

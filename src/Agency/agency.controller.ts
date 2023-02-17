@@ -14,11 +14,18 @@ export class AgencyController {
    insert(@Body() agency:AgencyDto):any{
     return this.agencyService.insert(agency);
   }
+  
+  @Get('/FindAgencyByid/:id')
+  getAgencyById(@Param("id", ParseIntPipe ) id:number):any  {
+    return this.agencyService.getAgencyById(id) ;
+  }
 
   @Get('ALL')
   getAllAgency(): Agency[]  {
     return this.agencyService.getAllAgency() ;
   }
+
+
   @Get('/history')
   record(): any  {
     return this.agencyService.record() ;
@@ -34,10 +41,6 @@ export class AgencyController {
   }
 
 
-  @Get('/:id')
-  getAgency(@Param("id", ParseIntPipe ) id:number):Agency  {
-    return this.agencyService.getAgencyById(id) ;
-  }
 
 
  
