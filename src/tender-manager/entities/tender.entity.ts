@@ -18,4 +18,7 @@ export class TenderEntity extends BaseEntity{
 
     @Column()
     Completeyear: number;
+
+    @Column()
+    isActive:boolean;
 }

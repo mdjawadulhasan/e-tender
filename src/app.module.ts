@@ -6,15 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TendermanagerEntity } from './tender-manager/entities/tendermanager.entity';
 import { TenderEntity } from './tender-manager/entities/tender.entity';
 import { AdminEntity } from './admin/entities/admin.entity';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
-  imports: [TendermanagerModule, TypeOrmModule.forRoot({
+  imports: [TendermanagerModule,AdminModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
     password: '123',
-    database: 'temp',
+    database: 'tender',
     entities: [TendermanagerEntity,TenderEntity,AdminEntity],
     autoLoadEntities: true,
     synchronize: true,

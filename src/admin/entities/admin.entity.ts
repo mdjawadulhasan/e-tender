@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
-@Entity("admins")
+@Entity("Admins")
 export class AdminEntity extends BaseEntity{
     
     @PrimaryGeneratedColumn()
@@ -12,4 +12,10 @@ export class AdminEntity extends BaseEntity{
 
     @Column()
     phoneNumber: string;
+   
+    @Column({
+        type:'boolean',
+        default:1,
+    })
+    isActive:boolean;
 }

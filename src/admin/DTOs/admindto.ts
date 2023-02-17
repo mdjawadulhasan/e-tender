@@ -1,9 +1,8 @@
-import { IsByteLength, IsEmail, IsNotEmpty, MaxLength, MinLength } from "class-validator";
+import { IsByteLength, IsEmail, IsInt, IsNotEmpty, MaxLength, MinLength } from "class-validator";
 
 export class AdminForm {
-    @IsNotEmpty({ message: "Please enter your Id" })
-    @MinLength(2, { message: "ID should be at least 2 characters long" })
-    @MaxLength(10, { message: "ID should not be longer than 10 characters" })
+    @IsNotEmpty({ message: "ID is required." })
+    @IsInt({ message: "Id must be an integer." })
     id: number;
 
     @IsNotEmpty({ message: "Please enter your Name" })
@@ -15,5 +14,7 @@ export class AdminForm {
     @IsNotEmpty({ message: "Please enter your phone number" })
     @IsByteLength(10)
     phoneNumber: string;
+
+    isActive:boolean;
 
 }

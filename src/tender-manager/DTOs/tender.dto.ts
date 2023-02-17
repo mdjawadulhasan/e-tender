@@ -18,6 +18,7 @@ export class TenderForm {
 
     Startyear: number;
     Completeyear: number;
+    isActive:boolean;
 
 
 
