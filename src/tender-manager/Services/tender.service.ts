@@ -5,9 +5,6 @@ import { TenderForm } from "../DTOs/tender.dto";
 import { TenderEntity } from "../entities/tender.entity";
 
 
-
-
-
 @Injectable()
 export class TenderService {
 
