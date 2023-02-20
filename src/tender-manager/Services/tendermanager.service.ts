@@ -6,9 +6,6 @@ import { TendermanagerForm } from "../DTOs/tendermanager.dto";
 import { TendermanagerEntity } from "../entities/tendermanager.entity";
 
 
-
-
-
 @Injectable()
 export class TendermanagerService {
 
