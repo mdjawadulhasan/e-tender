@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { extname } from "path";
 import { TenderForm } from "./DTOs/tender.dto";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
 import { TenderService } from "./Services/tender.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
-
+import * as moment from 'moment';
+import * as fs from 'fs';
 
 @Controller("/TenderManager")
 export class TendermanagerController {
@@ -21,9 +24,19 @@ export class TendermanagerController {
 
     @Post("/create")
     @UsePipes(new ValidationPipe())
-    async create(@Body() tmdto: TendermanagerForm) {
-        return await this.tendermanagerService.insert(tmdto);
+    @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+    async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: TendermanagerForm) {
+      if (file) {
+        const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
+        tmdto.ImgfileName = filename;
+        const tmpFilePath = file.path; // temporary path of the uploaded file
+        const destFilePath = `Images/${filename}`;
+        await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
+        await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
+      }
+      return await this.tendermanagerService.insert(tmdto);
     }
+    
 
     @Put("/update/:id")
     @UsePipes(new ValidationPipe())
@@ -34,7 +47,7 @@ export class TendermanagerController {
 
 
 
-//-----------Tender CRUD
+    //-----------Tender CRUD
 
     @Post("/createtender")
     @UsePipes(new ValidationPipe())
@@ -82,13 +95,13 @@ export class TendermanagerController {
 
 
     //Patch is used for to update single data .
-    
-    
-//----------------------
-   
 
 
-   
+    //----------------------
+
+
+
+
 
 
 

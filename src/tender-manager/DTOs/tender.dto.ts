@@ -38,7 +38,7 @@ export class TenderForm {
     @IsNotEmpty()
     Status: number;
     
-
+  
 
 
 }

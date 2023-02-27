@@ -37,6 +37,8 @@ export class TenderEntity extends BaseEntity {
     isActive: boolean;
 
 
+
+
     @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
     Tendermanager: TendermanagerEntity
 }

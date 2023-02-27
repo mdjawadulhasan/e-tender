@@ -16,6 +16,10 @@ export class TendermanagerEntity extends BaseEntity {
     @Column()
     password: string;
 
+
+    @Column({ nullable: true })
+    ImgfileName: string;
+
     @OneToMany(() => TenderEntity, (tender) => tender.Tendermanager)
     tenders: TenderEntity[]
 
