@@ -1,5 +1,6 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
+import { FeedBackEntity } from './FeedBack.entity';
 
 @Entity("Megisters")
 export class MegisterEntity extends BaseEntity{
@@ -12,6 +13,9 @@ export class MegisterEntity extends BaseEntity{
     password:string;
     @Column()
     Email:string;
+    
+    @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.AuditPannel)
+    feedBack: FeedBackEntity[]
 
 
   

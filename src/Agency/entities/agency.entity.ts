@@ -1,3 +1,4 @@
+import { FeedBackEntity } from 'src/Megister/Entity/FeedBack.entity';
 import { TenderAuctonEntity } from 'src/tender-manager/entities/TenderAuction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
 import { BudgetRequestEntity } from './BudgetRequest.entity';
@@ -30,6 +31,9 @@ export class AgencyEntity extends BaseEntity{
       
       @OneToMany(() => TenderAuctonEntity, (tenderAuctonEntity) => tenderAuctonEntity.Agency)
       tenderAuctonEntity : TenderAuctonEntity[]
+
+      @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Agency)
+      feedBack : FeedBackEntity[]
 
 
 }

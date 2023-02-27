@@ -13,6 +13,7 @@ import { AgencyModule } from './Agency/agency.module';
 import { MegisterEntity } from './Megister/Entity/megister.entity';
 import { MegisterModule } from './Megister/megister.module';
 import { TenderAuctonEntity } from './tender-manager/entities/TenderAuction.entity';
+import { FeedBackEntity } from './Megister/Entity/FeedBack.entity';
 
 @Module({
   imports: [TendermanagerModule, AdminModule,AgencyModule,MegisterModule, TypeOrmModule.forRoot({
@@ -22,7 +23,9 @@ import { TenderAuctonEntity } from './tender-manager/entities/TenderAuction.enti
     username: 'postgres',
     password: '41959',
     database: 'Agency',
-    entities: [TendermanagerEntity, TenderEntity, AdminEntity,AgencyEntity,BudgetRequestEntity,MegisterEntity,TenderAuctonEntity],
+    entities: [TendermanagerEntity, TenderEntity, AdminEntity,
+      FeedBackEntity,AgencyEntity,BudgetRequestEntity,
+      MegisterEntity,TenderAuctonEntity],
     autoLoadEntities: true,
     synchronize: true,
   }),],

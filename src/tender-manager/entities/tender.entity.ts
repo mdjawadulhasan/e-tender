@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { BudgetRequestEntity } from 'src/Agency/entities/BudgetRequest.entity';
+import { FeedBackEntity } from 'src/Megister/Entity/FeedBack.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
 import { TenderAuctonEntity } from './TenderAuction.entity';
 import { TendermanagerEntity } from './tendermanager.entity';
 
@@ -41,8 +43,16 @@ export class TenderEntity extends BaseEntity {
     @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
     Tendermanager: TendermanagerEntity
 
-    @ManyToOne(() => TenderAuctonEntity, (TenderAucton) => TenderAucton.Tender)
-    TenderAucton: TenderAuctonEntity
+    @OneToMany(() => TenderAuctonEntity, (TenderAucton) => TenderAucton.Tender)
+    TenderAucton: TenderAuctonEntity[]
+
+    @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Tender)
+    feedBack: FeedBackEntity[]
+
+    @OneToMany(() => BudgetRequestEntity, (budgetRequestEntity) => budgetRequestEntity.Tender)
+    budgetRequestEntity: BudgetRequestEntity[]
+
+
 
 
 }

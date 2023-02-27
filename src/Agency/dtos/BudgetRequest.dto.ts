@@ -8,11 +8,11 @@ export class BudgeRequestDto{
    @IsNotEmpty({message: "Enter tender ID  "})
    id:number;
 
-   @IsNotEmpty({message: "Enter tender id "})
+//    @IsNotEmpty({message: "Enter tender id "})
    
-   // @Matches('[a-z0-9]+')
-   @IsNumber()
-   Tender_id :number;
+//    // @Matches('[a-z0-9]+')
+//    @IsNumber()
+//    Tender_id :number;
 //    @IsNumber()
 //     @IsNotEmpty({message: "Enter Agency id "})
 //     Agency_id:number;
@@ -32,6 +32,7 @@ export class BudgeRequestDto{
     //2 Good
     //3 Very Good
     Agency:number
+    Tender:number
 
 
     

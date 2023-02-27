@@ -1,3 +1,4 @@
+import { TenderEntity } from 'src/tender-manager/entities/tender.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 'typeorm';
 import { AgencyEntity } from './agency.entity';
 
@@ -8,8 +9,8 @@ export class BudgetRequestEntity extends BaseEntity{
     id: number;
     // @Column()
     // Agency_id: number;
-    @Column()
-    Tender_id : number;
+    // @Column()
+    // Tender_id : number;
     @Column()
     Amount: number;
      @Column()
@@ -25,6 +26,9 @@ export class BudgetRequestEntity extends BaseEntity{
 
      @ManyToOne(() => AgencyEntity, (Agency) => Agency.budgetRequestEntity)
      Agency:AgencyEntity
+
+     @ManyToOne(() => TenderEntity, (Tender) => Tender.budgetRequestEntity)
+     Tender:TenderEntity
 
 
     
