@@ -1,9 +1,9 @@
 import { Injectable, Param, Put, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AgencyEntity } from './agency.entity';
-import { Agency } from './AgencyInterface/agency';
-import { AgencyDto } from './dtos/agency.dto';
+import { AgencyEntity } from '../Entity/agency.entity';
+import { AgencyDto } from '../dtos/agency.dto';
+// import { Agency } from './AgencyInterface/agency';
 
 @Injectable()
 export class AgencyService {
@@ -11,7 +11,7 @@ export class AgencyService {
         @InjectRepository(AgencyEntity)
         private agencyRepo: Repository<AgencyEntity>,
     ){}
-    public agencys: Agency []=[];  // globel agency object
+    //  public agencys: Agency []=[];  // globel agency object
 
     //Inserting 
     insert(agency:AgencyDto){
@@ -40,11 +40,11 @@ export class AgencyService {
        }
 
 
-   getAgencybylocation(location:string): Agency {
-   return this.agencys.filter(i=>i.location==location)[0];
+//    getAgencybylocation(location:string): Agency {
+//    return this.agencys.filter(i=>i.location==location)[0];
 
    
-   }
+//    }
 
    
    deleteAgencyByid(id){

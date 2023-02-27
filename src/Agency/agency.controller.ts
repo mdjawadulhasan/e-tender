@@ -1,7 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AgencyEntity } from './agency.entity';
-import { AgencyService } from './agency.service';
-import { Agency } from './AgencyInterface/agency';
+import { AgencyEntity } from './Entity/agency.entity';
+import { AgencyService } from './Services/agency.service';
 import { AgencyDto } from './dtos/agency.dto';
 
 
