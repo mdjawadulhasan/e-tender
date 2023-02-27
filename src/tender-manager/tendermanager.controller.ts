@@ -31,6 +31,9 @@ export class TendermanagerController {
         return this.tendermanagerService.update(tmdto, id);
     }
 
+
+
+
 //-----------Tender CRUD
 
     @Post("/createtender")
@@ -55,6 +58,15 @@ export class TendermanagerController {
         return this.tenderService.getAll();
     }
 
+
+    @Get("/FindTenderByManagerId/:id")
+    FindTenderByManagerId(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.FindTenderByManagerId(id);
+    }
+
+
+
+
     // @Get("/findtenderById/:id")
     // findtenderById(@Param("id", ParseIntPipe) id: number): any {
     //     return this.tenderService.findtenderById(id);
@@ -76,21 +88,7 @@ export class TendermanagerController {
    
 
 
-    @Get("/viewallagency")
-    viewAllAgency(): any {
-        return this.tendermanagerService.viewAllAgency();
-    }
-
-    @Get("/viewagencyById/:id")
-    viewagencyById(@Param("id", ParseIntPipe) id: number): any {
-        return this.tendermanagerService.viewagencyById(id);
-    }
-
-    @Get("/viewagencyByArea")
-    viewagencyByArea(@Query() qry: any): any {
-        return this.tendermanagerService.viewagencyByArea(qry);
-    }
-
+   
 
 
 

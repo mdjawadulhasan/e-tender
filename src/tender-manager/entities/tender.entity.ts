@@ -13,7 +13,10 @@ export class TenderEntity extends BaseEntity {
     Projectlocation: string;
 
     @Column()
-    LocationCoordinate: string;
+    LocationXCoordinate: string;
+
+    @Column()
+    LocationYCoordinate: string;
 
     @Column()
     Tenderbudget: number;
@@ -28,7 +31,7 @@ export class TenderEntity extends BaseEntity {
     Deadline: number;
 
     @Column()
-    Cmlptpercentege: number;
+    Cmpltpercentege: number;
 
     @Column()
     isActive: boolean;

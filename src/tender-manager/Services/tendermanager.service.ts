@@ -30,61 +30,21 @@ export class TendermanagerService {
 
     insert(Tmdto: TendermanagerForm) {
 
-        return  this.tendermanagerRepo.save(Tmdto);
+        return this.tendermanagerRepo.save(Tmdto);
     }
 
     update(Tmdto: TendermanagerForm, id): any {
         return this.tendermanagerRepo.update(id, Tmdto);
     }
 
-    
-    
-    
-    
-    
-    viewAllAgency(): any {
-        return "Agency List";
-    }
 
-    // createTender(tenderdto: TenderForm): any {
-
-    //     return "Name: " + tenderdto.name + " \n id is " + tenderdto.id + " \n location: " + tenderdto.location;
-    // }
-
-    updateTender(tenderdto: TenderForm): any {
-        return "Tender Updated";
-    }
-
-
-    deleteTenderById(id): any {
-
-        return "Deleted Tender Id is : " + id;
-    }
-
-
-    getAllTender(): any {
-        return "All tender List";
-    }
-
-
-
-    findtenderById(id): any {
-
-        return "Tender Id is : " + id;
-    }
-
-    findtenderByTenderAmount(amount): any {
-
-        return "All the tender > : " + amount;
-    }
-
-    viewagencyById(id): any {
-
-        return "Agency Id is : " + id;
-    }
-
-    viewagencyByArea(qry): any {
-        return "Location : " + qry.location;
+    FindTenderByManagerId(id): any {
+        return this.tendermanagerRepo.find(({
+            where: { id: id },
+            relations: {
+                tenders: true,
+            },
+        }))
     }
 
 }
