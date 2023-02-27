@@ -13,18 +13,30 @@ export class AgencyDto{
    @IsNotEmpty({message: "Enter Agency ID  "})
    id:number;
 
-   @IsString({message: "Agency location  must be string "})
-    @IsNotEmpty({message: "Enter Agency  Location "})
-   // @Matches('[a-z0-9]+')
-    location:string
+//    @IsString({message: "Agency location  must be string "})
+//     @IsNotEmpty({message: "Enter Agency  Location "})
+//    // @Matches('[a-z0-9]+')
+//    location:string;
+    @IsNotEmpty({message: "Enter Agency  password "})
+    password:string;
 
     @IsEmail()
     Email:string
     @IsNumber()
-    workingRecord:number
+    Ratings:number
+    @IsNumber()
+    Noprojectcomleted:number
+
+    @IsNumber()
+    Status:number
+
     //1 not good
     //2 Good
     //3 Very Good
+
+
+
+    
 
 
     

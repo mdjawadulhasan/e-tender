@@ -9,6 +9,7 @@ import { TenderEntity } from './tender-manager/entities/tender.entity';
 import { AdminModule } from './admin/admin.module';
 import { AgencyEntity } from './Agency/Entity/agency.entity';
 import { AgencyModule } from './Agency/agency.module';
+import { BudgetRequestEntity } from './Agency/Entity/BudgetRequest.entity';
 
 @Module({
   imports: [TendermanagerModule,AdminModule,AgencyModule,
@@ -19,7 +20,7 @@ import { AgencyModule } from './Agency/agency.module';
     username: 'postgres',
     password: '41959',
     database: 'Agency',
-    entities: [TendermanagerEntity,TenderEntity,AgencyEntity],
+    entities: [TendermanagerEntity,TenderEntity,AgencyEntity,BudgetRequestEntity],
     autoLoadEntities: true,
     synchronize: true,
   }),],

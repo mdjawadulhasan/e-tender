@@ -55,21 +55,21 @@ export class AgencyService {
     return this.agencyRepo.delete(AgencyName);
    }
 
- updateAgency(AgencyName,location,Email,id):any{
-    return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
-    }
+//  updateAgency(AgencyName,location,Email,id):any{
+//     return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
+//     }
 getAllAgency(): any {
         return this.agencyRepo.find();
 
     }
 
-    async updateAgencyRating(id: number, workingRecord: number): Promise<void> {
+    async updateAgencyRating(id: number, Ratings: number): Promise<void> {
         const agency = await this.agencyRepo.findOneBy({ id });
        
-        agency.workingRecord = workingRecord;
+        agency.Ratings = Ratings;
         await this.agencyRepo.save(agency);
     }
-    //done
+    done
 
 
    

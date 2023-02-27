@@ -58,22 +58,22 @@ export class AgencyController {
     return this.agencyService.deleteAgencybyname(AgencyName);
   }
 
-  @Put("/UpdateAgency")
-  @UsePipes(new ValidationPipe())
-  updateAgency(
-    @Body("AgencyName") AgencyName:string, 
-    @Body("location") location:string, 
-    @Body("Email") Email:string, 
+  // @Put("/UpdateAgency")
+  // @UsePipes(new ValidationPipe())
+  // updateAgency(
+  //   @Body("AgencyName") AgencyName:string, 
+  //   @Body("location") location:string, 
+  //   @Body("Email") Email:string, 
 
-    @Body("id") id: number,
+  //   @Body("id") id: number,
       
-  ): any {
-      return this.agencyService.updateAgency(AgencyName,location,Email,id);
-  }
+  // ): any {
+  //     return this.agencyService.updateAgency(AgencyName,location,Email,id);
+  // }
 
 
   
- //localhost:3000/agency/changerating/8?id=8&workingRecord=3
+//  localhost:3000/agency/changerating/8?id=8&workingRecord=3
  @Patch("/changerating/:id")
  updateAgencyRating(
      @Query('id') id: number,
@@ -119,11 +119,6 @@ export class AgencyController {
     return this.agencyService.updateAgencybyid(AgencyDto,id)
   }
 
-
- 
-
-
-  
 
   @Get("/viewagencyArea")
   viewagencyArea(@Query() location:string): string {

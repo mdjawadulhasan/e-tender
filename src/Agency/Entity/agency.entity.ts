@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
+import { BudgetRequestEntity } from './BudgetRequest.entity';
 
 @Entity("Agencys")
 export class AgencyEntity extends BaseEntity{
@@ -8,11 +9,20 @@ export class AgencyEntity extends BaseEntity{
     @Column()
     AgencyName: string;
     @Column()
-    Email: string;
+    password: string;
     @Column()
-    location: string;
-     @Column()
-    workingRecord:number;
+    Email: string;
+    //  @Column()
+    //  location: string;
 
-  
+     @Column()
+    Ratings:number;
+     @Column()
+     Noprojectcomleted:number;
+     @Column()
+      Status:number;
+
+
+      @OneToMany(() => BudgetRequestEntity, (budgetRequestEntity) => budgetRequestEntity.Agency)
+      budgetRequestEntity : BudgetRequestEntity[]
 }
