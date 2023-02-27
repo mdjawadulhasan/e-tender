@@ -33,28 +33,6 @@ export class AgencyService {
     SearchAgencyById(id) {
         return this.agencyRepo.findOneBy({ id });
 
-<<<<<<< HEAD
-
-        //    getAgencybylocation(location:string): Agency {
-        //    return this.agencys.filter(i=>i.location==location)[0];
-
-
-        //    }
-
-
-        deleteAgencyByid(id){
-            return this.agencyRepo.delete(id);
-
-        }
-        deleteAgencybyname(AgencyName) {
-            return this.agencyRepo.delete(AgencyName);
-        }
-
-        //  updateAgency(AgencyName,location,Email,id):any{
-        //     return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
-        //     }
-        getAllAgency(): any {
-=======
     }
     SearchAgencyByName(AgencyName) {
         return this.agencyRepo.findOneBy({ AgencyName });
@@ -76,74 +54,54 @@ export class AgencyService {
         return this.agencyRepo.delete(AgencyName);
     }
 
-    updateAgency(AgencyName, location, Email, id): any {
-        return this.agencyRepo.update(id, { AgencyName: AgencyName, location: location, Email: Email });
-    }
+    // updateAgency(AgencyName, location, Email, id): any {
+    //     return this.agencyRepo.update(id, { AgencyName: AgencyName, location: location, Email: Email });
+    // }
     getAllAgency(): any {
->>>>>>> 36707f84e0205efa16e22f6f3c9f8a77e3682413
-            return this.agencyRepo.find();
-
-        }
-
-    async updateAgencyRating(id: number, Ratings: number): Promise < void> {
-            const agency = await this.agencyRepo.findOneBy({ id });
-<<<<<<< HEAD
-
-            agency.Ratings = Ratings;
-=======
-
-        agency.workingRecord = workingRecord;
->>>>>>> 36707f84e0205efa16e22f6f3c9f8a77e3682413
-            await this.agencyRepo.save(agency);
-        }
-        done
-
-
-
-
-
-
-
-
-        record(): any {
-            return "all reecord hare";
-        }
-        project(): any {
-            return "100 project done";
-        }
-        Nextproject(): any {
-            return "next project name padma setu";
-        }
-
-        updateAgencybyid(AgencyDto: AgencyEntity, id): any {
-            return this.agencyRepo.update(id, AgencyDto)
-
-        }
-
-
-
-        viewagencyArea(q): string {
-            return "Area is  : " + q.location;
-        }
-        tanderValidornot(valid): boolean {
-            return valid;
-        }
-        adminApproaveProposal(approave): string {
-            //boolean ans= approave;
-            if (approave == true) {
-
-                return "admin accept the Proposal";
-            }
-            else {
-                return "admin reject the Proposal";
-            }
-
-        }
-
-
-
-
-
-
+        return this.agencyRepo.find();
 
     }
+
+
+    record(): any {
+        return "all reecord hare";
+    }
+    project(): any {
+        return "100 project done";
+    }
+    Nextproject(): any {
+        return "next project name padma setu";
+    }
+
+    updateAgencybyid(AgencyDto: AgencyEntity, id): any {
+        return this.agencyRepo.update(id, AgencyDto)
+
+    }
+
+
+
+    viewagencyArea(q): string {
+        return "Area is  : " + q.location;
+    }
+    tanderValidornot(valid): boolean {
+        return valid;
+    }
+    adminApproaveProposal(approave): string {
+        //boolean ans= approave;
+        if (approave == true) {
+
+            return "admin accept the Proposal";
+        }
+        else {
+            return "admin reject the Proposal";
+        }
+
+    }
+
+
+
+
+
+
+
+}

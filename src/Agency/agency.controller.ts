@@ -58,7 +58,7 @@ export class AgencyController {
     return this.agencyService.deleteAgencybyname(AgencyName);
   }
 
-<<<<<<< HEAD
+
   // @Put("/UpdateAgency")
   // @UsePipes(new ValidationPipe())
   // updateAgency(
@@ -67,45 +67,45 @@ export class AgencyController {
   //   @Body("Email") Email:string, 
 
   //   @Body("id") id: number,
-      
+
   // ): any {
   //     return this.agencyService.updateAgency(AgencyName,location,Email,id);
   // }
 
 
-  
-//  localhost:3000/agency/changerating/8?id=8&workingRecord=3
- @Patch("/changerating/:id")
- updateAgencyRating(
-     @Query('id') id: number,
-     @Query('workingRecord') workingRecord: number,
- ): any {
-     return this.agencyService.updateAgencyRating(id, workingRecord);
- }
-=======
-  @Put("/UpdateAgency")
-  @UsePipes(new ValidationPipe())
-  updateAgency(
-    @Body("AgencyName") AgencyName: string,
-    @Body("location") location: string,
-    @Body("Email") Email: string,
 
-    @Body("id") id: number,
+  //  localhost:3000/agency/changerating/8?id=8&workingRecord=3
+  // @Patch("/changerating/:id")
+  // updateAgencyRating(
+  //   @Query('id') id: number,
+  //   @Query('workingRecord') workingRecord: number,
+  // ): any {
+  //   return this.agencyService.updateAgencyRating(id, workingRecord);
+  // }
 
-  ): any {
-    return this.agencyService.updateAgency(AgencyName, location, Email, id);
-  }
+  // @Put("/UpdateAgency")
+  // @UsePipes(new ValidationPipe())
+  // updateAgency(
+  //   @Body("AgencyName") AgencyName: string,
+  //   @Body("location") location: string,
+  //   @Body("Email") Email: string,
+
+  //   @Body("id") id: number,
+
+  // ): any {
+  //   return this.agencyService.updateAgency(AgencyName, location, Email, id);
+  // }
 
 
 
   //localhost:3000/agency/changerating/8?id=8&workingRecord=3
-  @Patch("/changerating/:id")
-  updateAgencyRating(
-    @Query('id') id: number,
-    @Query('workingRecord') workingRecord: number,
-  ): any {
-    return this.agencyService.updateAgencyRating(id, workingRecord);
-  }
+  // @Patch("/changerating/:id")
+  // updateAgencyRating(
+  //   @Query('id') id: number,
+  //   @Query('workingRecord') workingRecord: number,
+  // ): any {
+  //   return this.agencyService.updateAgencyRating(id, workingRecord);
+  // }
 
 
 
@@ -146,14 +146,11 @@ export class AgencyController {
   }
 
 
-<<<<<<< HEAD
-=======
 
 
 
 
 
->>>>>>> 36707f84e0205efa16e22f6f3c9f8a77e3682413
   @Get("/viewagencyArea")
   viewagencyArea(@Query() location: string): string {
     return this.agencyService.viewagencyArea(location);
@@ -167,13 +164,6 @@ export class AgencyController {
   adminApproaveProposal(@Param("valid", ParseBoolPipe) valid: boolean): string {
     return this.agencyService.adminApproaveProposal(valid);
   }
-
-
-
-
-
-
-
 
 }
 
