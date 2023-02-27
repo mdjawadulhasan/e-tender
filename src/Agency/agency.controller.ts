@@ -106,7 +106,7 @@ export class AgencyController {
   ): any {
     return this.agencyService.updateAgencyRating(id, workingRecord);
   }
->>>>>>> 36707f84e0205efa16e22f6f3c9f8a77e3682413
+
 
 
 
