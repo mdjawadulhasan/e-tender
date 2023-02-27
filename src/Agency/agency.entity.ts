@@ -11,6 +11,8 @@ export class AgencyEntity extends BaseEntity{
     Email: string;
     @Column()
     location: string;
+     @Column()
+    workingRecord:number;
 
   
 }

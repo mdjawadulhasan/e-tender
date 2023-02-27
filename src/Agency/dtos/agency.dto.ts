@@ -20,6 +20,12 @@ export class AgencyDto{
 
     @IsEmail()
     Email:string
+    @IsNumber()
+    workingRecord:number
+    //1 not good
+    //2 Good
+    //3 Very Good
+
 
     
 

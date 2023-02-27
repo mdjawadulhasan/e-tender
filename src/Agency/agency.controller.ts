@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AgencyEntity } from './agency.entity';
 import { AgencyService } from './agency.service';
 import { Agency } from './AgencyInterface/agency';
@@ -29,23 +29,65 @@ export class AgencyController {
     return this.agencyService.getAgencyByIDName(qry);
   }
 
-  //search part 
-  @Get('/search/:id')
-  SearchAgency(@Param("id") id:number):any  {
-    return this.agencyService.SearchAgency(id) ;
-  }
-  @Get('/searchByName/:agencyName')
-  getAgencybyname(@Param("agencyName" ) AgencyName:string):any  {
-    return this.agencyService.getAgencybyname(AgencyName) ;
-  }
-
-  
-  
-
-  @Get('ALL')
-  getAllAgency(): Agency[]  {
+  @Get('ShowAllAgency')
+  getAllAgency():any {
     return this.agencyService.getAllAgency() ;
   }
+
+  //search part 
+  @Get('/search/:id')
+  SearchAgencyById(@Param("id") id:number):any  {
+    return this.agencyService.SearchAgencyById(id) ;
+  }
+
+  @Get('/search/:AgencyName')
+  SearchAgencyByName(@Param("AgencyName") AgencyName:string):any  {
+    return this.agencyService.SearchAgencyByName(AgencyName) ;
+  }
+
+
+
+  
+
+   @Delete("/DeleteById/:id")
+  deleteAgencyByid(@Param('id', ParseIntPipe) id: number): any {
+    return this.agencyService.deleteAgencyByid(id);
+   
+  }
+    @Delete("/DeleteByName/:AgencyName")
+  deleteAgencybyname(@Param() AgencyName:string):any{
+    return this.agencyService.deleteAgencybyname(AgencyName);
+  }
+
+  @Put("/UpdateAgency")
+  @UsePipes(new ValidationPipe())
+  updateAgency(
+    @Body("AgencyName") AgencyName:string, 
+    @Body("location") location:string, 
+    @Body("Email") Email:string, 
+
+    @Body("id") id: number,
+      
+  ): any {
+      return this.agencyService.updateAgency(AgencyName,location,Email,id);
+  }
+
+
+  
+ //localhost:3000/agency/changerating/8?id=8&workingRecord=3
+ @Patch("/changerating/:id")
+ updateAgencyRating(
+     @Query('id') id: number,
+     @Query('workingRecord') workingRecord: number,
+ ): any {
+     return this.agencyService.updateAgencyRating(id, workingRecord);
+ }
+
+
+
+  // done
+  
+
 
 
   @Get('/history')
@@ -63,26 +105,9 @@ export class AgencyController {
   }
 
 
-
-
- 
-
-
-
  
 
  
-
-  @Delete("/DeleteById/:id")
-  deleteAgencyByid(@Param('id', ParseIntPipe) id: number): any {
-    return this.agencyService.deleteAgencyByid(id);
-   
-  }
-
-  @Delete("/DeleteByName/:AgencyName")
-  deleteAgencybyname(@Param("AgencyName") AgencyName:string):Agency[]{
-    return this.agencyService.deleteAgencybyname(AgencyName);
-  }
 
 
   @Put("/UpdateBy")
@@ -96,18 +121,10 @@ export class AgencyController {
   }
 
 
-  @Put("/UpdateAgency")
-  @UsePipes(new ValidationPipe())
-  updateAgency(
-    @Body("AgencyName") AgencyName:string, 
-    @Body("location") location:string, 
-    @Body("Email") Email:string, 
+ 
 
-    @Body("id") id: number,
-      
-  ): any {
-      return this.agencyService.updateAgency(AgencyName,location,Email,id);
-  }
+
+  
 
   @Get("/viewagencyArea")
   viewagencyArea(@Query() location:string): string {

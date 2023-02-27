@@ -30,33 +30,14 @@ export class AgencyService {
         return this.agencyRepo.findOneBy({ id:qry.id,AgencyName:qry.AgencyName });
     }
 
-    SearchAgency(id) {
+    SearchAgencyById(id) {
         return this.agencyRepo.findOneBy({ id });
     
        }
-       SearchAgencybyname(AgencyName)
+       SearchAgencyByName(AgencyName)
        {
         return this.agencyRepo.findOneBy({ AgencyName });
        }
-
-
-
-
-
-
-  getAllAgency(): Agency[] {
-      return this.agencys;
-  }
-
-record(): any {
-    return "all reecord hare";
-}
-project():any {
-    return "100 project done";
-}
-Nextproject():any {
-    return "next project name padma setu";
-}
 
 
    getAgencybylocation(location:string): Agency {
@@ -65,33 +46,54 @@ Nextproject():any {
    
    }
 
-
-
-
-   getAgencybyname(AgencyName:string): Agency {
-    return this.agencys.filter(i=>i.AgencyName==AgencyName)[0];
- 
-    
-    }
    
    deleteAgencyByid(id){
     return this.agencyRepo.delete(id);
     
    }
-   deleteAgencybyname(AgencyName:string):Agency []{
-    const remainingAgency =this.agencys.filter(i=>i.AgencyName !== AgencyName);
-    this.agencys=remainingAgency;
-    return remainingAgency || [];
+   deleteAgencybyname(AgencyName) {
+    return this.agencyRepo.delete(AgencyName);
    }
 
+ updateAgency(AgencyName,location,Email,id):any{
+    return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
+    }
+getAllAgency(): any {
+        return this.agencyRepo.find();
 
+    }
+
+    async updateAgencyRating(id: number, workingRecord: number): Promise<void> {
+        const agency = await this.agencyRepo.findOneBy({ id });
+       
+        agency.workingRecord = workingRecord;
+        await this.agencyRepo.save(agency);
+    }
+    //done
+
+
+   
+  
+
+
+    
+  
+  record(): any {
+      return "all reecord hare";
+  }
+  project():any {
+      return "100 project done";
+  }
+  Nextproject():any {
+      return "next project name padma setu";
+  }
+  
    updateAgencybyid(AgencyDto:AgencyEntity, id):any{
     return this.agencyRepo.update(id,AgencyDto)
    
    }
-   updateAgency(AgencyName,location,Email,id):any{
-    return this.agencyRepo.update(id,{AgencyName:AgencyName,location:location,Email:Email});
-    }
+  
+    
 
     viewagencyArea(q):string{
         return "Area is  : "+q.location;
