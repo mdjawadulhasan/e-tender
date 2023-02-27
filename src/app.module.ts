@@ -15,7 +15,7 @@ import { AdminModule } from './admin/admin.module';
     port: 5432,
     username: 'postgres',
     password: '123',
-    database: 'tender',
+    database: 'e-tender',
     entities: [TendermanagerEntity,TenderEntity,AdminEntity],
     autoLoadEntities: true,
     synchronize: true,
