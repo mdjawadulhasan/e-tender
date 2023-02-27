@@ -1,7 +1,7 @@
 import { Injectable, Param, Put, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AgencyEntity } from '../Entity/agency.entity';
+import { AgencyEntity } from '../entities/agency.entity';
 import { AgencyDto } from '../DTOs/agency.dto';
 // import { Agency } from './AgencyInterface/agency';
 

@@ -7,22 +7,22 @@ import { TendermanagerEntity } from './tender-manager/entities/tendermanager.ent
 import { TenderEntity } from './tender-manager/entities/tender.entity';
 // import { AdminEntity } from './admin/entities/admin.entity';
 import { AdminModule } from './admin/admin.module';
-import { AgencyEntity } from './Agency/Entity/agency.entity';
+import { AgencyEntity } from './Agency/entities/agency.entity';
 import { AgencyModule } from './Agency/agency.module';
 
 @Module({
-  imports: [TendermanagerModule,AdminModule,AgencyModule,
-     TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: '41959',
-    database: 'Agency',
-    entities: [TendermanagerEntity,TenderEntity,AgencyEntity],
-    autoLoadEntities: true,
-    synchronize: true,
-  }),],
+  imports: [TendermanagerModule, AdminModule, AgencyModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '41959',
+      database: 'Agency',
+      entities: [TendermanagerEntity, TenderEntity, AgencyEntity],
+      autoLoadEntities: true,
+      synchronize: true,
+    }),],
   controllers: [AppController],
   providers: [AppService],
 })

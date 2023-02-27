@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AgencyController } from './agency.controller';
-import { AgencyEntity } from './Entity/agency.entity';
+import { AgencyEntity } from './entities/agency.entity';
 import { AgencyService } from './Services/agency.service';
 
 
@@ -13,4 +13,4 @@ import { AgencyService } from './Services/agency.service';
   controllers: [AgencyController],
   providers: [AgencyService],
 })
-export class AgencyModule {}
+export class AgencyModule { }
