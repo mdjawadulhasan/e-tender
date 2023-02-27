@@ -55,17 +55,17 @@ export class TendermanagerController {
         return this.tenderService.getAll();
     }
 
-    @Get("/findtenderById/:id")
-    findtenderById(@Param("id", ParseIntPipe) id: number): any {
-        return this.tenderService.findtenderById(id);
-    }
+    // @Get("/findtenderById/:id")
+    // findtenderById(@Param("id", ParseIntPipe) id: number): any {
+    //     return this.tenderService.findtenderById(id);
+    // }
 
 
 
-    @Get("/findtenderByTenderAmount/:amount")
-    findtenderByTenderAmount(@Param("amount", ParseFloatPipe) amount: number): any {
-        return this.tenderService.findTenderByAmount(amount);
-    }
+    // @Get("/findtenderByTenderAmount/:amount")
+    // findtenderByTenderAmount(@Param("amount", ParseFloatPipe) amount: number): any {
+    //     return this.tenderService.findTenderByAmount(amount);
+    // }
 
 
 

@@ -18,10 +18,10 @@ export class TenderService {
     ) { }
 
 
-    getTmanagerProfile(id): any {
+    // getTmanagerProfile(id): any {
 
-        return this.tenderRepo.findOneBy({ id });
-    }
+    //     return this.tenderRepo.findOneBy({ id });
+    // }
 
     insert(Tmdto: TenderForm) {
 
@@ -41,18 +41,18 @@ export class TenderService {
     }
 
 
-    findtenderById(id): any {
+    // findtenderById(id): any {
 
-        return this.tenderRepo.findOneBy({ id });
-    }
+    //     return this.tenderRepo.findOneBy({ id });
+    // }
 
-    findTenderByAmount(amount: number): any {
-        return this.tenderRepo.find({
-            where: {
-                budget: MoreThan(amount),
-            },
-        });
-    }
+    // findTenderByAmount(amount: number): any {
+    //     return this.tenderRepo.find({
+    //         where: {
+    //             budget: MoreThan(amount),
+    //         },
+    //     });
+    // }
 
 
     

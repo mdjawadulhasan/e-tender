@@ -1,24 +1,39 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { TendermanagerEntity } from './tendermanager.entity';
 
 @Entity("Tenders")
-export class TenderEntity extends BaseEntity{
+export class TenderEntity extends BaseEntity {
+
     @PrimaryGeneratedColumn()
-    id: number;
+    Tenderid: number;
     @Column()
-    name: string;
+    Tendername: string;
 
     @Column()
-    location: string;
+    Projectlocation: string;
 
     @Column()
-    budget: number;
+    LocationCoordinate: string;
 
     @Column()
-    Startyear: number;
+    Tenderbudget: number;
 
     @Column()
-    Completeyear: number;
+    ProjectStartDate: number;
 
     @Column()
-    isActive:boolean;
+    ProjectCmplttDate: number;
+
+    @Column()
+    Deadline: number;
+
+    @Column()
+    Cmlptpercentege: number;
+
+    @Column()
+    isActive: boolean;
+
+
+    @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
+    Tendermanager: TendermanagerEntity
 }

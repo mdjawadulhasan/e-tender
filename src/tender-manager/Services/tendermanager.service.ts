@@ -46,10 +46,10 @@ export class TendermanagerService {
         return "Agency List";
     }
 
-    createTender(tenderdto: TenderForm): any {
+    // createTender(tenderdto: TenderForm): any {
 
-        return "Name: " + tenderdto.name + " \n id is " + tenderdto.id + " \n location: " + tenderdto.location;
-    }
+    //     return "Name: " + tenderdto.name + " \n id is " + tenderdto.id + " \n location: " + tenderdto.location;
+    // }
 
     updateTender(tenderdto: TenderForm): any {
         return "Tender Updated";

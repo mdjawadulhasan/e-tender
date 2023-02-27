@@ -16,12 +16,9 @@ export class TendermanagerForm {
     @IsEmail()
     email: string;
 
-    @IsNotEmpty()
-    isActive:boolean;
-
-  
-
-
+    @IsNotEmpty({ message: "Password is required." })
+    @MinLength(5, { message: "Password must be at least 5 characters long." })
+    password: string;
 
 
 
