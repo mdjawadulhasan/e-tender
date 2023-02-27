@@ -1,84 +1,99 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
-import { TenderForm } from "./tender.dto";
-import { TendermanagerForm } from "./tendermanager.dto";
-
-import { TendermanagerService } from "./tendermanager.service";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UsePipes, ValidationPipe } from "@nestjs/common";
+import { TenderForm } from "./DTOs/tender.dto";
+import { TendermanagerForm } from "./DTOs/tendermanager.dto";
+import { TenderService } from "./Services/tender.service";
+import { TendermanagerService } from "./Services/tendermanager.service";
 
 
 @Controller("/TenderManager")
 export class TendermanagerController {
-    constructor(private tendermanagerService: TendermanagerService) { }
+    constructor(private tendermanagerService: TendermanagerService,
+        private tenderService: TenderService) { }
 
     @Get("/index")
     getAdmin(): any {
         return this.tendermanagerService.getIndex();
     }
-    @Get("/viewprofile")
-    getUserByID(): any {
-        return this.tendermanagerService.getTmanagerProfile();
+    @Get("/viewprofile/:id")
+    getUserByID(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.getTmanagerProfile(id);
     }
 
     @Post("/create")
     @UsePipes(new ValidationPipe())
-    create(@Body() tmdto: TendermanagerForm): any {
-        return this.tendermanagerService.insert(tmdto);
+    async create(@Body() tmdto: TendermanagerForm) {
+        return await this.tendermanagerService.insert(tmdto);
     }
 
-    @Put("/update/")
+    @Put("/update/:id")
     @UsePipes(new ValidationPipe())
-    update(@Body() tmdto: TendermanagerForm): any {
-        return this.tendermanagerService.update(tmdto);
+    async update(@Body() tmdto: TendermanagerForm, @Param('id') id: number) {
+        return this.tendermanagerService.update(tmdto, id);
     }
 
+//-----------Tender CRUD
 
     @Post("/createtender")
     @UsePipes(new ValidationPipe())
     createTender(@Body() tenderdto: TenderForm): any {
-        return this.tendermanagerService.createTender(tenderdto);
+        return this.tenderService.insert(tenderdto);
     }
 
-    @Put("/updatetender")
+    @Put("/updatetender/:id")
     @UsePipes(new ValidationPipe())
-    updateTender(@Body() tenderdto: TenderForm): any {
-        return this.tendermanagerService.updateTender(tenderdto);
+    async updateTender(@Body() tdto: TenderForm, @Param('id') id: number) {
+        return this.tenderService.update(tdto, id);
     }
-
 
     @Delete("/deletetender/:id")
-    deleteTenderById( @Param("id", ParseIntPipe) id: number): any {
-        return this.tendermanagerService.deleteTenderById(id);
+    deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.deleteTenderById(id);
     }
 
     @Get("/viewalltender")
     getAllTender(): any {
-      return this.tendermanagerService.getAllTender();
-    }  
-
+        return this.tenderService.getAll();
+    }
 
     @Get("/findtenderById/:id")
-    findtenderById( @Param("id", ParseIntPipe) id: number): any {
-        return this.tendermanagerService.findtenderById(id);
-    } 
+    findtenderById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.findtenderById(id);
+    }
+
+
+
+    @Get("/findtenderByTenderAmount/:amount")
+    findtenderByTenderAmount(@Param("amount", ParseFloatPipe) amount: number): any {
+        return this.tenderService.findTenderByAmount(amount);
+    }
+
+
+
+    //Patch is used for to update single data .
+    
+    
+//----------------------
+   
 
 
     @Get("/viewallagency")
     viewAllAgency(): any {
         return this.tendermanagerService.viewAllAgency();
-    } 
+    }
 
     @Get("/viewagencyById/:id")
     viewagencyById(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.viewagencyById(id);
-    } 
+    }
 
     @Get("/viewagencyByArea")
-    viewagencyByArea(@Query() qry:any): any {
-      return this.tendermanagerService.viewagencyByArea(qry);
-    } 
+    viewagencyByArea(@Query() qry: any): any {
+        return this.tendermanagerService.viewagencyByArea(qry);
+    }
 
 
-    
 
-   
+
+
 
 }

@@ -1,12 +1,17 @@
 import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { TendermanagerController } from "./tendermanager.controller"
-import { TendermanagerService } from "./tendermanager.service"
+import { TendermanagerEntity } from "./entities/tendermanager.entity";
+import { TendermanagerService } from "./Services/tendermanager.service"
+import { TenderEntity } from "./entities/tender.entity";
+import { TenderService } from "./Services/tender.service";
 
 @Module({
 
-controllers: [TendermanagerController],
-providers: [TendermanagerService],
+    imports: [TypeOrmModule.forFeature([TendermanagerEntity,TenderEntity])],
+    controllers: [TendermanagerController],
+    providers: [TendermanagerService,TenderService],
 
 })
 
-export class TendermanagerModule {}
+export class TendermanagerModule { }
