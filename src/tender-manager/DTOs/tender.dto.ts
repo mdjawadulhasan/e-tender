@@ -35,6 +35,12 @@ export class TenderForm {
     IsActive: boolean;
     TendermanagerId:number
 
+    @IsNotEmpty()
+    Status: number;
+    
+  
 
 
 }
+
+

@@ -2,8 +2,7 @@ import { IsEmail, IsNotEmpty, MinLength, MaxLength, IsInt, IsAlpha } from "class
 
 export class TendermanagerForm {
 
-    @IsNotEmpty({ message: "ID is required." })
-    @IsInt({ message: "Id must be an integer." })
+   
     id: number;
 
     @IsNotEmpty({ message: "Name is required." })
@@ -20,6 +19,7 @@ export class TendermanagerForm {
     @MinLength(5, { message: "Password must be at least 5 characters long." })
     password: string;
 
-
+   
+    ImgfileName: string;
 
 }

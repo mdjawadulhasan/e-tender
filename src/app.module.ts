@@ -15,6 +15,8 @@ import { MegisterModule } from './Megister/megister.module';
 import { TenderAuctonEntity } from './tender-manager/entities/TenderAuction.entity';
 import { FeedBackEntity } from './Megister/Entity/FeedBack.entity';
 
+
+
 @Module({
   imports: [TendermanagerModule, AdminModule,AgencyModule,MegisterModule, TypeOrmModule.forRoot({
     type: 'postgres',
