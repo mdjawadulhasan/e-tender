@@ -1,4 +1,4 @@
-import { IsNotEmpty,IsString, MaxLength, IsNumber, MinLength } from "class-validator";
+import { IsNotEmpty,IsString, MaxLength, IsNumber, MinLength, IsEmail } from "class-validator";
 //import { IsNumber,  } from "class-validator/types/decorator/decorators";
 
 
@@ -14,6 +14,10 @@ export class MegisterDto
    @IsNotEmpty({message: "enter a Megister ID"})
     id:number;
     @IsString({message: "enter a Megister area name"})
-    location:string;
+    password:string;
+    @IsNotEmpty({message: "enter a Megister EmaiL"})
+    @IsEmail()
+    Email:string;
+
     
 }

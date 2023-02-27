@@ -10,16 +10,19 @@ import { AdminModule } from './admin/admin.module';
 import { BudgetRequestEntity } from './Agency/entities/BudgetRequest.entity';
 import { AgencyEntity } from './Agency/entities/agency.entity';
 import { AgencyModule } from './Agency/agency.module';
+import { MegisterEntity } from './Megister/Entity/megister.entity';
+import { MegisterModule } from './Megister/megister.module';
+import { TenderAuctonEntity } from './tender-manager/entities/TenderAuction.entity';
 
 @Module({
-  imports: [TendermanagerModule, AdminModule,AgencyModule, TypeOrmModule.forRoot({
+  imports: [TendermanagerModule, AdminModule,AgencyModule,MegisterModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '123',
-    database: 'e-tender',
-    entities: [TendermanagerEntity, TenderEntity, AdminEntity,AgencyEntity,BudgetRequestEntity],
+    password: '41959',
+    database: 'Agency',
+    entities: [TendermanagerEntity, TenderEntity, AdminEntity,AgencyEntity,BudgetRequestEntity,MegisterEntity,TenderAuctonEntity],
     autoLoadEntities: true,
     synchronize: true,
   }),],

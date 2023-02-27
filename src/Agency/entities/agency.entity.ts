@@ -1,3 +1,4 @@
+import { TenderAuctonEntity } from 'src/tender-manager/entities/TenderAuction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
 import { BudgetRequestEntity } from './BudgetRequest.entity';
 
@@ -25,4 +26,10 @@ export class AgencyEntity extends BaseEntity{
 
       @OneToMany(() => BudgetRequestEntity, (budgetRequestEntity) => budgetRequestEntity.Agency)
       budgetRequestEntity : BudgetRequestEntity[]
+
+      
+      @OneToMany(() => TenderAuctonEntity, (tenderAuctonEntity) => tenderAuctonEntity.Agency)
+      tenderAuctonEntity : TenderAuctonEntity[]
+
+
 }

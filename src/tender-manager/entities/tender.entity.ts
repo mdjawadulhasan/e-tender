@@ -1,11 +1,12 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 'typeorm';
+import { TenderAuctonEntity } from './TenderAuction.entity';
 import { TendermanagerEntity } from './tendermanager.entity';
 
 @Entity("Tenders")
 export class TenderEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    Tenderid: number;
+    id: number;
     @Column()
     Tendername: string;
 
@@ -36,7 +37,12 @@ export class TenderEntity extends BaseEntity {
     @Column()
     isActive: boolean;
 
-
+   
     @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
     Tendermanager: TendermanagerEntity
+
+    @ManyToOne(() => TenderAuctonEntity, (TenderAucton) => TenderAucton.Tender)
+    TenderAucton: TenderAuctonEntity
+
+
 }

@@ -9,7 +9,10 @@ export class MegisterEntity extends BaseEntity{
     @Column()
     name: string;
     @Column()
-    location: string;
+    password:string;
+    @Column()
+    Email:string;
+
 
   
 }
