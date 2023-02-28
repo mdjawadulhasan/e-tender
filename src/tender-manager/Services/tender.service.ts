@@ -15,7 +15,7 @@ export class TenderService {
     ) { }
 
 
-  
+
 
     insert(Tmdto: TenderForm) {
 
@@ -34,40 +34,49 @@ export class TenderService {
         return this.tenderRepo.delete(id);
     }
 
+    getCustom(val): any {
+        return this.tenderRepo.find({
+            where: {
+                Status: val
+            }
+        });
+    }
 
 
-    searchByName(name: string): any {
+  
+
+    searchByName(name: string,status:number): any {
         return this.tenderRepo.find({
             where: {
                 Tendername: Like(`%${name}%`),
-                Status: 0
+                Status: status
             }
         });
     }
 
-    searchByLocation(location: string): any {
+    searchByLocation(location: string,status:number): any {
         return this.tenderRepo.find({
             where: {
                 Projectlocation: Like(`%${location}%`),
-                Status: 0
+                Status: status
             }
         });
     }
 
-    searchByBudget(minBudget: number, maxBudget: number): any {
+    searchByBudget(minBudget: number, maxBudget: number,status:number): any {
         return this.tenderRepo.find({
-          where: {
-            Tenderbudget: Between(minBudget, maxBudget),
-            Status: 0
-          }
+            where: {
+                Tenderbudget: Between(minBudget, maxBudget),
+                Status: status
+            }
         });
-      }
-      
+    }
 
 
-    
 
-    
 
-    
+
+
+
+
 }
