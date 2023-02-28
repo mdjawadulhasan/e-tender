@@ -18,16 +18,13 @@ import { FeedBackEntity } from './Megister/Entity/FeedBack.entity';
 
 
 @Module({
-  imports: [TendermanagerModule, AdminModule,AgencyModule,MegisterModule, TypeOrmModule.forRoot({
+  imports: [TendermanagerModule, AdminModule, AgencyModule, MegisterModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '41959',
-    database: 'Agency',
-    entities: [TendermanagerEntity, TenderEntity, AdminEntity,
-      FeedBackEntity,AgencyEntity,BudgetRequestEntity,
-      MegisterEntity,TenderAuctonEntity],
+    password: '123',
+    database: 'e-tender',
     autoLoadEntities: true,
     synchronize: true,
   }),],

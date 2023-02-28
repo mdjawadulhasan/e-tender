@@ -3,7 +3,7 @@ import { IsEmail, IsInt, IsNotEmpty, MaxLength, MinLength } from "class-validato
 export class TenderForm {
    
     @IsNotEmpty({ message: "ID is required." })
-    Tenderid: number;
+    id: number;
 
     @IsNotEmpty({ message: "Tender Name is required." })
     Tendername: string;
@@ -32,8 +32,10 @@ export class TenderForm {
 
    
     Cmpltpercentege: number;
-    IsActive: boolean;
+   
     TendermanagerId:number
+
+    AgencyId:number;
 
     @IsNotEmpty()
     Status: number;

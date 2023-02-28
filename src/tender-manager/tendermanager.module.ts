@@ -8,6 +8,7 @@ import { TenderService } from "./Services/tender.service";
 import { MulterModule } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname } from "path";
+import { TenderAuctonEntity } from "./entities/TenderAuction.entity";
 
 @Module({
 
@@ -19,7 +20,7 @@ import { extname } from "path";
         }),
 
 
-        TypeOrmModule.forFeature([TendermanagerEntity, TenderEntity])],
+        TypeOrmModule.forFeature([TendermanagerEntity,TenderAuctonEntity,TenderEntity])],
     controllers: [TendermanagerController],
     providers: [TendermanagerService, TenderService],
 

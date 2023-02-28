@@ -26,17 +26,17 @@ export class TendermanagerController {
     @UsePipes(new ValidationPipe())
     @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: TendermanagerForm) {
-      if (file) {
-        const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
-        tmdto.ImgfileName = filename;
-        const tmpFilePath = file.path; // temporary path of the uploaded file
-        const destFilePath = `Images/${filename}`;
-        await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
-        await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
-      }
-      return await this.tendermanagerService.insert(tmdto);
+        if (file) {
+            const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
+            tmdto.ImgfileName = filename;
+            const tmpFilePath = file.path; // temporary path of the uploaded file
+            const destFilePath = `Images/${filename}`;
+            await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
+            await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
+        }
+        return await this.tendermanagerService.insert(tmdto);
     }
-    
+
 
     @Put("/update/:id")
     @UsePipes(new ValidationPipe())
@@ -78,33 +78,25 @@ export class TendermanagerController {
     }
 
 
+    //Searching Tender
 
+    @Get('availabletenders/search-by-name/:name')
+    searchByName(@Param('name') name: string): any {
+        return this.tenderService.searchByName(name);
+    }
 
-    // @Get("/findtenderById/:id")
-    // findtenderById(@Param("id", ParseIntPipe) id: number): any {
-    //     return this.tenderService.findtenderById(id);
-    // }
+    @Get('availabletenders/search-by-location/:location')
+    searchByLocation(@Param('location') location: string): any {
+        return this.tenderService.searchByLocation(location);
+    }
 
+    @Get('availabletenders/search-by-budget/:minBudget/:maxBudget')
+    searchByBudget(
+        @Param('minBudget') minBudget: number,
+        @Param('maxBudget') maxBudget: number
+    ): any {
 
-
-    // @Get("/findtenderByTenderAmount/:amount")
-    // findtenderByTenderAmount(@Param("amount", ParseFloatPipe) amount: number): any {
-    //     return this.tenderService.findTenderByAmount(amount);
-    // }
-
-
-
-    //Patch is used for to update single data .
-
-
-    //----------------------
-
-
-
-
-
-
-
-
+        return this.tenderService.searchByBudget(minBudget, maxBudget);
+    }
 
 }

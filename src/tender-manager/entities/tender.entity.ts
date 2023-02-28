@@ -1,3 +1,4 @@
+import { AgencyEntity } from 'src/Agency/entities/agency.entity';
 import { BudgetRequestEntity } from 'src/Agency/entities/BudgetRequest.entity';
 import { FeedBackEntity } from 'src/Megister/Entity/FeedBack.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne, OneToMany } from 'typeorm';
@@ -36,12 +37,15 @@ export class TenderEntity extends BaseEntity {
     @Column()
     Cmpltpercentege: number;
 
-    @Column()
-    isActive: boolean;
+    @Column({nullable:true})
+    Status: number;
 
    
     @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
     Tendermanager: TendermanagerEntity
+
+    @ManyToOne(() => AgencyEntity, (Agency) => Agency.tenders)
+    Agency: AgencyEntity
 
     @OneToMany(() => TenderAuctonEntity, (TenderAucton) => TenderAucton.Tender)
     TenderAucton: TenderAuctonEntity[]
