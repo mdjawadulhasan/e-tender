@@ -10,6 +10,7 @@ import { diskStorage } from "multer";
 import { extname } from "path";
 import { TenderAuctonEntity } from "./entities/TenderAuction.entity";
 import { TenderController } from "./Tender.Controller";
+import { TenderAuctionService } from "./Services/tenderAuction.service";
 
 @Module({
 
@@ -23,7 +24,7 @@ import { TenderController } from "./Tender.Controller";
 
         TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity])],
     controllers: [TendermanagerController, TenderController],
-    providers: [TendermanagerService, TenderService],
+    providers: [TendermanagerService, TenderService,TenderAuctionService],
 
 })
 

@@ -30,6 +30,10 @@ export class TenderService {
         return this.tenderRepo.find();
     }
 
+    get(id: number): any {
+        return this.tenderRepo.findOneBy({ id });
+    }
+
     deleteTenderById(id: number): any {
         return this.tenderRepo.delete(id);
     }
@@ -43,9 +47,9 @@ export class TenderService {
     }
 
 
-  
 
-    searchByName(name: string,status:number): any {
+
+    searchByName(name: string, status: number): any {
         return this.tenderRepo.find({
             where: {
                 Tendername: Like(`%${name}%`),
@@ -54,7 +58,7 @@ export class TenderService {
         });
     }
 
-    searchByLocation(location: string,status:number): any {
+    searchByLocation(location: string, status: number): any {
         return this.tenderRepo.find({
             where: {
                 Projectlocation: Like(`%${location}%`),
@@ -63,7 +67,7 @@ export class TenderService {
         });
     }
 
-    searchByBudget(minBudget: number, maxBudget: number,status:number): any {
+    searchByBudget(minBudget: number, maxBudget: number, status: number): any {
         return this.tenderRepo.find({
             where: {
                 Tenderbudget: Between(minBudget, maxBudget),
@@ -74,7 +78,14 @@ export class TenderService {
 
 
 
-
+    FindTenderAuctionsByTenderId(id): any {
+        return this.tenderRepo.find(({
+            where: { id: id },
+            relations: {
+                TenderAucton: true,
+            },
+        }))
+    }
 
 
 

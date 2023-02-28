@@ -12,6 +12,9 @@ export class TenderController {
 
     //-----------Tender CRUD
 
+
+
+
     @Post("/create")
     @UsePipes(new ValidationPipe())
     createTender(@Body() tenderdto: TenderForm): any {
@@ -32,6 +35,11 @@ export class TenderController {
     @Get("/all")
     getAllTender(): any {
         return this.tenderService.getAll();
+    }
+
+    @Get("/viewTender/:id")
+    getUserByID(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.get(id);
     }
 
     @Get("/Available")
@@ -67,12 +75,12 @@ export class TenderController {
 
     @Get('/available/search-by-name/:name')
     searchByName(@Param('name') name: string): any {
-        return this.tenderService.searchByName(name,0);
+        return this.tenderService.searchByName(name, 0);
     }
 
     @Get('/available/search-by-location/:location')
     searchByLocation(@Param('location') location: string): any {
-        return this.tenderService.searchByLocation(location,0);
+        return this.tenderService.searchByLocation(location, 0);
     }
 
     @Get('/available/search-by-budget/:minBudget/:maxBudget')
@@ -81,7 +89,7 @@ export class TenderController {
         @Param('maxBudget') maxBudget: number
     ): any {
 
-        return this.tenderService.searchByBudget(minBudget, maxBudget,0);
+        return this.tenderService.searchByBudget(minBudget, maxBudget, 0);
     }
 
 
@@ -90,12 +98,12 @@ export class TenderController {
 
     @Get('/Ongoing/search-by-name/:name')
     searchOGTByName(@Param('name') name: string): any {
-        return this.tenderService.searchByName(name,1);
+        return this.tenderService.searchByName(name, 1);
     }
 
     @Get('/Ongoing/search-by-location/:location')
     earchOGTByLocation(@Param('location') location: string): any {
-        return this.tenderService.searchByLocation(location,1);
+        return this.tenderService.searchByLocation(location, 1);
     }
 
     @Get('/Ongoing/search-by-budget/:minBudget/:maxBudget')
@@ -104,7 +112,7 @@ export class TenderController {
         @Param('maxBudget') maxBudget: number
     ): any {
 
-        return this.tenderService.searchByBudget(minBudget, maxBudget,1);
+        return this.tenderService.searchByBudget(minBudget, maxBudget, 1);
     }
 
 
@@ -113,12 +121,12 @@ export class TenderController {
 
     @Get('/Blocked/search-by-name/:name')
     searchBLKTByName(@Param('name') name: string): any {
-        return this.tenderService.searchByName(name,2);
+        return this.tenderService.searchByName(name, 2);
     }
 
     @Get('/Blocked/search-by-location/:location')
     earchBLKTByLocation(@Param('location') location: string): any {
-        return this.tenderService.searchByLocation(location,2);
+        return this.tenderService.searchByLocation(location, 2);
     }
 
     @Get('/Blocked/search-by-budget/:minBudget/:maxBudget')
@@ -127,7 +135,7 @@ export class TenderController {
         @Param('maxBudget') maxBudget: number
     ): any {
 
-        return this.tenderService.searchByBudget(minBudget, maxBudget,2);
+        return this.tenderService.searchByBudget(minBudget, maxBudget, 2);
     }
 
 
@@ -135,12 +143,12 @@ export class TenderController {
 
     @Get('/Completed /search-by-name/:name')
     searchCmpTByName(@Param('name') name: string): any {
-        return this.tenderService.searchByName(name,3);
+        return this.tenderService.searchByName(name, 3);
     }
 
     @Get('/Completed /search-by-location/:location')
     earchCmpTByLocation(@Param('location') location: string): any {
-        return this.tenderService.searchByLocation(location,3);
+        return this.tenderService.searchByLocation(location, 3);
     }
 
     @Get('/Completed/search-by-budget/:minBudget/:maxBudget')
@@ -149,7 +157,7 @@ export class TenderController {
         @Param('maxBudget') maxBudget: number
     ): any {
 
-        return this.tenderService.searchByBudget(minBudget, maxBudget,3);
+        return this.tenderService.searchByBudget(minBudget, maxBudget, 3);
     }
 
 }
