@@ -30,7 +30,7 @@ export class AgencyEntity extends BaseEntity {
 
 
     @OneToMany(() => TenderAuctonEntity, (tenderAuctonEntity) => tenderAuctonEntity.Agency)
-    tenderAuctonEntity: TenderAuctonEntity[]
+    tenderAuctonEntitys: TenderAuctonEntity[]
 
     @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Agency)
     feedBack: FeedBackEntity[]

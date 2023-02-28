@@ -7,11 +7,13 @@ import { TenderService } from "./Services/tender.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
 import * as moment from 'moment';
 import * as fs from 'fs';
+import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
+import { TenderAuctionService } from "./Services/tenderAuction.service";
 
 @Controller("/TenderManager")
 export class TendermanagerController {
     constructor(private tendermanagerService: TendermanagerService,
-        private tenderService: TenderService) { }
+        private tenderService: TenderService, private tenderauctionService: TenderAuctionService) { }
 
     @Get("/index")
     getAdmin(): any {
@@ -49,6 +51,14 @@ export class TendermanagerController {
     ShowBid(@Param("id", ParseIntPipe) id: number): any {
         return this.tenderService.FindTenderAuctionsByTenderId(id);
     }
+
+
+    @Post("/createbid")
+    @UsePipes(new ValidationPipe())
+    createBid(@Body() TaucDTO: TenderAuctinForm): any {
+        return this.tenderauctionService.insert(TaucDTO);
+    }
+
 
 
 

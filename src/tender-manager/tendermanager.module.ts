@@ -22,7 +22,7 @@ import { TenderAuctionService } from "./Services/tenderAuction.service";
         }),
 
 
-        TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity])],
+    TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity])],
     controllers: [TendermanagerController, TenderController],
     providers: [TendermanagerService, TenderService,TenderAuctionService],
 

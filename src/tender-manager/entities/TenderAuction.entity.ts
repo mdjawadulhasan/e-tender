@@ -13,9 +13,8 @@ export class TenderAuctonEntity extends BaseEntity {
     Bid: number;
 
 
-    @ManyToOne(() => AgencyEntity, (Agency) => Agency.tenderAuctonEntity)
+    @ManyToOne(() => AgencyEntity, (Agency) => Agency.tenderAuctonEntitys)
     Agency: AgencyEntity
-
 
     @ManyToOne(() => TenderEntity, (Tender) => Tender.TenderAucton)
     Tender: TenderEntity

@@ -44,12 +44,16 @@ export class TenderEntity extends BaseEntity {
     @ManyToOne(() => TendermanagerEntity, (Tendermanager) => Tendermanager.tenders)
     Tendermanager: TendermanagerEntity
 
+
     @ManyToOne(() => AgencyEntity, (Agency) => Agency.tenders)
     Agency: AgencyEntity
+
 
     @OneToMany(() => TenderAuctonEntity, (TenderAucton) => TenderAucton.Tender)
     TenderAucton: TenderAuctonEntity[]
 
+
+    
     @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Tender)
     feedBack: FeedBackEntity[]
 
