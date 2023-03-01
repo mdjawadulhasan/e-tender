@@ -87,9 +87,22 @@ export class TenderService {
         }))
     }
 
+    ChangeStatus(id, status) {
+        return this.tenderRepo.update(id, {
+            Status: status
+        })
+    }
 
-    
-      
+    Approvebid(id, agencyid) {
+        return this.tenderRepo.update(id, {
+            Status: 1,
+            Agency: agencyid
+        })
+    }
+
+
+
+
 
 
 

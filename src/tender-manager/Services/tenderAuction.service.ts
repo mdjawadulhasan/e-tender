@@ -14,9 +14,6 @@ export class TenderAuctionService {
         private tenderAuctonRepo: Repository<TenderAuctonEntity>,
     ) { }
 
-
-
-
     insert(Tmdto: TenderAuctinForm) {
 
         return this.tenderAuctonRepo.save(Tmdto);
@@ -50,6 +47,11 @@ export class TenderAuctionService {
         return tenders;
     }
 
+    async deleteBidByTenderId(x: number) {
+        const tenders = await this.tenderAuctonRepo.find({ where: { Tender: { id: x } } });
+        await this.tenderAuctonRepo.remove(tenders);
+      }
+    
 
 
 
