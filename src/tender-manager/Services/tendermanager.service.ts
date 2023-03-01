@@ -1,10 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { TenderForm } from "../DTOs/tender.dto";
 import { TendermanagerForm } from "../DTOs/tendermanager.dto";
 import { TendermanagerEntity } from "../entities/tendermanager.entity";
-
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class TendermanagerService {
@@ -35,6 +34,19 @@ export class TendermanagerService {
     }
 
 
+    async signin(mydto) {
+        const mydata = await this.tendermanagerRepo.findOneBy({ email: mydto.email });
+        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+        if (isMatch) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
+    }
+
+
     FindTenderByManagerId(id): any {
         return this.tendermanagerRepo.find(({
             where: { id: id },
@@ -46,6 +58,6 @@ export class TendermanagerService {
 
 
 
-    
+
 
 }

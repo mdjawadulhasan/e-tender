@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, Session, UnauthorizedException, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { extname } from "path";
-import { TenderForm } from "./DTOs/tender.dto";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
 import { TenderService } from "./Services/tender.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
@@ -24,7 +23,7 @@ export class TendermanagerController {
         return this.tendermanagerService.getTmanagerProfile(id);
     }
 
-    @Post("/create")
+    @Post("/signup")
     @UsePipes(new ValidationPipe())
     @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: TendermanagerForm) {
@@ -39,6 +38,29 @@ export class TendermanagerController {
         return await this.tendermanagerService.insert(tmdto);
     }
 
+
+    @Get('/signin')
+    signin(@Session() session, @Body() mydto: TendermanagerForm) {
+        if (this.tendermanagerService.signin(mydto)) {
+            session.tmemail = mydto.email;
+            return { message: "Login Success" };
+        }
+        else {
+            return { message: "invalid credentials" };
+        }
+
+    }
+
+
+    @Get('/signout')
+    signout(@Session() session) {
+        if (session.destroy()) {
+            return { message: "Logged Out from the Account" };
+        }
+        else {
+            throw new UnauthorizedException("Invalid actions");
+        }
+    }
 
     @Put("/update/:id")
     @UsePipes(new ValidationPipe())
