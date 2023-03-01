@@ -16,7 +16,6 @@ export class TendermanagerEntity extends BaseEntity {
     @Column()
     password: string;
 
-
     @Column({ nullable: true })
     ImgfileName: string;
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, Session, UnauthorizedException, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, Session, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { extname } from "path";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
@@ -8,14 +8,18 @@ import * as moment from 'moment';
 import * as fs from 'fs';
 import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
 import { TenderAuctionService } from "./Services/tenderAuction.service";
+import { SessionGuard } from "./session.guard";
+import { OTPService } from "./Services/OTP.service";
 
 @Controller("/TenderManager")
 export class TendermanagerController {
     constructor(private tendermanagerService: TendermanagerService,
-        private tenderService: TenderService, private tenderauctionService: TenderAuctionService) { }
+        private tenderService: TenderService, private tenderauctionService: TenderAuctionService, private otpService: OTPService) { }
 
+    @UseGuards(SessionGuard)
     @Get("/index")
-    getAdmin(): any {
+    getAdmin(@Session() session): any {
+        console.log(session.tmemail);
         return this.tendermanagerService.getIndex();
     }
     @Get("/viewprofile/:id")
@@ -35,6 +39,7 @@ export class TendermanagerController {
             await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
             await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
         }
+
         return await this.tendermanagerService.insert(tmdto);
     }
 
@@ -42,14 +47,35 @@ export class TendermanagerController {
     @Get('/signin')
     signin(@Session() session, @Body() mydto: TendermanagerForm) {
         if (this.tendermanagerService.signin(mydto)) {
-            session.tmemail = mydto.email;
-            return { message: "Login Success" };
+
+
+            session.email = mydto.email;
+            this.otpService.create(mydto.email);
+            return { message: "Login Success ! Go to Verification" };
         }
         else {
             return { message: "invalid credentials" };
         }
 
     }
+
+
+    @Get('/validate')
+    async ValidateOTP(@Session() session, @Body() myOTP) {
+        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);
+        console.log(isOTPValid);
+        console.log(myOTP.otp);
+        if (isOTPValid) {
+            session.tmemail = session.email;
+            return { message: "Login Success" };
+        } else {
+            session.destroy();
+            return { message: "Invalid Token" };
+        }
+    }
+
+
+
 
 
     @Get('/signout')

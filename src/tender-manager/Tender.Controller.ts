@@ -12,9 +12,6 @@ export class TenderController {
 
     //-----------Tender CRUD
 
-
-
-
     @Post("/create")
     @UsePipes(new ValidationPipe())
     createTender(@Body() tenderdto: TenderForm): any {
@@ -64,12 +61,10 @@ export class TenderController {
     }
 
 
-
     @Get("/Available/FindByManagerId/:id")
     FindTenderByManagerId(@Param("id", ParseIntPipe) id: number): any {
         return this.tendermanagerService.FindTenderByManagerId(id);
     }
-
 
     //Searching Available Tender for Auctions
 
@@ -92,8 +87,6 @@ export class TenderController {
         return this.tenderService.searchByBudget(minBudget, maxBudget, 0);
     }
 
-
-
     //Searching Ongoing Project By the Tenders
 
     @Get('/Ongoing/search-by-name/:name')
@@ -115,8 +108,6 @@ export class TenderController {
         return this.tenderService.searchByBudget(minBudget, maxBudget, 1);
     }
 
-
-
     //Searching Blocked Project By the Tenders
 
     @Get('/Blocked/search-by-name/:name')
@@ -137,7 +128,6 @@ export class TenderController {
 
         return this.tenderService.searchByBudget(minBudget, maxBudget, 2);
     }
-
 
     //Searching Completed  Project By the Tenders
 

@@ -11,6 +11,9 @@ import { extname } from "path";
 import { TenderAuctonEntity } from "./entities/TenderAuction.entity";
 import { TenderController } from "./Tender.Controller";
 import { TenderAuctionService } from "./Services/tenderAuction.service";
+import { OTPEntity } from "./entities/OTP.entity";
+import { OTPService } from "./Services/OTP.service";
+import { MailerModule } from "@nestjs-modules/mailer";
 
 @Module({
 
@@ -20,11 +23,22 @@ import { TenderAuctionService } from "./Services/tenderAuction.service";
                 destination: './Images',
             }),
         }),
+        MailerModule.forRoot({
+            transport: {
+                host: 'smtp.gmail.com',
+                port: 465,
+                ignoreTLS: true,
+                secure: true,
+                auth: {
+                    user: 'e.tenderspring2023@gmail.com',
+                    pass: 'gqdgqqwhfmwbuhvt'
+                },
+            }
+        }),
 
-
-    TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity])],
+        TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity, OTPEntity])],
     controllers: [TendermanagerController, TenderController],
-    providers: [TendermanagerService, TenderService,TenderAuctionService],
+    providers: [OTPService, TendermanagerService, TenderService, TenderAuctionService],
 
 })
 
