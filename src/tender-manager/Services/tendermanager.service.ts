@@ -24,9 +24,13 @@ export class TendermanagerService {
     }
 
 
-    insert(Tmdto: TendermanagerForm) {
+    async insert(Tmdto: TendermanagerForm) {
 
+        const salt = await bcrypt.genSalt();
+        const hassedpassed = await bcrypt.hash(Tmdto.password, salt);
+        Tmdto.password = hassedpassed;
         return this.tendermanagerRepo.save(Tmdto);
+
     }
 
     update(Tmdto: TendermanagerForm, id): any {

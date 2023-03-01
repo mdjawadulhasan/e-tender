@@ -31,6 +31,8 @@ export class TendermanagerController {
     @UsePipes(new ValidationPipe())
     @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: TendermanagerForm) {
+
+
         if (file) {
             const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
             tmdto.ImgfileName = filename;
@@ -39,6 +41,8 @@ export class TendermanagerController {
             await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
             await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
         }
+
+
 
         return await this.tendermanagerService.insert(tmdto);
     }
@@ -62,9 +66,10 @@ export class TendermanagerController {
 
     @Get('/validate')
     async ValidateOTP(@Session() session, @Body() myOTP) {
+       // console.log(session.email);
         const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);
-        console.log(isOTPValid);
-        console.log(myOTP.otp);
+       // console.log(isOTPValid);
+       // console.log(myOTP.otp);
         if (isOTPValid) {
             session.tmemail = session.email;
             return { message: "Login Success" };
@@ -73,9 +78,6 @@ export class TendermanagerController {
             return { message: "Invalid Token" };
         }
     }
-
-
-
 
 
     @Get('/signout')
