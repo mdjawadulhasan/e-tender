@@ -2,7 +2,7 @@ import { IsEmail, IsInt, IsNotEmpty, MaxLength, MinLength } from "class-validato
 
 export class TenderForm {
    
-    @IsNotEmpty({ message: "ID is required." })
+   
     id: number;
 
     @IsNotEmpty({ message: "Tender Name is required." })

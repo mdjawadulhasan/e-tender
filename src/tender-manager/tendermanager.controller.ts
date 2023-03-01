@@ -66,10 +66,7 @@ export class TendermanagerController {
 
     @Get('/validate')
     async ValidateOTP(@Session() session, @Body() myOTP) {
-       // console.log(session.email);
-        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);
-       // console.log(isOTPValid);
-       // console.log(myOTP.otp);
+        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);  
         if (isOTPValid) {
             session.tmemail = session.email;
             return { message: "Login Success" };
@@ -103,11 +100,7 @@ export class TendermanagerController {
     }
 
 
-    @Post("/createbid")
-    @UsePipes(new ValidationPipe())
-    createBid(@Body() TaucDTO: TenderAuctinForm): any {
-        return this.tenderauctionService.insert(TaucDTO);
-    }
+    
 
 
 

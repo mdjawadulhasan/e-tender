@@ -1,13 +1,15 @@
 import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TenderForm } from "./DTOs/tender.dto";
+import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
 import { TenderService } from "./Services/tender.service";
+import { TenderAuctionService } from "./Services/tenderAuction.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
 
 
 @Controller("/Tenders")
 export class TenderController {
     constructor(private tendermanagerService: TendermanagerService,
-        private tenderService: TenderService) { }
+        private tenderService: TenderService, private tenderauctionService: TenderAuctionService) { }
 
 
     //-----------Tender CRUD
@@ -149,5 +151,40 @@ export class TenderController {
 
         return this.tenderService.searchByBudget(minBudget, maxBudget, 3);
     }
+
+    //Auction Methods
+    @Post("/createbid")
+    @UsePipes(new ValidationPipe())
+    createBid(@Body() TaucDTO: TenderAuctinForm): any {
+        return this.tenderauctionService.insert(TaucDTO);
+    }
+
+    @Put("/updatebid:id")
+    @UsePipes(new ValidationPipe())
+    async updateBid(@Body() tdto: TenderAuctinForm, @Param('id') id: number) {
+        return this.tenderauctionService.update(tdto, id);
+    }
+
+    @Delete("/deletebid/:id")
+    deleteBid(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderauctionService.deleteBidById(id);
+    }
+
+    @Get("/allbid/:id")
+    getAllBids(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderauctionService.getAll(id);
+    }
+
+    @Get("/viewBid/:id")
+    getBidByID(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderauctionService.get(id);
+    }
+
+    @Get("/SortBid/:id")
+    SortByBid(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderauctionService.sortBid(id);
+    }
+
+
 
 }

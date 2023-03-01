@@ -2,8 +2,7 @@ import { IsEmail, IsNotEmpty, MinLength, MaxLength, IsInt, IsAlpha, IsNumber } f
 
 export class TenderAuctinForm {
 
-  @IsNotEmpty({ message: "ID is required." })
-  @IsInt({ message: "Id must be an integer." })
+
   id: number;
 
   @IsNotEmpty({ message: "BID is required." })
