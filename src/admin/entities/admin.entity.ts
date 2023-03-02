@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { MegisterEntity } from 'src/Megister/Entity/megister.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
 
 @Entity("Admins")
 export class AdminEntity extends BaseEntity {
@@ -18,5 +19,6 @@ export class AdminEntity extends BaseEntity {
     @Column({nullable:true})
     ImgfileName: string;
 
-
+    @OneToMany(() => MegisterEntity, (Megister) => Megister.Admin)
+    Megisters: MegisterEntity[]
 }

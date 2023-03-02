@@ -9,6 +9,7 @@ export class FeedBackEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
+
     @Column()
     FeedbackText: string;
 
@@ -21,8 +22,8 @@ export class FeedBackEntity extends BaseEntity {
     @ManyToOne(() => AgencyEntity, (Agency) => Agency.feedBack)
     Agency: AgencyEntity
 
-    @ManyToOne(() => MegisterEntity, (AuditPannel) => AuditPannel.feedBack)
+    
+    @ManyToOne(() => MegisterEntity, (Megister) => Megister.feedBacks)
     Megister: MegisterEntity
-
 
 }

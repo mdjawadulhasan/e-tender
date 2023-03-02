@@ -9,8 +9,7 @@ export class MegisterDto {
     @MinLength(3, { message: "Min Megister name lenght is 3" })
     name: string;
 
-    @IsNumber()
-    @IsNotEmpty({ message: "Enter a Megister ID" })
+   
     id: number;
 
     @IsString({ message: "Enter a Megister area name" })
@@ -18,8 +17,11 @@ export class MegisterDto {
 
 
     @IsNotEmpty({ message: "Enter a Megister EmaiL" })
-    @IsEmail()
+   // @IsEmail()
     Email: string;
+
+   adminId: number
+
 
 
 }

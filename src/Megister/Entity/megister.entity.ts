@@ -1,5 +1,6 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm';
+import { AdminEntity } from 'src/admin/entities/admin.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany, ManyToOne } from 'typeorm';
 import { FeedBackEntity } from './FeedBack.entity';
 
 @Entity("Megisters")
@@ -15,8 +16,9 @@ export class MegisterEntity extends BaseEntity {
     Email: string;
 
     @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Megister)
-    feedBack: FeedBackEntity[]
+    feedBacks: FeedBackEntity[]
 
-
+    @ManyToOne(() => AdminEntity, (Admin) => Admin.Megisters)
+    Admin: AdminEntity
 
 }

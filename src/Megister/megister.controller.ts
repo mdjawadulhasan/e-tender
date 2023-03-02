@@ -19,12 +19,12 @@ export class MegisterController {
   @Post("/add")
   @UsePipes(new ValidationPipe)
   AddUser(@Body() megister: MegisterDto): any {
-    return this.megisterService.AddUser(megister);
+   // return this.megisterService.AddUser(megister);
   }
-  @Put("/:name")
-  Update(@Param() Param): string {
-    return this.megisterService.Update(Param.name);
-  }
+  // @Put("/:name")
+  // Update(@Param() Param): string {
+  //   //return this.megisterService.Update(Param.name);
+  // }
   @Delete("/deleteById/:id")
   DeleteUser(@Param('id', ParseIntPipe) id: number): any {
     return this.megisterService.DeleteUser(id);

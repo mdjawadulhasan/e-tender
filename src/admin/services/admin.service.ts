@@ -12,7 +12,7 @@ export class AdminService {
 
     constructor(
         @InjectRepository(AdminEntity)
-        private adminRepo: Repository<AdminEntity>,private mailerService: MailerService
+        private adminRepo: Repository<AdminEntity>, private mailerService: MailerService
     ) { }
 
 
@@ -26,14 +26,14 @@ export class AdminService {
     }
 
 
-    async sendEmail(mydata){
-        return   await this.mailerService.sendMail({
-               to: mydata.email,
-               subject: mydata.subject,
-               text: mydata.text, 
-             });
-       
-       }
+    async sendEmail(mydata) {
+        return await this.mailerService.sendMail({
+            to: mydata.email,
+            subject: mydata.subject,
+            text: mydata.text,
+        });
+
+    }
 
 
 
@@ -50,17 +50,28 @@ export class AdminService {
     async signin(mydto) {
         const mydata = await this.adminRepo.findOneBy({ email: mydto.email });
         const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+
+
+        if (typeof isMatch !== 'undefined') {
+        }
         if (isMatch) {
-            return 1;
+            return mydata.id;
         }
         else {
             return 0;
         }
-
     }
 
-    update(Tmdto: AdminForm, id): any {
-        return this.adminRepo.update(id, Tmdto);
+
+
+
+
+    async update(admindto: AdminForm, id) {
+
+        const salt = await bcrypt.genSalt();
+        const hassedpassed = await bcrypt.hash(admindto.password, salt);
+        admindto.password = hassedpassed;
+        return this.adminRepo.update(id, admindto);
     }
 
 
@@ -82,6 +93,17 @@ export class AdminService {
     }
 
 
+
+    //Megister
+
+    FindMegisterByAdminId(id): any {
+        return this.adminRepo.find(({
+            where: { id: id },
+            relations: {
+                Megisters: true,
+            },
+        }))
+    }
 
 
 

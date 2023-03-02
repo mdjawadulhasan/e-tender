@@ -19,8 +19,7 @@ export class AdminController {
     @UseGuards(SessionGuard)
     @Get("/index")
 
-    getAdminIndex(@Session() session): any {
-        console.log(session.adminemail);
+    getAdminIndex(): any {
         return this.adminService.getIndex();
     }
 
@@ -71,10 +70,12 @@ export class AdminController {
 
 
     @Get('/signin')
-    signin(@Session() session, @Body() mydto: AdminForm) {
-        if (this.adminService.signin(mydto)) {
+    async signin(@Session() session, @Body() mydto: AdminForm) {
 
-            session.adminemail = mydto.email;
+        var id = await this.adminService.signin(mydto);
+        if (id) {
+
+            session.adminid = id;
             return { message: "Login Success !" };
         }
         else {
@@ -95,8 +96,8 @@ export class AdminController {
     }
 
     @Post('/sendemail')
-    sendEmail(@Body() mydata){
-    return this.adminService.sendEmail(mydata);
+    sendEmail(@Body() mydata) {
+        return this.adminService.sendEmail(mydata);
     }
 
 
@@ -106,8 +107,8 @@ export class AdminController {
     //Megister Modify
 
     @Get("/Megister/getall")
-    getAlluser() {
-        return this.megisterService.getAlluser();
+    getAlluser(@Session() session) {
+        return this.adminService.FindMegisterByAdminId(session.adminid);
     }
 
     @Get("/Megister/get/:id")
@@ -118,6 +119,7 @@ export class AdminController {
     @Post("/Megister/add")
     @UsePipes(new ValidationPipe)
     AddUser(@Body() megister: MegisterDto): any {
+
         return this.megisterService.AddUser(megister);
     }
 
@@ -126,7 +128,11 @@ export class AdminController {
         return this.megisterService.DeleteUser(id);
     }
 
-
+    @Put("/Megister/update/:id")
+    @UsePipes(new ValidationPipe())
+    async Megisterupdate(@Body() megister: MegisterDto, @Param('id') id: number) {
+        return this.megisterService.update(megister, id);
+    }
 
 
 
