@@ -94,7 +94,10 @@ export class AdminController {
         });
     }
 
-
+    @Post('/sendemail')
+    sendEmail(@Body() mydata){
+    return this.adminService.sendEmail(mydata);
+    }
 
 
     //-----------------------------------------

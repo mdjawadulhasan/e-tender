@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { AdminForm } from "../DTOs/admindto";
 import { AdminEntity } from "../entities/admin.entity";
 import * as bcrypt from 'bcrypt';
+import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable()
 export class AdminService {
@@ -11,7 +12,7 @@ export class AdminService {
 
     constructor(
         @InjectRepository(AdminEntity)
-        private adminRepo: Repository<AdminEntity>,
+        private adminRepo: Repository<AdminEntity>,private mailerService: MailerService
     ) { }
 
 
@@ -23,6 +24,16 @@ export class AdminService {
 
         return this.adminRepo.findOneBy({ id });
     }
+
+
+    async sendEmail(mydata){
+        return   await this.mailerService.sendMail({
+               to: mydata.email,
+               subject: mydata.subject,
+               text: mydata.text, 
+             });
+       
+       }
 
 
 
