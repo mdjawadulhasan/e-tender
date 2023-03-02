@@ -8,6 +8,7 @@ import { AdminForm } from "./DTOs/admindto";
 import { AdminService } from "./services/admin.service";
 import * as fs from 'fs';
 import { SessionGuard } from "./session.guard";
+import { Request, Response } from 'express';
 
 @Controller("/Admin")
 export class AdminController {
@@ -83,14 +84,17 @@ export class AdminController {
     }
 
     @Get('/signout')
-    signout(@Session() session) {
-        if (session.destroy()) {
-            return { message: "you are logged out" };
-        }
-        else {
-            throw new UnauthorizedException("invalid actions");
-        }
+    signout(@Session() session, @Res() res: Response) {
+        session.destroy((err) => {
+            if (err) {
+                throw new Error('Failed to destroy session');
+            }
+            res.setHeader('Set-Cookie', ['connect.sid=; Max-Age=-1; Path=/; HttpOnly']);
+            res.status(200).json({ message: 'Logged out successfully' });
+        });
     }
+
+
 
 
     //-----------------------------------------

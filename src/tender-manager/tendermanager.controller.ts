@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, Session, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseFloatPipe, ParseIntPipe, Post, Put, Query, Req, Request, Res, Session, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { extname } from "path";
 import { TendermanagerForm } from "./DTOs/tendermanager.dto";
@@ -10,6 +10,7 @@ import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
 import { TenderAuctionService } from "./Services/tenderAuction.service";
 import { SessionGuard } from "./session.guard";
 import { OTPService } from "./Services/OTP.service";
+import { Response } from 'express';
 
 @Controller("/TenderManager")
 export class TendermanagerController {
@@ -78,13 +79,14 @@ export class TendermanagerController {
 
 
     @Get('/signout')
-    signout(@Session() session) {
-        if (session.destroy()) {
-            return { message: "Logged Out from the Account" };
-        }
-        else {
-            throw new UnauthorizedException("Invalid actions");
-        }
+    signout(@Session() session, @Res() res: Response) {
+        session.destroy((err) => {
+            if (err) {
+                throw new Error('Failed to destroy session');
+            }
+            res.setHeader('Set-Cookie', ['connect.sid=; Max-Age=-1; Path=/; HttpOnly']);
+            res.status(200).json({ message: 'Logged out successfully' });
+        });
     }
 
     @Put("/update/:id")
