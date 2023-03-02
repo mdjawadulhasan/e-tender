@@ -204,5 +204,22 @@ export class AdminController {
         return this.tendermanagerService.getall();
     }
 
+    //Tender Reports
+    @Get("Tender/Reports/Auction")
+    getonAcutionTenderReports(): any {
+        return this.tenderService.getTotalTendersByStatus(0);
+    }
+
+    //Tender Reports
+    @Get("Tender/Reports/Ongoing")
+    getonGoingTenderReports(): any {
+        return this.tenderService.getTotalTendersByStatus(1);
+    }
+
+    //Tender Reports
+    @Get("Tender/Reports/Completed")
+    getCompletedTenderReports(): any {
+        return this.tenderService.getTotalTendersByStatus(3);
+    }
 
 }
