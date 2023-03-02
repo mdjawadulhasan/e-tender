@@ -18,23 +18,23 @@ import { MailerModule } from "@nestjs-modules/mailer";
 @Module({
 
     imports: [
-        MulterModule.register({
-            storage: diskStorage({
-                destination: './Images',
-            }),
-        }),
-        MailerModule.forRoot({
-            transport: {
-                host: 'smtp.gmail.com',
-                port: 465,
-                ignoreTLS: true,
-                secure: true,
-                auth: {
-                    user: 'e.tenderspring2023@gmail.com',
-                    pass: 'gqdgqqwhfmwbuhvt'
-                },
-            }
-        }),
+        // MulterModule.register({
+        //     storage: diskStorage({
+        //         destination: './Images',
+        //     }),
+        // }),
+        // MailerModule.forRoot({
+        //     transport: {
+        //         host: 'smtp.gmail.com',
+        //         port: 465,
+        //         ignoreTLS: true,
+        //         secure: true,
+        //         auth: {
+        //             user: 'e.tenderspring2023@gmail.com',
+        //             pass: 'gqdgqqwhfmwbuhvt'
+        //         },
+        //     }
+        // }),
 
         TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity, OTPEntity])],
     controllers: [TendermanagerController, TenderController],

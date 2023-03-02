@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { AdminForm } from "../DTOs/admindto";
 import { AdminEntity } from "../entities/admin.entity";
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AdminService {
@@ -23,9 +24,28 @@ export class AdminService {
         return this.adminRepo.findOneBy({ id });
     }
 
-    insert(admindto: AdminForm): any {
 
+
+    async insert(admindto: AdminForm) {
+
+        const salt = await bcrypt.genSalt();
+        const hassedpassed = await bcrypt.hash(admindto.password, salt);
+        admindto.password = hassedpassed;
         return this.adminRepo.save(admindto);
+
+    }
+
+
+    async signin(mydto) {
+        const mydata = await this.adminRepo.findOneBy({ email: mydto.email });
+        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+        if (isMatch) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
     }
 
     update(Tmdto: AdminForm, id): any {
@@ -52,7 +72,7 @@ export class AdminService {
 
 
 
-   
+
 
 
 }

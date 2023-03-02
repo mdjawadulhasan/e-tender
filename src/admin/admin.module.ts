@@ -6,7 +6,7 @@ import { AdminEntity } from "./entities/admin.entity";
 import { AdminService } from "./services/admin.service"
 
 @Module({
-    imports: [TypeOrmModule.forFeature([AdminEntity]),MegisterModule],
+    imports: [TypeOrmModule.forFeature([AdminEntity]), MegisterModule],
     controllers: [AdminController],
     providers: [AdminService],
 

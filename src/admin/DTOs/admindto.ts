@@ -11,9 +11,13 @@ export class AdminForm {
     @IsEmail()
     email: string
 
+  
     @IsNotEmpty({ message: "Please enter your phone number" })
-    @IsByteLength(10)
-    phoneNumber: string;
+    @IsByteLength(5)
+    password: string;
+
+   
+    ImgfileName: string;
 
 
 }

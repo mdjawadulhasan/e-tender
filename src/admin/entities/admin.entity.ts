@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 
 @Entity("Admins")
-export class AdminEntity extends BaseEntity{
-    
+export class AdminEntity extends BaseEntity {
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,8 +12,11 @@ export class AdminEntity extends BaseEntity{
     @Column()
     email: string;
 
-    @Column()
-    phoneNumber: string;
-   
-    
+    @Column({nullable:true})
+    password: string;
+
+    @Column({nullable:true})
+    ImgfileName: string;
+
+
 }
