@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, Session, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, Res, Session, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import * as moment from 'moment';
 import { extname } from "path";
@@ -19,7 +19,7 @@ export class AdminController {
     @Get("/index")
 
     getAdminIndex(@Session() session): any {
-        console.log(session.tmemail);
+        console.log(session.adminemail);
         return this.adminService.getIndex();
     }
 
@@ -82,15 +82,15 @@ export class AdminController {
 
     }
 
-
-
-
-
-
-
-
-
-
+    @Get('/signout')
+    signout(@Session() session) {
+        if (session.destroy()) {
+            return { message: "you are logged out" };
+        }
+        else {
+            throw new UnauthorizedException("invalid actions");
+        }
+    }
 
 
     //-----------------------------------------
