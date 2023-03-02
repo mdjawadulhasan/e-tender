@@ -9,10 +9,14 @@ import { AdminService } from "./services/admin.service";
 import * as fs from 'fs';
 import { SessionGuard } from "./session.guard";
 import { Request, Response } from 'express';
+import { TenderForm } from "src/tender-manager/DTOs/tender.dto";
+import { TenderService } from "src/tender-manager/Services/tender.service";
+import { AgencyService } from "src/Agency/Services/agency.service";
+import { TendermanagerService } from "src/tender-manager/Services/tendermanager.service";
 
 @Controller("/Admin")
 export class AdminController {
-    constructor(private adminService: AdminService, private readonly megisterService: MegisterService) { }
+    constructor(private tendermanagerService: TendermanagerService, private adminService: AdminService, private readonly agencyService: AgencyService, private tenderService: TenderService, private readonly megisterService: MegisterService) { }
 
     //Admin CRUD
 
@@ -135,6 +139,70 @@ export class AdminController {
     }
 
 
+    //-Tender
+
+    @Post("/Tender/create")
+    @UsePipes(new ValidationPipe())
+    createTender(@Body() tenderdto: TenderForm): any {
+        return this.tenderService.insert(tenderdto);
+    }
+
+    @Put("/Tender/update:id")
+    @UsePipes(new ValidationPipe())
+    async updateTender(@Body() tdto: TenderForm, @Param('id') id: number) {
+        return this.tenderService.update(tdto, id);
+    }
+
+    @Delete("/Tender/delete/:id")
+    deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.deleteTenderById(id);
+    }
+
+    @Get("/Tender/all")
+    getAllTender(): any {
+        return this.tenderService.getAll();
+    }
+
+    @Get("/Tender/viewTender/:id")
+    getTenderByID(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.get(id);
+    }
+
+
+    //--Agency
+    @Get('/Agency/FindAgencyByid/:id')
+    getAgencyById(@Param("id", ParseIntPipe) id: number): any {
+        return this.agencyService.getAgencyById(id);
+    }
+
+    @Get('/Agency/search/:AgencyName')
+    SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
+        return this.agencyService.SearchAgencyByName(AgencyName);
+    }
+
+
+    @Delete("/Agency/DeleteById/:id")
+    deleteAgencyByid(@Param('id', ParseIntPipe) id: number): any {
+        return this.agencyService.deleteAgencyByid(id);
+
+    }
+
+    //--Tender Manager
+
+    @Get("/TenderManager/viewprofile/:id")
+    getTenderManagerUserByID(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.getTmanagerProfile(id);
+    }
+
+    @Delete("/TenderManager/delete/:id")
+    deleteTenderManagerById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.deleteById(id);
+    }
+
+    @Get("/TenderManagers")
+    GetAllTenderManager(): any {
+        return this.tendermanagerService.getall();
+    }
 
 
 }

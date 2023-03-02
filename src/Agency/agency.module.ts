@@ -13,5 +13,7 @@ import { AgencyService } from './Services/agency.service';
   imports: [TypeOrmModule.forFeature([AgencyEntity,BudgetRequestEntity])],
   controllers: [AgencyController],
   providers: [AgencyService],
+  exports: [AgencyService]
+  
 })
 export class AgencyModule { }

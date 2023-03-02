@@ -8,7 +8,7 @@ import { AgencyDto } from './DTOs/agency.dto';
 export class AgencyController {
   constructor(private readonly agencyService: AgencyService) { }
 
-  @Post("add")
+  @Post("create")
   @UsePipes(new ValidationPipe())
   insert(@Body() agency: AgencyDto): any {
     return this.agencyService.insert(agency);
@@ -18,11 +18,8 @@ export class AgencyController {
   getAgencyById(@Param("id", ParseIntPipe) id: number): any {
     return this.agencyService.getAgencyById(id);
   }
-  @Get('/FindAgencyByName/:AgencyName')
-  getAgencyByName(@Param("AgencyName") AgencyName: string): any {
-    return this.agencyService.getAgencyByName(AgencyName);
-  }
-  //localhost:3000/agency/FindAgency?AgencyName=joy& id=3
+  
+
   @Get('/FindAgency')
   getAgencyByIDName(@Query() qry: any): any {
     return this.agencyService.getAgencyByIDName(qry);

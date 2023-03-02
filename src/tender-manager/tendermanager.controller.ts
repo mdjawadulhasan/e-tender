@@ -67,7 +67,7 @@ export class TendermanagerController {
 
     @Get('/validate')
     async ValidateOTP(@Session() session, @Body() myOTP) {
-        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);  
+        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);
         if (isOTPValid) {
             session.tmemail = session.email;
             return { message: "Login Success" };
@@ -96,13 +96,21 @@ export class TendermanagerController {
     }
 
 
+
+    @Delete("/delete/:id")
+    deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.deleteById(id);
+    }
+
+
+
     @Get("/AuctionBids/:id")
     ShowBid(@Param("id", ParseIntPipe) id: number): any {
         return this.tenderService.FindTenderAuctionsByTenderId(id);
     }
 
 
-    
+
 
 
 

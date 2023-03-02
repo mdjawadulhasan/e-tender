@@ -37,6 +37,15 @@ export class TendermanagerService {
         return this.tendermanagerRepo.update(id, Tmdto);
     }
 
+    deleteById(id: number): any {
+        return this.tendermanagerRepo.delete(id);
+    }
+
+    getall(): any {
+        return this.tendermanagerRepo.find();
+    }
+
+
 
     async signin(mydto) {
         const mydata = await this.tendermanagerRepo.findOneBy({ email: mydto.email });

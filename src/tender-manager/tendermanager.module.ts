@@ -39,7 +39,7 @@ import { MailerModule } from "@nestjs-modules/mailer";
         TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity, OTPEntity])],
     controllers: [TendermanagerController, TenderController],
     providers: [OTPService, TendermanagerService, TenderService, TenderAuctionService],
-
+    exports: [TendermanagerService, TenderService]
 })
 
 export class TendermanagerModule { }
