@@ -6,8 +6,9 @@ import { MegisterService } from './Services/megister.servces';
 import { FeedBackEntity } from './Entity/FeedBack.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MegisterEntity,FeedBackEntity])],
+  imports: [TypeOrmModule.forFeature([MegisterEntity, FeedBackEntity])],
   controllers: [MegisterController],
   providers: [MegisterService],
+  exports: [MegisterService],
 })
-export class MegisterModule {}
+export class MegisterModule { }

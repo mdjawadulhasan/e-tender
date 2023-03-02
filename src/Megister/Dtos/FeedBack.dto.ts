@@ -1,27 +1,20 @@
-import { IsNotEmpty, IsString, MaxLength, IsNumber, MinLength, IsEmail } from "class-validator";
-//import { IsNumber,  } from "class-validator/types/decorator/decorators";
-
+import { IsNotEmpty, IsNumber } from "class-validator";
 
 export class FeedBackDto {
-   //    @IsNotEmpty({message: "enter a Tender name"})
-   //    TenderID:number;
 
    @IsNumber()
    @IsNotEmpty({ message: "enter a  ID" })
    id: number;
 
-
-
    @IsNotEmpty({ message: "Write  a Feedback " })
    FeedbackText: string;
-   @IsNotEmpty({ message: "Write  a Feedback " })
+
+   @IsNotEmpty({ message: "Give the Rating" })
    Rating: number;
 
-   Tender: number;
-   Agency: number;
-
-
-
+   TenderId: number;
+   AgencyId: number;
+   MegisterId: number;
 
 
 }

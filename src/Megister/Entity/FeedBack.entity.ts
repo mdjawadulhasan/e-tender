@@ -5,30 +5,24 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany, ManyToOn
 import { MegisterEntity } from './megister.entity';
 
 @Entity("FeedBack")
-export class FeedBackEntity extends BaseEntity{
-    
+export class FeedBackEntity extends BaseEntity {
+
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
     FeedbackText: string;
-    // @Column()
-    // AgencyID:string;
-    // @Column()
-    // TenderID:number;
 
-    // @Column()
-    // AuditPanelID:number;
     @Column()
-    Rating:number;
+    Rating: number;
 
     @ManyToOne(() => TenderEntity, (Tender) => Tender.feedBack)
-    Tender : TenderEntity
+    Tender: TenderEntity
 
     @ManyToOne(() => AgencyEntity, (Agency) => Agency.feedBack)
-    Agency : AgencyEntity
-    
-    @ManyToOne(() => MegisterEntity, (AuditPannel) => AuditPannel.feedBack)
-    AuditPannel : MegisterEntity
+    Agency: AgencyEntity
 
-  
+    @ManyToOne(() => MegisterEntity, (AuditPannel) => AuditPannel.feedBack)
+    Megister: MegisterEntity
+
+
 }

@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, UsePipes, ValidationPipe } from "@nestjs/common";
+import { MegisterDto } from "src/Megister/Dtos/megister.dto";
+import { MegisterService } from "src/Megister/Services/megister.servces";
 import { AdminForm } from "./DTOs/admindto";
 import { AdminService } from "./services/admin.service";
 
 
 @Controller("/Admin")
 export class AdminController {
-    constructor(private adminService: AdminService) { }
+    constructor(private adminService: AdminService, private readonly megisterService: MegisterService) { }
 
     //Admin CRUD
 
@@ -32,65 +34,63 @@ export class AdminController {
         return this.adminService.update(admindto, id);
     }
 
-   
-    @Patch(':id')
-    async updateAdminIsActive(
-      @Query('id') id: number,
-      @Query('isActive') isActive: boolean,
-    ): Promise<void> {
-      return this.adminService.updateAdminIsActive(id, isActive);
-    }
-    
-    @Delete('/deleteadmin/:id')
+
+    // @Patch(':id')
+    // async updateAdminIsActive(
+    //     @Query('id') id: number,
+    //     @Query('isActive') isActive: boolean,
+    // ): Promise<void> {
+    //     return this.adminService.updateAdminIsActive(id, isActive);
+    // }
+
+    @Delete('/delete/:id')
     async deleteAdminById(@Param('id') id: number): Promise<void> {
-      return this.adminService.deleteAdminById(id);
+        return this.adminService.deleteAdminById(id);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     //-----------------------------------------
+    //Megister Modify
 
-
-
-
-
-    @Get("/adduser")
-    adduser(@Query() qry: any): any {
-        return this.adminService.adduser(qry);
+    @Get("/Megister/getall")
+    getAlluser() {
+        return this.megisterService.getAlluser();
     }
 
-    @Get("/blockuser/:id")
-    blockuserById(@Param("id", ParseIntPipe) id: number): any {
-        return this.adminService.blockuserById(id);
+    @Get("/Megister/get/:id")
+    getuser(@Param("id", ParseIntPipe) id: number): any {
+        return this.megisterService.getuser(id);
     }
 
-    @Get("/activeuser/:id")
-    activeuserById(@Param("id", ParseIntPipe) id: number): any {
-        return this.adminService.activeuserById(id);
+    @Post("/Megister/add")
+    @UsePipes(new ValidationPipe)
+    AddUser(@Body() megister: MegisterDto): any {
+        return this.megisterService.AddUser(megister);
+    }
+
+    @Delete("/Megister/deleteById/:id")
+    DeleteUser(@Param('id', ParseIntPipe) id: number): any {
+        return this.megisterService.DeleteUser(id);
     }
 
 
-    
 
-
-    @Get("/userstatus/:id")
-    userStatusById(@Param("id", ParseIntPipe) id: number): any {
-        return this.adminService.userStatusById(id);
-    }
-
-    @Get("/checkstatus/:stat")
-    checkstatus(@Param("stat", ParseBoolPipe) stat: boolean): any {
-        return this.adminService.checkstatus(stat);
-    }
-
-    @Get("/sentmsg")
-    sentMsg(@Query() qry: any): any {
-        return this.adminService.sentMsg(qry);
-    }
-
-    @Get("/userlog/:id")
-    userLog(@Param("id", ParseIntPipe) id: number): any {
-        return this.adminService.userLog(id);
-    }
 
 
 

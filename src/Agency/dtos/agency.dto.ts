@@ -26,15 +26,6 @@ export class AgencyDto {
     @IsNumber()
     Status: number
 
-    //1 not good
-    //2 Good
-    //3 Very Good
-
-
-
-
-
-
 
 
 } 

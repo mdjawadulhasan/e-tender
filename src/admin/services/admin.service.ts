@@ -33,14 +33,14 @@ export class AdminService {
     }
 
 
-    async updateAdminIsActive(id: number, isActive: boolean): Promise<void> {
-        const tender = await this.adminRepo.findOneBy({ id });
-        if (!tender) {
-            throw new Error(`Tender with id ${id} not found`);
-        }
-        tender.isActive = isActive;
-        await this.adminRepo.save(tender);
-    }
+    // async updateAdminIsActive(id: number, isActive: boolean): Promise<void> {
+    //     const tender = await this.adminRepo.findOneBy({ id });
+    //     if (!tender) {
+    //         throw new Error(`Tender with id ${id} not found`);
+    //     }
+    //     tender.isActive = isActive;
+    //     await this.adminRepo.save(tender);
+    // }
 
     async deleteAdminById(id: number): Promise<void> {
         const admin: AdminForm = await this.adminRepo.findOneBy({ id });
@@ -52,53 +52,7 @@ export class AdminService {
 
 
 
-    userCount(qry): any {
-        return "Total : " + qry.utype + "= 10";
-    }
-
-
-    blockuserById(id): any {
-
-        return "Blocked User Id is : " + id;
-    }
-
-    delteuserById(id): any {
-
-        return "Deleted User Id is : " + id;
-    }
-
-    activeuserById(id): any {
-
-        return "Actived User Id is : " + id;
-    }
-
-    userStatusById(id): any {
-
-        return "Status : Active for user with ID =: " + id;
-    }
-
-    userLog(id): any {
-
-        return "User log with ID =: " + id;
-    }
-
-    sentMsg(qry): any {
-
-        return "Your message is : " + qry.msg;
-    }
-
-    adduser(qry): any {
-
-        return "User Name : " + qry.name + " and |  User ID : " + qry.id;
-    }
-
-
-
-
-    checkstatus(stat): any {
-
-        return "Status :  " + stat;
-    }
+   
 
 
 }

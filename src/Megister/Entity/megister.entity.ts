@@ -3,20 +3,20 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 't
 import { FeedBackEntity } from './FeedBack.entity';
 
 @Entity("Megisters")
-export class MegisterEntity extends BaseEntity{
-    
+export class MegisterEntity extends BaseEntity {
+
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
     name: string;
     @Column()
-    password:string;
+    password: string;
     @Column()
-    Email:string;
-    
-    @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.AuditPannel)
+    Email: string;
+
+    @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Megister)
     feedBack: FeedBackEntity[]
 
 
-  
+
 }
