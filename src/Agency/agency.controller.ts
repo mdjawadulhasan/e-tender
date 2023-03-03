@@ -8,10 +8,12 @@ import * as moment from 'moment';
 import { extname } from 'path';
 import * as fs from 'fs';
 import { Request, Response } from 'express';
+import { BudgeRequestDto } from './dtos/BudgetRequest.dto';
+import { BudgetReqService } from './Services/BudgetReq.service';
 
 @Controller("Agency")
 export class AgencyController {
-  constructor(private readonly agencyService: AgencyService) { }
+  constructor(private readonly agencyService: AgencyService,private readonly BudgetReqService: BudgetReqService) { }
 
   @UseGuards(SessionGuard)
   @Get("/index")
@@ -74,6 +76,42 @@ export class AgencyController {
   async update(@Body() admindto: AgencyDto, @Param('id') id: number) {
       return this.agencyService.update(admindto, id);
   }
+
+  @Post('/sendemail')
+  sendEmail(@Body() mydata) {
+      return this.agencyService.sendEmail(mydata);
+  }
+
+
+  //--BudgetRequest
+
+  @Post("/BudgetReq/create")
+  @UsePipes(new ValidationPipe())
+  createTender(@Body() tenderdto: BudgeRequestDto): any {
+      return this.BudgetReqService.insert(tenderdto);
+  }
+
+  @Put("/BudgetReq/update/:id")
+  @UsePipes(new ValidationPipe())
+  async updateTender(@Body() tdto: BudgeRequestDto, @Param('id') id: number) {
+      return this.BudgetReqService.update(tdto, id);
+  }
+
+  @Delete("/BudgetReq/delete/:id")
+  deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
+      return this.BudgetReqService.deleteBudgetReqById(id);
+  }
+
+  @Get("/BudgetReq/all")
+  getAllTender(): any {
+      return this.BudgetReqService.getAll();
+  }
+
+  @Get("/BudgetReq/view/:id")
+  GetBudgetReqById(@Param("id", ParseIntPipe) id: number): any {
+      return this.BudgetReqService.get(id);
+  }
+
 
 }
 

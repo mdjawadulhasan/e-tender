@@ -3,33 +3,32 @@ import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 't
 import { AgencyEntity } from './agency.entity';
 
 @Entity("BudgetRequest")
-export class BudgetRequestEntity extends BaseEntity{
-    
+export class BudgetRequestEntity extends BaseEntity {
+
     @PrimaryGeneratedColumn()
     id: number;
-    // @Column()
-    // Agency_id: number;
-    // @Column()
-    // Tender_id : number;
+
     @Column()
     Amount: number;
-     @Column()
-     Status : number;
 
-     @Column()
-     Created_at: Date;
-     @Column()
-     Updated_at  : Date;
+    @Column({ nullable: true, default: 0 })
+    Status: number;
+
+    @Column()
+    Created_at: Date;
+   
+    @Column({ nullable: true})
+    Updated_at: Date;
+
+    @Column()
+    Cause: string;
+
+    @ManyToOne(() => AgencyEntity, (Agency) => Agency.budgetRequestEntity)
+    Agency: AgencyEntity
+
+    @ManyToOne(() => TenderEntity, (Tender) => Tender.budgetRequestEntity)
+    Tender: TenderEntity
 
 
 
-
-     @ManyToOne(() => AgencyEntity, (Agency) => Agency.budgetRequestEntity)
-     Agency:AgencyEntity
-
-     @ManyToOne(() => TenderEntity, (Tender) => Tender.budgetRequestEntity)
-     Tender:TenderEntity
-
-
-    
 }

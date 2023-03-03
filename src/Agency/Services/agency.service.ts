@@ -4,12 +4,13 @@ import { Repository } from 'typeorm';
 import { AgencyEntity } from '../entities/agency.entity';
 import { AgencyDto } from '../DTOs/agency.dto';
 import * as bcrypt from 'bcrypt';
+import { MailerService } from "@nestjs-modules/mailer";
 
 @Injectable()
 export class AgencyService {
     constructor(
         @InjectRepository(AgencyEntity)
-        private agencyRepo: Repository<AgencyEntity>,
+        private agencyRepo: Repository<AgencyEntity>, private mailerService: MailerService
     ) { }
    
     
@@ -66,5 +67,12 @@ export class AgencyService {
 
     }
 
+    async sendEmail(mydata) {
+        return await this.mailerService.sendMail({
+            to: mydata.email,
+            subject: mydata.subject,
+            text: mydata.text,
+        });
 
+    }
 }
