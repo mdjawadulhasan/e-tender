@@ -105,7 +105,14 @@ export class TenderService {
     async getTotalTendersByStatus(status: number): Promise<number> {
         const count = await this.tenderRepo.count({ where: { Status: status } });
         return count;
+    }
+
+
+    async getTotalTenderscompletedByAgencyID(status: number, agencyId: number): Promise<number> {
+        const count = await this.tenderRepo.count({ where: { Status: status, Agency: { id: agencyId } } });
+        return count;
       }
+    
 
 
 

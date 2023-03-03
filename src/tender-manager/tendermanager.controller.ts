@@ -15,7 +15,7 @@ import { Response } from 'express';
 @Controller("/TenderManager")
 export class TendermanagerController {
     constructor(private tendermanagerService: TendermanagerService,
-        private tenderService: TenderService, private tenderauctionService: TenderAuctionService, private otpService: OTPService) { }
+        private tenderService: TenderService, private otpService: OTPService) { }
 
     @UseGuards(SessionGuard)
     @Get("/index")

@@ -163,32 +163,7 @@ export class TenderController {
     }
 
     //Auction Methods
-    @Post("/createbid")
-    @UsePipes(new ValidationPipe())
-    createBid(@Body() TaucDTO: TenderAuctinForm): any {
-        return this.tenderauctionService.insert(TaucDTO);
-    }
-
-    @Put("/updatebid:id")
-    @UsePipes(new ValidationPipe())
-    async updateBid(@Body() tdto: TenderAuctinForm, @Param('id') id: number) {
-        return this.tenderauctionService.update(tdto, id);
-    }
-
-    @Delete("/deletebid/:id")
-    deleteBid(@Param("id", ParseIntPipe) id: number): any {
-        return this.tenderauctionService.deleteBidById(id);
-    }
-
-    @Get("/allbid/:id")
-    getAllBids(@Param("id", ParseIntPipe) id: number): any {
-        return this.tenderauctionService.getAll(id);
-    }
-
-    @Get("/viewBid/:id")
-    getBidByID(@Param("id", ParseIntPipe) id: number): any {
-        return this.tenderauctionService.get(id);
-    }
+   
 
     @Get("/SortBid/:id")
     SortByBid(@Param("id", ParseIntPipe) id: number): any {

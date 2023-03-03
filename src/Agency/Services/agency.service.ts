@@ -75,4 +75,31 @@ export class AgencyService {
         });
 
     }
+
+
+    FindFeedbacksByAgencyId(id): any {
+        return this.agencyRepo.find(({
+            where: { id: id },
+            relations: {
+                feedBack: true,
+            },
+        }))
+    }
+
+
+    FindTendersByAgencyId(id): any {
+        return this.agencyRepo.find(({
+            where: { id: id },
+            relations: {
+                tenders: true,
+            },
+        }))
+    }
+
+    
+
+
+    
+      
+      
 }
