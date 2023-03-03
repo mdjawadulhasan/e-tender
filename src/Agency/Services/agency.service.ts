@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AgencyEntity } from '../entities/agency.entity';
 import { AgencyDto } from '../DTOs/agency.dto';
-// import { Agency } from './AgencyInterface/agency';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AgencyService {
@@ -11,97 +11,60 @@ export class AgencyService {
         @InjectRepository(AgencyEntity)
         private agencyRepo: Repository<AgencyEntity>,
     ) { }
-    //  public agencys: Agency []=[];  // globel agency object
+   
+    
+    getIndex(): string {
+        return "Welcome to Agency Dash Board";
 
-    //Inserting 
-    insert(agency: AgencyDto) {
-        return this.agencyRepo.save(agency);
+    }
+
+
+    async insert(agencyDTO: AgencyDto) {
+
+        const salt = await bcrypt.genSalt();
+        const hassedpassed = await bcrypt.hash(agencyDTO.password, salt);
+        agencyDTO.password = hassedpassed;
+        return this.agencyRepo.save(agencyDTO);
+
+    }
+
+    async signin(mydto) {
+        const mydata = await this.agencyRepo.findOneBy({ Email: mydto.Email });
+        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+
+        if (typeof isMatch !== 'undefined') {
+        }
+        if (isMatch) {
+            return mydata.id;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+    async update(agencyDTO: AgencyDto, id) {
+
+        const salt = await bcrypt.genSalt();
+        const hassedpassed = await bcrypt.hash(agencyDTO.password, salt);
+        agencyDTO.password = hassedpassed;
+        return this.agencyRepo.update(id, agencyDTO);
     }
 
     getAgencyById(id) {
 
         return this.agencyRepo.findOneBy({ id });
     }
-    getAgencyByName(AgencyName) {
 
-        return this.agencyRepo.findOneBy({ AgencyName });
-    }
-    getAgencyByIDName(qry): any {
-        return this.agencyRepo.findOneBy({ id: qry.id, AgencyName: qry.AgencyName });
-    }
-
-    SearchAgencyById(id) {
-        return this.agencyRepo.findOneBy({ id });
-
-    }
+    
     SearchAgencyByName(AgencyName) {
         return this.agencyRepo.findOneBy({ AgencyName });
     }
-
-
-    //    getAgencybylocation(location:string): Agency {
-    //    return this.agencys.filter(i=>i.location==location)[0];
-
-
-    //    }
-
 
     deleteAgencyByid(id) {
         return this.agencyRepo.delete(id);
 
     }
-    deleteAgencybyname(AgencyName) {
-        return this.agencyRepo.delete(AgencyName);
-    }
-
-    // updateAgency(AgencyName, location, Email, id): any {
-    //     return this.agencyRepo.update(id, { AgencyName: AgencyName, location: location, Email: Email });
-    // }
-    getAllAgency(): any {
-        return this.agencyRepo.find();
-
-    }
-
-
-    record(): any {
-        return "all reecord hare";
-    }
-    project(): any {
-        return "100 project done";
-    }
-    Nextproject(): any {
-        return "next project name padma setu";
-    }
-
-    updateAgencybyid(AgencyDto: AgencyEntity, id): any {
-        return this.agencyRepo.update(id, AgencyDto)
-
-    }
-
-
-
-    viewagencyArea(q): string {
-        return "Area is  : " + q.location;
-    }
-    tanderValidornot(valid): boolean {
-        return valid;
-    }
-    adminApproaveProposal(approave): string {
-        //boolean ans= approave;
-        if (approave == true) {
-
-            return "admin accept the Proposal";
-        }
-        else {
-            return "admin reject the Proposal";
-        }
-
-    }
-
-
-
-
-
 
 
 }

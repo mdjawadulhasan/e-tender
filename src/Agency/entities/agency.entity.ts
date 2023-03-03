@@ -9,6 +9,7 @@ export class AgencyEntity extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
+   
     @Column()
     AgencyName: string;
     @Column()
@@ -17,12 +18,17 @@ export class AgencyEntity extends BaseEntity {
     Email: string;
 
 
-    @Column()
+    @Column({ nullable: true, default: 0 })
     Ratings: number;
-    @Column()
+
+    @Column({ nullable: true, default: 0 })
     Noprojectcomleted: number;
-    @Column()
+
+    @Column({ nullable: true, default: 1 })
     Status: number;
+
+    @Column({ nullable: true })
+    ImgfileName:string;
 
 
     @OneToMany(() => BudgetRequestEntity, (budgetRequestEntity) => budgetRequestEntity.Agency)

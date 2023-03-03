@@ -1,114 +1,78 @@
-import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Put, Query, Res, Session, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AgencyEntity } from './entities/agency.entity';
 import { AgencyService } from './Services/agency.service';
 import { AgencyDto } from './DTOs/agency.dto';
-
+import { SessionGuard } from './session.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as moment from 'moment';
+import { extname } from 'path';
+import * as fs from 'fs';
+import { Request, Response } from 'express';
 
 @Controller("Agency")
 export class AgencyController {
   constructor(private readonly agencyService: AgencyService) { }
 
-  @Post("create")
-  @UsePipes(new ValidationPipe())
-  insert(@Body() agency: AgencyDto): any {
-    return this.agencyService.insert(agency);
+  @UseGuards(SessionGuard)
+  @Get("/index")
+  getAdmin(@Session() session): any {
+    console.log(session.agencyid);
+    return this.agencyService.getIndex();
   }
 
-  @Get('/FindAgencyByid/:id')
-  getAgencyById(@Param("id", ParseIntPipe) id: number): any {
+  @Get("/viewprofile/:id")
+  getUserByID(@Param("id", ParseIntPipe) id: number): any {
     return this.agencyService.getAgencyById(id);
   }
-  
 
-  @Get('/FindAgency')
-  getAgencyByIDName(@Query() qry: any): any {
-    return this.agencyService.getAgencyByIDName(qry);
-  }
-
-  @Get('ShowAllAgency')
-  getAllAgency(): any {
-    return this.agencyService.getAllAgency();
-  }
-
-  //search part 
-  @Get('/search/:id')
-  SearchAgencyById(@Param("id") id: number): any {
-    return this.agencyService.SearchAgencyById(id);
-  }
-
-  @Get('/search/:AgencyName')
-  SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
-    return this.agencyService.SearchAgencyByName(AgencyName);
-  }
-
-
-
-
-
-  @Delete("/DeleteById/:id")
-  deleteAgencyByid(@Param('id', ParseIntPipe) id: number): any {
-    return this.agencyService.deleteAgencyByid(id);
-
-  }
-  @Delete("/DeleteByName/:AgencyName")
-  deleteAgencybyname(@Param() AgencyName: string): any {
-    return this.agencyService.deleteAgencybyname(AgencyName);
-  }
-
-
-
-
-
-
-
-  @Get('/history')
-  record(): any {
-    return this.agencyService.record();
-  }
-
-  @Get('/projectcomplete')
-  project(): any {
-    return this.agencyService.project();
-  }
-  @Get('/upcomingproject')
-  nextproject(): any {
-    return this.agencyService.Nextproject();
-  }
-
-
-
-
-
-
-
-  @Put("/UpdateBy")
+  @Post("/signup")
   @UsePipes(new ValidationPipe())
-  updateAgencybyid(
-    @Body() AgencyDto: AgencyEntity,
-    @Param('id', ParseIntPipe) id: number
+  @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+  async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: AgencyDto) {
 
-  ): any {
-    return this.agencyService.updateAgencybyid(AgencyDto, id)
+
+    if (file) {
+      const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
+      tmdto.ImgfileName = filename;
+      const tmpFilePath = file.path; // temporary path of the uploaded file
+      const destFilePath = `Images/${filename}`;
+      await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
+      await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
+    }
+
+    return await this.agencyService.insert(tmdto);
   }
 
+  @Get('/signin')
+  async signin(@Session() session, @Body() mydto: AgencyDto) {
 
+    var id = await this.agencyService.signin(mydto);
+    if (id) {
 
+      session.agencyid = id;
+      return { message: "Login Success !" };
+    }
+    else {
+      return { message: "invalid credentials" };
+    }
 
-
-
-
-  @Get("/viewagencyArea")
-  viewagencyArea(@Query() location: string): string {
-    return this.agencyService.viewagencyArea(location);
   }
-  @Get("/tandervalidOrnot/:valid")
-  tanderValidornot(@Param("valid", ParseBoolPipe) valid: boolean): boolean {
-    return this.agencyService.tanderValidornot(valid);
+
+  @Get('/signout')
+  signout(@Session() session, @Res() res: Response) {
+      session.destroy((err) => {
+          if (err) {
+              throw new Error('Failed to destroy session');
+          }
+          res.setHeader('Set-Cookie', ['connect.sid=; Max-Age=-1; Path=/; HttpOnly']);
+          res.status(200).json({ message: 'Logged out successfully' });
+      });
   }
 
-  @Get("/proposal/:valid")
-  adminApproaveProposal(@Param("valid", ParseBoolPipe) valid: boolean): string {
-    return this.agencyService.adminApproaveProposal(valid);
+  @Put("/update/:id")
+  @UsePipes(new ValidationPipe())
+  async update(@Body() admindto: AgencyDto, @Param('id') id: number) {
+      return this.agencyService.update(admindto, id);
   }
 
 }
