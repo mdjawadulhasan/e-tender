@@ -64,6 +64,15 @@ export class OTPService {
     }
 
 
+    async Delete() {
+        const currentTime = new Date();
+        await OTPEntity.createQueryBuilder()
+            .delete()
+            .where("ExpirationTime < :currentTime", { currentTime })
+            .execute();
+    }
+
+
 
 
 

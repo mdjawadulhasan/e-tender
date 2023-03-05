@@ -14,32 +14,16 @@ import { TenderAuctionService } from "./Services/tenderAuction.service";
 import { OTPEntity } from "./entities/OTP.entity";
 import { OTPService } from "./Services/OTP.service";
 import { MailerModule } from "@nestjs-modules/mailer";
+import { ScheduleService } from "./Services/Schedule.Service";
 
 @Module({
 
     imports: [
-        // MulterModule.register({
-        //     storage: diskStorage({
-        //         destination: './Images',
-        //     }),
-        // }),
-        // MailerModule.forRoot({
-        //     transport: {
-        //         host: 'smtp.gmail.com',
-        //         port: 465,
-        //         ignoreTLS: true,
-        //         secure: true,
-        //         auth: {
-        //             user: 'e.tenderspring2023@gmail.com',
-        //             pass: 'gqdgqqwhfmwbuhvt'
-        //         },
-        //     }
-        // }),
 
         TypeOrmModule.forFeature([TendermanagerEntity, TenderAuctonEntity, TenderEntity, OTPEntity])],
     controllers: [TendermanagerController, TenderController],
-    providers: [OTPService, TendermanagerService, TenderService, TenderAuctionService],
-    exports: [TendermanagerService, TenderService,TenderAuctionService]
+    providers: [OTPService, TendermanagerService, TenderService, TenderAuctionService,ScheduleService],
+    exports: [TendermanagerService, TenderService, TenderAuctionService]
 })
 
 export class TendermanagerModule { }
