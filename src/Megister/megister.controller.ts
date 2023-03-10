@@ -119,21 +119,21 @@ export class MegisterController {
   }
 
 
-  //Agency
-  // @Get('/Agency/search/:AgencyName')
-  // SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
-  //   return this.agencyService.SearchAgencyByName(AgencyName);
-  // }
+  Agency
+  @Get('/Agency/search/:AgencyName')
+  SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
+    return this.agencyService.SearchAgencyByName(AgencyName);
+  }
 
-  // @Get("/Agency/Block/:id")
-  // BlockAgency(@Param("id", ParseIntPipe) id: number): any {
-  //   return this.agencyService.ChangeStatus(id, 2);
-  // }
+  @Get("/Agency/Block/:id")
+  BlockAgency(@Param("id", ParseIntPipe) id: number): any {
+    return this.agencyService.ChangeStatus(id, 2);
+  }
 
-  // @Get("/Agency/Active/:id")
-  // ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
-  //   return this.agencyService.ChangeStatus(id, 1);
-  // }
+  @Get("/Agency/Active/:id")
+  ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
+    return this.agencyService.ChangeStatus(id, 1);
+  }
 
 
 

@@ -40,14 +40,6 @@ export class AdminController {
     }
 
 
-    // @Patch(':id')
-    // async updateAdminIsActive(
-    //     @Query('id') id: number,
-    //     @Query('isActive') isActive: boolean,
-    // ): Promise<void> {
-    //     return this.adminService.updateAdminIsActive(id, isActive);
-    // }
-
     @Delete('/delete/:id')
     async deleteAdminById(@Param('id') id: number): Promise<void> {
         return this.adminService.deleteAdminById(id);
