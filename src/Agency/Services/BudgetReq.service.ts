@@ -22,6 +22,7 @@ export class BudgetReqService {
 
         const now = new Date();
         BreqDTO.Created_at = now;
+        BreqDTO.Status = 0;
         return this.BudgetReqRepo.save(BreqDTO);
     }
 

@@ -96,6 +96,12 @@ export class AgencyService {
         }))
     }
 
+    ChangeStatus(id, status) {
+        return this.agencyRepo.update(id, {
+            Status: status
+        })
+    }
+
     
 
 

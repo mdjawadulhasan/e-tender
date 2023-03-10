@@ -14,6 +14,8 @@ export class MegisterEntity extends BaseEntity {
     password: string;
     @Column()
     Email: string;
+    @Column({nullable:true})
+    ImgfileName: string;
 
     @OneToMany(() => FeedBackEntity, (feedBack) => feedBack.Megister)
     feedBacks: FeedBackEntity[]

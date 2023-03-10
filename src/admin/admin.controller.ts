@@ -106,9 +106,24 @@ export class AdminController {
 
 
     //-----------------------------------------
-
-
     //Megister Modify
+
+    @Post("/Megister/create")
+    @UsePipes(new ValidationPipe())
+    @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+    async createMegister(@UploadedFile() file: Express.Multer.File, @Body() tmdto: MegisterDto) {
+
+
+        if (file) {
+            const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
+            tmdto.ImgfileName = filename;
+            const tmpFilePath = file.path; // temporary path of the uploaded file
+            const destFilePath = `Images/${filename}`;
+            await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
+            await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
+        }
+        return await this.megisterService.insert(tmdto);
+    }
 
     @Get("/Megister/getall")
     getAlluser(@Session() session) {
@@ -117,19 +132,13 @@ export class AdminController {
 
     @Get("/Megister/get/:id")
     getuser(@Param("id", ParseIntPipe) id: number): any {
-        return this.megisterService.getuser(id);
+        return this.megisterService.getProfile(id);
     }
 
-    @Post("/Megister/add")
-    @UsePipes(new ValidationPipe)
-    AddUser(@Body() megister: MegisterDto): any {
-
-        return this.megisterService.AddUser(megister);
-    }
 
     @Delete("/Megister/deleteById/:id")
     DeleteUser(@Param('id', ParseIntPipe) id: number): any {
-        return this.megisterService.DeleteUser(id);
+        return this.megisterService.deletemegisterById(id);
     }
 
     @Put("/Megister/update/:id")

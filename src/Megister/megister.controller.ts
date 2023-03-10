@@ -1,39 +1,179 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, Session, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import { ParseBoolPipe, ParseIntPipe, ValidationPipe } from '@nestjs/common/pipes';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { MegisterDto } from './Dtos/megister.dto';
 import { MegisterService } from './Services/megister.servces';
-//import { AppService } from './app.service';
+import { SessionGuard } from './session.guard';
+import { Request, Response } from 'express';
+import * as moment from 'moment';
+import * as fs from 'fs';
+import { extname } from 'path';
+import { BudgetReqService } from '../Agency/Services/BudgetReq.service';
+import { TenderService } from 'src/tender-manager/Services/tender.service';
+import { AgencyService } from 'src/Agency/Services/agency.service';
+import { FeedBackDto } from './Dtos/FeedBack.dto';
+import { FeedbackService } from './Services/FeedBack.service';
+
 
 @Controller("megister")
 export class MegisterController {
-  constructor(private readonly megisterService: MegisterService) { }
+  constructor(private readonly fdService: FeedbackService, private readonly agencyService: AgencyService, private tenderService: TenderService, private readonly megisterService: MegisterService, private readonly BudgetReqService: BudgetReqService) { }
 
-  @Get("getall")
-  getAlluser() {
-    return this.megisterService.getAlluser();
+
+  @UseGuards(SessionGuard)
+  @Get("/index")
+  getAdmin(@Session() session): any {
+    console.log(session.mgstid);
+    return this.megisterService.getIndex();
   }
-  @Get("/:id")
-  getuser(@Param("id", ParseIntPipe) id: number): any {
-    return this.megisterService.getuser(id);
+
+  @Get("/viewprofile/:id")
+  getUserByID(@Param("id", ParseIntPipe) id: number): any {
+    return this.megisterService.getProfile(id);
   }
-  @Post("/add")
-  @UsePipes(new ValidationPipe)
-  AddUser(@Body() megister: MegisterDto): any {
-   // return this.megisterService.AddUser(megister);
+
+  @Post("/signup")
+  @UsePipes(new ValidationPipe())
+  @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+  async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: MegisterDto) {
+
+
+    if (file) {
+      const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
+      tmdto.ImgfileName = filename;
+      const tmpFilePath = file.path; // temporary path of the uploaded file
+      const destFilePath = `Images/${filename}`;
+      await fs.promises.mkdir('Images', { recursive: true }); // create Images folder if it doesn't exist
+      await fs.promises.rename(tmpFilePath, destFilePath); // move the file to the Images folder
+    }
+    return await this.megisterService.insert(tmdto);
   }
-  // @Put("/:name")
-  // Update(@Param() Param): string {
-  //   //return this.megisterService.Update(Param.name);
+
+
+  @Get('/signin')
+  async signin(@Session() session, @Body() mydto: MegisterDto) {
+
+    var id = await this.megisterService.signin(mydto);
+    if (id) {
+
+      session.mgstid = id;
+      return { message: "Login Success !" };
+    }
+    else {
+      return { message: "invalid credentials" };
+    }
+
+  }
+
+  @Get('/signout')
+  signout(@Session() session, @Res() res: Response) {
+    session.destroy((err) => {
+      if (err) {
+        throw new Error('Failed to destroy session');
+      }
+      res.setHeader('Set-Cookie', ['connect.sid=; Max-Age=-1; Path=/; HttpOnly']);
+      res.status(200).json({ message: 'Logged out successfully' });
+    });
+  }
+
+
+  @Put("/update/:id")
+  @UsePipes(new ValidationPipe())
+  async update(@Body() admindto: MegisterDto, @Param('id') id: number) {
+    return this.megisterService.update(admindto, id);
+  }
+
+
+  @Post('/sendemail')
+  sendEmail(@Body() mydata) {
+    return this.megisterService.sendEmail(mydata);
+  }
+
+  //Budget Request Update
+
+  @Get("/BudgetReq/all")
+  getAllTender(): any {
+    return this.BudgetReqService.getAll();
+  }
+
+  @Get("/BudgetReq/view/:id")
+  GetBudgetReqById(@Param("id", ParseIntPipe) id: number): any {
+    return this.BudgetReqService.get(id);
+  }
+
+
+  @Get("/BudgetReq/Accept/:id")
+  AcceptBudgetReq(@Param("id", ParseIntPipe) id: number): any {
+    return this.BudgetReqService.ChangeStatus(id, 1);
+  }
+
+  @Get("/BudgetReq/Delete/:id")
+  DeleteBudgetReq(@Param("id", ParseIntPipe) id: number): any {
+    return this.BudgetReqService.ChangeStatus(id, 2);
+  }
+
+
+  @Get("/AuctionBids/:id")
+  ShowBid(@Param("id", ParseIntPipe) id: number): any {
+    return this.tenderService.FindTenderAuctionsByTenderId(id);
+  }
+
+
+  //Agency
+  // @Get('/Agency/search/:AgencyName')
+  // SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
+  //   return this.agencyService.SearchAgencyByName(AgencyName);
   // }
-  @Delete("/deleteById/:id")
-  DeleteUser(@Param('id', ParseIntPipe) id: number): any {
-    return this.megisterService.DeleteUser(id);
+
+  // @Get("/Agency/Block/:id")
+  // BlockAgency(@Param("id", ParseIntPipe) id: number): any {
+  //   return this.agencyService.ChangeStatus(id, 2);
+  // }
+
+  // @Get("/Agency/Active/:id")
+  // ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
+  //   return this.agencyService.ChangeStatus(id, 1);
+  // }
+
+
+
+  //Feedbacks
+  @Get('/Completed /search-by-name/:name')
+  searchCmpTByName(@Param('name') name: string): any {
+    return this.tenderService.searchByName(name, 3);
+  }
+
+  @Get('/Completed /search-by-location/:location')
+  earchCmpTByLocation(@Param('location') location: string): any {
+    return this.tenderService.searchByLocation(location, 3);
   }
 
 
+  //CRUD
+  @Post("/Feedback/create")
+  @UsePipes(new ValidationPipe())
+  createTender(@Body() fdto: FeedBackDto): any {
+    return this.fdService.insert(fdto);
+  }
 
+  @Put("/Feedback/update:id")
+  @UsePipes(new ValidationPipe())
+  async updateTender(@Body() tdto: FeedBackDto, @Param('id') id: number) {
+    return this.fdService.update(tdto, id);
+  }
 
+  @Delete("/Feedback/delete/:id")
+  deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
+    return this.fdService.deleteById(id);
+  }
 
+  @Get("/Feedback/all")
+  getAllFeedback(): any {
+    return this.fdService.getAll();
+  }
 
-
+  @Get("/Feedback/:id")
+  getFeedbackByID(@Param("id", ParseIntPipe) id: number): any {
+    return this.fdService.get(id);
+  }
 }
