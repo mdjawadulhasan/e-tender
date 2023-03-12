@@ -119,7 +119,7 @@ export class MegisterController {
   }
 
 
-  Agency
+  //Agency
   @Get('/Agency/search/:AgencyName')
   SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
     return this.agencyService.SearchAgencyByName(AgencyName);
@@ -156,7 +156,7 @@ export class MegisterController {
     return this.fdService.insert(fdto);
   }
 
-  @Put("/Feedback/update:id")
+  @Put("/Feedback/update/:id")
   @UsePipes(new ValidationPipe())
   async updateTender(@Body() tdto: FeedBackDto, @Param('id') id: number) {
     return this.fdService.update(tdto, id);

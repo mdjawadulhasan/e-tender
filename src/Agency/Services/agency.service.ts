@@ -67,14 +67,33 @@ export class AgencyService {
 
     }
 
-    async sendEmail(mydata) {
-        return await this.mailerService.sendMail({
-            to: mydata.email,
-            subject: mydata.subject,
-            text: mydata.text,
-        });
+    // async sendEmail(mydata) {
+    //     return await this.mailerService.sendMail({
+    //         to: mydata.email,
+    //         subject: mydata.subject,
+    //         text: mydata.text,
+    //     });
 
-    }
+    // }
+    async sendEmail(mydata, file){
+        if (!mydata.email) {
+          throw new Error('Recipient email address is missing');
+        }
+        const attachments = [];
+        if (file) {
+          attachments.push({
+            filename: file.originalname,
+            content: file.buffer,//temporary storage area for data in memory.
+            encoding: 'base64' //Base64 encoding is commonly used to transmit binary data over text-based protocols 
+          });
+        }
+        return await this.mailerService.sendMail({
+          to: mydata.email,
+          subject: mydata.subject,
+          text: mydata.text,
+          attachments: attachments
+        });
+      }
 
 
     FindFeedbacksByAgencyId(id): any {

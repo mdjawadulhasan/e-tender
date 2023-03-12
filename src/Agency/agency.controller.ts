@@ -80,9 +80,14 @@ export class AgencyController {
     return this.agencyService.update(admindto, id);
   }
 
+  // @Post('/sendemail')
+  // sendEmail(@Body() mydata) {
+  //   return this.agencyService.sendEmail(mydata);
+  // }
   @Post('/sendemail')
-  sendEmail(@Body() mydata) {
-    return this.agencyService.sendEmail(mydata);
+  @UseInterceptors(FileInterceptor('file'))
+  async sendEmail(@Body() mydata, @UploadedFile() file){
+      return await this.agencyService.sendEmail(mydata, file);
   }
 
 
