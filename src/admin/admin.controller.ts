@@ -32,6 +32,10 @@ export class AdminController {
         return this.adminService.getTadminProfile(id);
     }
 
+    @Get('/getimage/:name')
+    getImages(@Param('name') name, @Res() res) {
+        res.sendFile(name, { root: './Images' })
+    }
 
     @Put("/update/:id")
     @UsePipes(new ValidationPipe())
@@ -122,6 +126,11 @@ export class AdminController {
         return this.adminService.FindMegisterByAdminId(session.adminid);
     }
 
+    @Get("/Megister/all")
+    getAllMegister(@Session() session) {
+        return this.megisterService.get();
+    }
+
     @Get("/Megister/get/:id")
     getuser(@Param("id", ParseIntPipe) id: number): any {
         return this.megisterService.getProfile(id);
@@ -171,6 +180,12 @@ export class AdminController {
 
 
     //--Agency
+
+    @Get('/Agency/all')
+    getallAgency(): any {
+        return this.agencyService.get();
+    }
+
     @Get('/Agency/FindAgencyByid/:id')
     getAgencyById(@Param("id", ParseIntPipe) id: number): any {
         return this.agencyService.getAgencyById(id);

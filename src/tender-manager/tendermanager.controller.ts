@@ -28,6 +28,13 @@ export class TendermanagerController {
         return this.tendermanagerService.getTmanagerProfile(id);
     }
 
+
+    @Get('/getimage/:name')
+    getImages(@Param('name') name, @Res() res) {
+        res.sendFile(name, { root: './Images' })
+    }
+
+
     @Post("/signup")
     @UsePipes(new ValidationPipe())
     @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))

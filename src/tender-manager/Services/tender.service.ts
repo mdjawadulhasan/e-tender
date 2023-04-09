@@ -47,7 +47,13 @@ export class TenderService {
     }
 
 
-
+    searchallByName(name: string): any {
+        return this.tenderRepo.find({
+            where: {
+                Tendername: Like(`%${name}%`)   
+            }
+        });
+    }
 
     searchByName(name: string, status: number): any {
         return this.tenderRepo.find({
