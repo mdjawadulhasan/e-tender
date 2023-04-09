@@ -78,6 +78,11 @@ export class TenderController {
         return this.tenderService.ChangeStatus(id, 1);
     }
 
+    //search all tenders
+    @Get('/allavailable/search-by-name/:name')
+    searchallByName(@Param('name') name: string): any {
+        return this.tenderService.searchallByName(name);
+    }
     //Searching Available Tender for Auctions
 
     @Get('/available/search-by-name/:name')
@@ -163,7 +168,7 @@ export class TenderController {
     }
 
     //Auction Methods
-   
+
 
     @Get("/SortBid/:id")
     SortByBid(@Param("id", ParseIntPipe) id: number): any {
@@ -171,9 +176,9 @@ export class TenderController {
     }
 
     @Get("/Approvebid/:id/:agencyid")
-    Approvebid(@Param("id", ParseIntPipe) id: number,@Param("agencyid", ParseIntPipe) agencyid: number): any {
+    Approvebid(@Param("id", ParseIntPipe) id: number, @Param("agencyid", ParseIntPipe) agencyid: number): any {
         this.tenderauctionService.deleteBidByTenderId(id);
-        return this.tenderService.Approvebid(id,agencyid);
+        return this.tenderService.Approvebid(id, agencyid);
     }
 
 

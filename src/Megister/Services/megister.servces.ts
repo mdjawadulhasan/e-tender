@@ -19,6 +19,10 @@ export class MegisterService {
 
   }
 
+
+  get() {
+    return this.megisterRepo.find();
+  }
   getProfile(id): any {
 
     return this.megisterRepo.findOneBy({ id });
