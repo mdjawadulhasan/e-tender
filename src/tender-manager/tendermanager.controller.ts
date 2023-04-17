@@ -37,7 +37,7 @@ export class TendermanagerController {
 
     @Post("/signup")
     @UsePipes(new ValidationPipe())
-    @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+    @UseInterceptors(FileInterceptor('myfile', { dest: 'tmp/' }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: TendermanagerForm) {
 
 
