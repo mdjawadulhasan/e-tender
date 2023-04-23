@@ -6,8 +6,6 @@ import { TenderService } from "./Services/tender.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
 import * as moment from 'moment';
 import * as fs from 'fs';
-import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
-import { TenderAuctionService } from "./Services/tenderAuction.service";
 import { SessionGuard } from "./session.guard";
 import { OTPService } from "./Services/OTP.service";
 import { Response } from 'express';
@@ -56,31 +54,38 @@ export class TendermanagerController {
     }
 
 
-    @Get('/signin')
-    signin(@Session() session, @Body() mydto: TendermanagerForm) {
-        if (this.tendermanagerService.signin(mydto)) {
 
 
-            session.email = mydto.email;
-            this.otpService.create(mydto.email);
-            return { message: "Login Success ! Go to Verification" };
+    @Post('/signin')
+     async signin(@Session() session, @Body('email') email: string, @Body('password') password: string) {
+       
+
+        var b=await this.tendermanagerService.signin(email, password);
+        if (b) {
+            session.email = email;
+            console.log("session.email = " + session.email);
+            this.otpService.create(email);
+            return session.email;
+        } else {        
+            return 0;
         }
-        else {
-            return { message: "invalid credentials" };
-        }
-
     }
 
 
-    @Get('/validate')
-    async ValidateOTP(@Session() session, @Body() myOTP) {
-        const isOTPValid = await this.otpService.validate(session.tempmail, myOTP.otp);
+
+
+    @Post('/validate')
+    async ValidateOTP(@Session() session, @Body('otp') otp: number,@Body('semail') semail: string) {
+       console.log(otp);
+       
+        const isOTPValid = await this.otpService.validate(semail, otp);
         if (isOTPValid) {
-            session.tmemail = session.email;
-            return { message: "Login Success" };
+            console.log("created",semail);
+            return (semail);
+           
         } else {
             session.destroy();
-            return { message: "Invalid Token" };
+            throw new UnauthorizedException({ message: "invalid credentials" });
         }
     }
 
