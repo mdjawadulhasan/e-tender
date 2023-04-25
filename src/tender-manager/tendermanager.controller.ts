@@ -26,6 +26,11 @@ export class TendermanagerController {
         return this.tendermanagerService.getTmanagerProfile(id);
     }
 
+    @Get("/viewprofilebyemail/:email")
+    getUserByemail(@Param("email") email: string): any {
+        return this.tendermanagerService.getTmanagerProfilebyemail(email);
+    }
+
 
     @Get('/getimage/:name')
     getImages(@Param('name') name, @Res() res) {

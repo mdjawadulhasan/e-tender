@@ -23,6 +23,11 @@ export class TendermanagerService {
         return this.tendermanagerRepo.findOneBy({ id });
     }
 
+    getTmanagerProfilebyemail(email): any {
+
+        return this.tendermanagerRepo.findOneBy({ email });
+    }
+
 
     async insert(Tmdto: TendermanagerForm) {
 
