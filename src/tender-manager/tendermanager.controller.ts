@@ -37,6 +37,13 @@ export class TendermanagerController {
         res.sendFile(name, { root: './Images' })
     }
 
+    @Put("/update")
+    @UsePipes(new ValidationPipe())
+    async update(@Body() tmdto: TendermanagerForm) {
+        return this.tendermanagerService.update(tmdto, tmdto.id);
+    }
+
+
 
     @Post("/signup")
     @UsePipes(new ValidationPipe())
@@ -106,12 +113,7 @@ export class TendermanagerController {
         });
     }
 
-    @Put("/update/:id")
-    @UsePipes(new ValidationPipe())
-    async update(@Body() tmdto: TendermanagerForm, @Param('id') id: number) {
-        return this.tendermanagerService.update(tmdto, id);
-    }
-
+   
 
 
     @Delete("/delete/:id")
