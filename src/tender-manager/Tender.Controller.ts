@@ -20,10 +20,12 @@ export class TenderController {
         return this.tenderService.insert(tenderdto);
     }
 
-    @Put("/update:id")
+    @Put("/update")
     @UsePipes(new ValidationPipe())
-    async updateTender(@Body() tdto: TenderForm, @Param('id') id: number) {
-        return this.tenderService.update(tdto, id);
+    async updateTender(@Body() tdto: TenderForm) {
+console.log(tdto);
+
+        return this.tenderService.update(tdto, tdto.id);
     }
 
     @Delete("/delete/:id")

@@ -26,13 +26,13 @@ export class TenderEntity extends BaseEntity {
     Tenderbudget: number;
 
     @Column()
-    ProjectStartDate: number;
+    ProjectStartDate: Date;
 
     @Column()
-    ProjectCmplttDate: number;
+    ProjectCmplttDate: Date;
 
     @Column()
-    Deadline: number;
+    Deadline: Date;
 
     @Column()
     Cmpltpercentege: number;
