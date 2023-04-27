@@ -23,7 +23,6 @@ export class TenderController {
     @Put("/update")
     @UsePipes(new ValidationPipe())
     async updateTender(@Body() tdto: TenderForm) {
-console.log(tdto);
 
         return this.tenderService.update(tdto, tdto.id);
     }
