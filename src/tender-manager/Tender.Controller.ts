@@ -80,7 +80,7 @@ export class TenderController {
     }
 
     //search all tenders
-    @Get('/allavailable/search-by-name/:name')
+    @Get('search-by-name/:name')
     searchallByName(@Param('name') name: string): any {
         return this.tenderService.searchallByName(name);
     }
