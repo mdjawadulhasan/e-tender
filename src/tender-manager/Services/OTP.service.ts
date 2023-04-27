@@ -46,7 +46,7 @@ export class OTPService {
 
     async validate(email: string, otp: number) {
 
-
+        console.log("Inside ",email);
         const now = new Date();
         const otpEntity = await this.OTPRepo.findOne({
             where: {

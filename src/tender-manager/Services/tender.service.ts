@@ -27,7 +27,9 @@ export class TenderService {
     }
 
     getAll(): any {
-        return this.tenderRepo.find();
+        return this.tenderRepo.find({
+            relations: ['Tendermanager', 'Agency', 'TenderAucton', 'feedBack', 'budgetRequestEntity']
+          });
     }
 
     get(id: number): any {
@@ -47,7 +49,13 @@ export class TenderService {
     }
 
 
-
+    searchallByName(name: string): any {
+        return this.tenderRepo.find({
+            where: {
+                Tendername: Like(`%${name}%`)   
+            }
+        });
+    }
 
     searchByName(name: string, status: number): any {
         return this.tenderRepo.find({

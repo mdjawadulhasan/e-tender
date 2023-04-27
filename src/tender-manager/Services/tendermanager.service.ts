@@ -23,6 +23,11 @@ export class TendermanagerService {
         return this.tendermanagerRepo.findOneBy({ id });
     }
 
+    getTmanagerProfilebyemail(email): any {
+
+        return this.tendermanagerRepo.findOneBy({ email });
+    }
+
 
     async insert(Tmdto: TendermanagerForm) {
 
@@ -47,9 +52,10 @@ export class TendermanagerService {
 
 
 
-    async signin(mydto) {
-        const mydata = await this.tendermanagerRepo.findOneBy({ email: mydto.email });
-        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+    async signin(uemail, upassword) {
+        const mydata = await this.tendermanagerRepo.findOneBy({ email: uemail });
+        const isMatch = await bcrypt.compare(upassword, mydata.password);
+       
         if (isMatch) {
             return 1;
         }

@@ -12,13 +12,16 @@ export class AgencyService {
         @InjectRepository(AgencyEntity)
         private agencyRepo: Repository<AgencyEntity>, private mailerService: MailerService
     ) { }
-   
-    
+
+
     getIndex(): string {
         return "Welcome to Agency Dash Board";
 
     }
 
+    get(): any {
+        return this.agencyRepo.find();
+    }
 
     async insert(agencyDTO: AgencyDto) {
 
@@ -57,7 +60,7 @@ export class AgencyService {
         return this.agencyRepo.findOneBy({ id });
     }
 
-    
+
     SearchAgencyByName(AgencyName) {
         return this.agencyRepo.findOneBy({ AgencyName });
     }
@@ -121,10 +124,10 @@ export class AgencyService {
         })
     }
 
-    
 
 
-    
-      
-      
+
+
+
+
 }
