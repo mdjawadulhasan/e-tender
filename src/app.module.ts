@@ -5,6 +5,7 @@ import { TendermanagerModule } from './tender-manager/tendermanager.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { AgencyModule } from './Agency/agency.module';
+<<<<<<< Updated upstream
 import { MegisterModule } from './Megister/megister.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -47,6 +48,24 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),],
 
     
+=======
+import { BudgetRequestEntity } from './Agency/entities/BudgetRequest.entity';
+
+
+@Module({
+  imports: [TendermanagerModule,AdminModule,AgencyModule,
+     TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: '41959',
+    database: 'Agency',
+    entities: [TendermanagerEntity,TenderEntity,AgencyEntity,BudgetRequestEntity],
+    autoLoadEntities: true,
+    synchronize: true,
+  }),],
+>>>>>>> Stashed changes
   controllers: [AppController],
   providers: [AppService],
 })
