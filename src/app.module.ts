@@ -5,14 +5,11 @@ import { TendermanagerModule } from './tender-manager/tendermanager.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { AgencyModule } from './Agency/agency.module';
-<<<<<<< Updated upstream
 import { MegisterModule } from './Megister/megister.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ScheduleModule } from '@nestjs/schedule';
-
-
 
 @Module({
   imports: [
@@ -30,13 +27,16 @@ import { ScheduleModule } from '@nestjs/schedule';
         secure: true,
         auth: {
           user: 'e.tenderspring2023@gmail.com',
-          pass: 'gqdgqqwhfmwbuhvt'
+          pass: 'gqdgqqwhfmwbuhvt',
         },
-      }
+      },
     }),
 
-
-    TendermanagerModule, AdminModule, AgencyModule, MegisterModule, TypeOrmModule.forRoot({
+    TendermanagerModule,
+    AdminModule,
+    AgencyModule,
+    MegisterModule,
+    TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
@@ -45,28 +45,10 @@ import { ScheduleModule } from '@nestjs/schedule';
       database: 'e-tender',
       autoLoadEntities: true,
       synchronize: true,
-    }),],
+    }),
+  ],
 
-    
-=======
-import { BudgetRequestEntity } from './Agency/entities/BudgetRequest.entity';
-
-
-@Module({
-  imports: [TendermanagerModule,AdminModule,AgencyModule,
-     TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: '41959',
-    database: 'Agency',
-    entities: [TendermanagerEntity,TenderEntity,AgencyEntity,BudgetRequestEntity],
-    autoLoadEntities: true,
-    synchronize: true,
-  }),],
->>>>>>> Stashed changes
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
