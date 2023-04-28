@@ -87,13 +87,12 @@ export class TenderService {
 
 
     FindTenderAuctionsByTenderId(id): any {
-        return this.tenderRepo.find(({
-            where: { id: id },
-            relations: {
-                TenderAucton: true,
-            },
-        }))
-    }
+    return this.tenderRepo.find({
+        where: { id: id },
+        relations: ['TenderAucton', 'TenderAucton.Agency'],
+    });
+}
+
 
     ChangeStatus(id, status) {
         return this.tenderRepo.update(id, {
