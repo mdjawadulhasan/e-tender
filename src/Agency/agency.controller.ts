@@ -51,6 +51,7 @@ export class AgencyController {
 
   @Get('/viewprofile/:id')
   getUserByID(@Param('id', ParseIntPipe) id: number): any {
+    
     return this.agencyService.getAgencyById(id);
   }
 
@@ -74,21 +75,6 @@ export class AgencyController {
 
     return await this.agencyService.insert(tmdto);
   }
-
-  // @Get('/signin')
-  // async signin(@Session() session, @Body() mydto: AgencyDto) {
-
-  // var id = await this.agencyService.signin(mydto);
-  // if (id) {
-
-  // session.agencyid = id;
-  // return { message: "Login Success !" };
-  // }
-  // else {
-  // return { message: "invalid credentials eee" };
-  // }
-
-  // }
 
   @Post('/signin')
   async signin(
@@ -213,10 +199,10 @@ export class AgencyController {
   getBidByID(@Param('id', ParseIntPipe) id: number): any {
     return this.tenderauctionService.get(id);
   }
-}
 
-// @Get('/getimage/:name')
-// getImages(@Param('name') name, @Res() res) {
-// res.sendFile(name, { root: './Images' })
-// }
-//
+  @Get('/getimage/:name')
+  getImages(@Param('name') name, @Res() res) {
+    // console.log(name);
+    res.sendFile(name, { root: './Images' });
+  }
+}

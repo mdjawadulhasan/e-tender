@@ -19,7 +19,9 @@ export class AgencyService {
   }
 
   getTmanagerProfilebyemail(Email): any {
-    return this.agencyRepo.findOneBy({ Email });
+    var data= this.agencyRepo.findOneBy({ Email });
+    console.log(data);
+    return data;
   }
 
   get(): any {
@@ -66,7 +68,8 @@ export class AgencyService {
   }
 
   getAgencyById(id) {
-    return this.agencyRepo.findOneBy({ id });
+   var data= this.agencyRepo.findOneBy({ id });
+   return data;
   }
 
   SearchAgencyByName(AgencyName) {
