@@ -90,36 +90,21 @@ export class AgencyController {
 
   // }
 
-
-
-  
   @Post('/signin')
-  async signin(@Session() session, @Body('Email') email: string, @Body('password') password: string) {
-    
-console.log(email,password);
-     var b=await this.agencyService.signin(email, password);
-     if (b) {
-         session.email = email;
-         return session.email;
-     } else {        
-         return 0;
-     }
- }
-
-  // @Get('/signin')
-  // async signin(
-    // @Session() session,
-    // @Body('Email') Email: string,
-    // @Body('password') password: string,
-  // ) {
-    // var b = await this.agencyService.signin(Email, password);
-    // if (b) {
-      // session.email = Email;
-      // return session.email;
-    // } else {
-      // return { message: 'invalid credentials eee' };
-    // }
-  // }
+  async signin(
+    @Session() session,
+    @Body('Email') email: string,
+    @Body('password') password: string,
+  ) {
+    console.log(email, password);
+    var b = await this.agencyService.signin(email, password);
+    if (b) {
+      session.email = email;
+      return session.email;
+    } else {
+      return 0;
+    }
+  }
 
   @Get('/signout')
   signout(@Session() session, @Res() res: Response) {
@@ -229,3 +214,9 @@ console.log(email,password);
     return this.tenderauctionService.get(id);
   }
 }
+
+// @Get('/getimage/:name')
+// getImages(@Param('name') name, @Res() res) {
+// res.sendFile(name, { root: './Images' })
+// }
+//
