@@ -25,6 +25,11 @@ export class AdminService {
         return this.adminRepo.findOneBy({ id });
     }
 
+    getTadminProfilebyemail(email): any {
+
+        return this.adminRepo.findOneBy({ email });
+    }
+
 
     async sendEmail(mydata) {
         return await this.mailerService.sendMail({
@@ -47,9 +52,9 @@ export class AdminService {
     }
 
 
-    async signin(mydto) {
-        const mydata = await this.adminRepo.findOneBy({ email: mydto.email });
-        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+    async signin(aemail, apassword) {
+        const mydata = await this.adminRepo.findOneBy({ email: aemail });
+        const isMatch = await bcrypt.compare(apassword, mydata.password);
 
 
         if (typeof isMatch !== 'undefined') {
