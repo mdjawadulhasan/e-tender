@@ -11,8 +11,6 @@ import { diskStorage } from 'multer';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ScheduleModule } from '@nestjs/schedule';
 
-
-
 @Module({
   imports: [
     MulterModule.register({
@@ -29,25 +27,28 @@ import { ScheduleModule } from '@nestjs/schedule';
         secure: true,
         auth: {
           user: 'e.tenderspring2023@gmail.com',
-          pass: 'gqdgqqwhfmwbuhvt'
+          pass: 'gqdgqqwhfmwbuhvt',
         },
-      }
+      },
     }),
 
-
-    TendermanagerModule, AdminModule, AgencyModule, MegisterModule, TypeOrmModule.forRoot({
+    TendermanagerModule,
+    AdminModule,
+    AgencyModule,
+    MegisterModule,
+    TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '123',
+      password: '41959',
       database: 'e-tender',
       autoLoadEntities: true,
       synchronize: true,
-    }),],
+    }),
+  ],
 
-    
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

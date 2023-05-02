@@ -17,7 +17,7 @@ export class FeedBackEntity extends BaseEntity {
     Rating: number;
 
     @ManyToOne(() => TenderEntity, (Tender) => Tender.feedBack)
-    Tender: TenderEntity
+    Tender: TenderEntity 
 
     @ManyToOne(() => AgencyEntity, (Agency) => Agency.feedBack)
     Agency: AgencyEntity
