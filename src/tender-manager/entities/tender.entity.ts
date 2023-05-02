@@ -22,7 +22,7 @@ export class TenderEntity extends BaseEntity {
     @Column()
     LocationYCoordinate: string;
 
-    @Column()
+    @Column({nullable:true})
     Tenderbudget: number;
 
     @Column()

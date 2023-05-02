@@ -177,11 +177,12 @@ export class TenderController {
     }
 
     
-    @Get("/Approvebid/:id/:agencyid")
-    Approvebid(@Param("id", ParseIntPipe) id: number, @Param("agencyid", ParseIntPipe) agencyid: number): any {
+    @Get("/Approvebid/:id/:agencyid/:bid")
+    Approvebid(@Param("id", ParseIntPipe) id: number, @Param("agencyid", ParseIntPipe) agencyid: number, @Param("bid") bid: number): any {
         this.tenderauctionService.deleteBidByTenderId(id);
-        return this.tenderService.Approvebid(id, agencyid);
+        return this.tenderService.Approvebid(id, agencyid, bid);
     }
+    
 
 
 

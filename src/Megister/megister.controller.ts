@@ -124,7 +124,7 @@ export class MegisterController {
   }
 
 
-  Agency
+
   @Get('/Agency/search/:AgencyName')
   SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
     return this.agencyService.SearchAgencyByName(AgencyName);
