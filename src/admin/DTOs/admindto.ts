@@ -18,6 +18,14 @@ export class AdminForm {
 
    
     ImgfileName: string;
+   
+    @IsNotEmpty({ message: "Please enter your Address" })
+    address: string
+
+    @IsNotEmpty({ message: "Please enter your Area" })
+    area: string
+
+
 
 
 }
