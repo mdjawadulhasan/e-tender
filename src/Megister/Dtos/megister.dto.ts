@@ -12,13 +12,13 @@ export class MegisterDto {
  
     id: number;
 
-    @IsString({ message: "Enter a Megister area name" })
+    @IsString({ message: "Enter a Megister Password" })
     password: string;
 
 
     @IsNotEmpty({ message: "Enter a Megister EmaiL" })
     @IsEmail()
-    Email: string;
+    email: string;
 
     adminId: number
     ImgfileName:string;

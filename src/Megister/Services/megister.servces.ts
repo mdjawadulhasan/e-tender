@@ -49,7 +49,7 @@ export class MegisterService {
 
 
   async signin(mydto) {
-    const mydata = await this.megisterRepo.findOneBy({ Email: mydto.Email });
+    const mydata = await this.megisterRepo.findOneBy({ email: mydto.Email });
     const isMatch = await bcrypt.compare(mydto.password, mydata.password);
 
     if (typeof isMatch !== 'undefined') {
