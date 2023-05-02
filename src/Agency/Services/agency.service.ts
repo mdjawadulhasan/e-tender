@@ -12,14 +12,14 @@ export class AgencyService {
     @InjectRepository(AgencyEntity)
     private agencyRepo: Repository<AgencyEntity>,
     private mailerService: MailerService,
-  ) {}
+  ) { }
 
   getIndex(): string {
     return 'Welcome to Agency Dash Board';
   }
 
   getTmanagerProfilebyemail(Email): any {
-    var data= this.agencyRepo.findOneBy({ Email });
+    var data = this.agencyRepo.findOneBy({ Email });
     console.log(data);
     return data;
   }
@@ -68,8 +68,8 @@ export class AgencyService {
   }
 
   getAgencyById(id) {
-   var data= this.agencyRepo.findOneBy({ id });
-   return data;
+    var data = this.agencyRepo.findOneBy({ id });
+    return data;
   }
 
   SearchAgencyByName(AgencyName) {
@@ -130,5 +130,11 @@ export class AgencyService {
     return this.agencyRepo.update(id, {
       Status: status,
     });
+  }
+
+
+  getAgencyCount(): any {
+    const count = this.agencyRepo.count();
+    return count;
   }
 }

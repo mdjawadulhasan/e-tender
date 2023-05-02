@@ -41,7 +41,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: '41959',
+      password: '123',
       database: 'e-tender',
       autoLoadEntities: true,
       synchronize: true,
