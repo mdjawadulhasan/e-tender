@@ -131,7 +131,7 @@ export class AdminController {
 
     @Get("/Megister/getall")
     getAlluser(@Session() session) {
-        return this.adminService.FindMegisterByAdminId(session.adminid);
+        return this.megisterService.get();
     }
 
     @Get("/Megister/all")

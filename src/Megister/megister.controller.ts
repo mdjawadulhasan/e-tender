@@ -32,6 +32,11 @@ export class MegisterController {
     return this.megisterService.getProfile(id);
   }
 
+  @Get('/getimage/:name')
+  getImages(@Param('name') name, @Res() res) {
+      res.sendFile(name, { root: './Images' })
+  }
+
   @Post("/signup")
   @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('myfile', { dest: 'tmp/' }))
