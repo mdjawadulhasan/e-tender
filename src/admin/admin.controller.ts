@@ -236,16 +236,36 @@ export class AdminController {
         return this.tenderService.getTotalTendersByStatus(0);
     }
 
-    //Tender Reports
+
     @Get("Tender/Reports/Ongoing")
     getonGoingTenderReports(): any {
         return this.tenderService.getTotalTendersByStatus(1);
     }
 
-    //Tender Reports
+   
     @Get("Tender/Reports/Completed")
     getCompletedTenderReports(): any {
         return this.tenderService.getTotalTendersByStatus(3);
     }
+
+
+  
+    @Get("Tendermanager/totalcount")
+    getTendermanagerCount(): any {
+        return this.tendermanagerService.TendermanagerCount();
+    }
+
+    
+    @Get("Agency/totalcount")
+    getAgencyCount(): any {
+        return this.agencyService.getAgencyCount();
+    }
+
+    @Get("Magister/totalcount")
+    getMagisterCount(): any {
+        return this.megisterService.getMagisterCount();
+    }
+    
+
 
 }

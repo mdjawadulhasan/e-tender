@@ -55,7 +55,7 @@ export class TendermanagerService {
     async signin(uemail, upassword) {
         const mydata = await this.tendermanagerRepo.findOneBy({ email: uemail });
         const isMatch = await bcrypt.compare(upassword, mydata.password);
-       
+
         if (isMatch) {
             return 1;
         }
@@ -76,7 +76,10 @@ export class TendermanagerService {
     }
 
 
-
+    TendermanagerCount(): any {
+        const count = this.tendermanagerRepo.count();
+        return count;
+    }
 
 
 }

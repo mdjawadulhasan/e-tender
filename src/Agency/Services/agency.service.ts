@@ -106,6 +106,11 @@ export class AgencyService {
     }
 
 
+    getAgencyCount():any  {
+        const count =  this.agencyRepo.count();
+        return count;
+    }
+
 
 
 

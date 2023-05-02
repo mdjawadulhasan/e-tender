@@ -72,6 +72,12 @@ export class MegisterService {
 
   }
 
+
+  getMagisterCount():any  {
+    const count =  this.megisterRepo.count();
+    return count;
+}
+
 }
 
 
