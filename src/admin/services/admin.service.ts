@@ -68,26 +68,12 @@ export class AdminService {
     }
 
 
-
-
-
-    async update(admindto: AdminForm, id) {
-
-        const salt = await bcrypt.genSalt();
-        const hassedpassed = await bcrypt.hash(admindto.password, salt);
-        admindto.password = hassedpassed;
+    update(admindto: AdminForm, id): any {
         return this.adminRepo.update(id, admindto);
     }
 
 
-    // async updateAdminIsActive(id: number, isActive: boolean): Promise<void> {
-    //     const tender = await this.adminRepo.findOneBy({ id });
-    //     if (!tender) {
-    //         throw new Error(`Tender with id ${id} not found`);
-    //     }
-    //     tender.isActive = isActive;
-    //     await this.adminRepo.save(tender);
-    // }
+   
 
     async deleteAdminById(id: number): Promise<void> {
         const admin: AdminForm = await this.adminRepo.findOneBy({ id });
