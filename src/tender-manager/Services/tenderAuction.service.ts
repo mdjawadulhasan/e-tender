@@ -19,6 +19,10 @@ export class TenderAuctionService {
         return this.tenderAuctonRepo.save(Tmdto);
     }
 
+   
+   
+   
+
     update(Tmdto: TenderAuctinForm, id): any {
         return this.tenderAuctonRepo.update(id, Tmdto);
     }

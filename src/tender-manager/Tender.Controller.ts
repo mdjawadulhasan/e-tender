@@ -84,6 +84,7 @@ export class TenderController {
     searchallByName(@Param('name') name: string): any {
         return this.tenderService.searchallByName(name);
     }
+    
     //Searching Available Tender for Auctions
 
     @Get('/available/search-by-name/:name')

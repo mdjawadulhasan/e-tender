@@ -74,14 +74,19 @@ export class MegisterController {
     return await this.megisterService.insert(tmdto);
   }
 
-  @Get('/signin')
-  async signin(@Session() session, @Body() mydto: MegisterDto) {
-    var id = await this.megisterService.signin(mydto);
-    if (id) {
-      session.mgstid = id;
-      return { message: 'Login Success !' };
+  @Post('/signin')
+  async signin(
+    @Session() session,
+    @Body('Email') Email: string,
+    @Body('password') password: string,
+  ) {
+    console.log(Email, password);
+    var b = await this.megisterService.signin(Email, password);
+    if (b) {
+      session.Email = Email;
+      return session.Email;
     } else {
-      return { message: 'invalid credentials' };
+      return 0;
     }
   }
 
@@ -98,10 +103,15 @@ export class MegisterController {
     });
   }
 
-  @Put('/update/:id')
+  @Put('/update')
   @UsePipes(new ValidationPipe())
-  async update(@Body() admindto: MegisterDto, @Param('id') id: number) {
-    return this.megisterService.update(admindto, id);
+  async update(@Body() megisterDto: MegisterDto) {
+    return this.megisterService.update(megisterDto, megisterDto.id);
+  }
+
+  @Delete('/delete/:id')
+  deleteMegisterById(@Param('id', ParseIntPipe) id: number): any {
+    return this.megisterService.deleteById(id);
   }
 
   @Post('/sendemail')
@@ -189,5 +199,16 @@ export class MegisterController {
   @Get('/Feedback/:id')
   getFeedbackByID(@Param('id', ParseIntPipe) id: number): any {
     return this.fdService.get(id);
+  }
+
+  @Get('/getimage/:name')
+  getImages(@Param('name') name, @Res() res) {
+    // console.log(name);
+    res.sendFile(name, { root: './Images' });
+  }
+
+  @Get('/viewprofilebyemail/:Email')
+  getUserByemail(@Param('Email') Email: string): any {
+    return this.megisterService.getProfilebyemail(Email);
   }
 }

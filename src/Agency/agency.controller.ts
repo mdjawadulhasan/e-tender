@@ -32,6 +32,7 @@ import { BudgetReqService } from './Services/BudgetReq.service';
 import { TenderService } from 'src/tender-manager/Services/tender.service';
 import { TenderAuctinForm } from 'src/tender-manager/DTOs/TenderAuction.dto';
 import { TenderAuctionService } from 'src/tender-manager/Services/tenderAuction.service';
+import { BudgetRequestEntity } from './entities/BudgetRequest.entity';
 
 @Controller('Agency')
 export class AgencyController {
@@ -51,8 +52,17 @@ export class AgencyController {
 
   @Get('/viewprofile/:id')
   getUserByID(@Param('id', ParseIntPipe) id: number): any {
-    
     return this.agencyService.getAgencyById(id);
+  }
+
+  @Get('/all')
+  getAllAgency(): any {
+    return this.agencyService.getAll();
+  }
+
+  @Get('/search/:AgencyName')
+  searchByName(@Param('AgencyName') AgencyName: string): any {
+    return this.agencyService.searchaByName(AgencyName);
   }
 
   @Post('/signup')
@@ -105,16 +115,17 @@ export class AgencyController {
     });
   }
 
-  @Put('/update/:id')
+  @Put('/update')
   @UsePipes(new ValidationPipe())
-  async update(@Body() admindto: AgencyDto, @Param('id') id: number) {
-    return this.agencyService.update(admindto, id);
+  async update(@Body() admindto: AgencyDto) {
+    return this.agencyService.update(admindto, admindto.id);
   }
 
-  // @Post('/sendemail')
-  // sendEmail(@Body() mydata) {
-  //   return this.agencyService.sendEmail(mydata);
-  // }
+  @Delete('/delete/:id')
+  deleteAgencyById(@Param('id', ParseIntPipe) id: number): any {
+    return this.agencyService.deleteById(id);
+  }
+
   @Post('/sendemail')
   @UseInterceptors(FileInterceptor('file'))
   async sendEmail(@Body() mydata, @UploadedFile() file) {
@@ -123,21 +134,24 @@ export class AgencyController {
 
   //--BudgetRequest
 
-  @Post('/BudgetReq/create')
+  @Post('/BudgetReq/Create')
   @UsePipes(new ValidationPipe())
-  createTender(@Body() tenderdto: BudgeRequestDto): any {
-    return this.BudgetReqService.insert(tenderdto);
+  createBudgetReq(@Body() tenderdto: BudgeRequestDto): any {
+    return this.BudgetReqService.BudgetReqCreate(tenderdto);
   }
 
   @Put('/BudgetReq/update/:id')
   @UsePipes(new ValidationPipe())
-  async updateTender(@Body() tdto: BudgeRequestDto, @Param('id') id: number) {
-    return this.BudgetReqService.update(tdto, id);
+  async updateBudgetReq(
+    @Body() budgeRequestDto: BudgeRequestDto,
+    @Param('id') id: number,
+  ) {
+    return this.BudgetReqService.update(budgeRequestDto, id);
   }
 
   @Get('/viewprofilebyemail/:Email')
   getUserByemail(@Param('Email') Email: string): any {
-    return this.agencyService.getTmanagerProfilebyemail(Email);
+    return this.agencyService.getAgencyProfilebyemail(Email);
   }
 
   @Delete('/BudgetReq/delete/:id')
@@ -162,9 +176,21 @@ export class AgencyController {
     return this.agencyService.FindFeedbacksByAgencyId(id);
   }
 
-  @Get('/PrevProjects/:id')
-  GetPrevProjectsById(@Param('id', ParseIntPipe) id: number): any {
+  @Get('/TendersByAgency/:id')
+  TendersByAgency(@Param('id', ParseIntPipe) id: number): any {
     return this.agencyService.FindTendersByAgencyId(id);
+  }
+
+  @Get('/BudgetReqByAgency/:id')
+  BudgetReqByAgency(@Param('id', ParseIntPipe) id: number): any {
+    return this.BudgetReqService.FindBudgetReqByAgencyId(id);
+  }
+
+  @Get('/BudgetReqByAgency/:id')
+  async GetBudgetReqByAgencyId(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<BudgetRequestEntity[]> {
+    return this.BudgetReqService.FindBudgetReqByAgencyId(id);
   }
 
   @Get('/TotalProjectCompleted/:id')

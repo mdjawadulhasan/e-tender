@@ -1,6 +1,6 @@
 import { Injectable, Param, Put, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { AgencyEntity } from '../entities/agency.entity';
 import { AgencyDto } from '../DTOs/agency.dto';
 import * as bcrypt from 'bcrypt';
@@ -18,13 +18,17 @@ export class AgencyService {
     return 'Welcome to Agency Dash Board';
   }
 
-  getTmanagerProfilebyemail(Email): any {
-    var data= this.agencyRepo.findOneBy({ Email });
+  getAgencyProfilebyemail(Email): any {
+    var data = this.agencyRepo.findOneBy({ Email });
     console.log(data);
     return data;
   }
 
   get(): any {
+    return this.agencyRepo.find();
+  }
+
+  getAll(): any {
     return this.agencyRepo.find();
   }
 
@@ -34,20 +38,6 @@ export class AgencyService {
     agencyDTO.password = hassedpassed;
     return this.agencyRepo.save(agencyDTO);
   }
-
-  // async signin(mydto) {
-  // const mydata = await this.agencyRepo.findOneBy({ Email: mydto.Email });
-  // const isMatch = await bcrypt.compare(mydto.password, mydata.password);
-
-  // if (typeof isMatch !== 'undefined') {
-  // }
-  // if (isMatch) {
-  // return mydata.id;
-  // }
-  // else {
-  // return 0;
-  // }
-  // }
 
   async signin(Email: string, password: string) {
     const mydata = await this.agencyRepo.findOneBy({ Email: Email });
@@ -60,16 +50,24 @@ export class AgencyService {
     }
   }
 
-  async update(agencyDTO: AgencyDto, id) {
-    const salt = await bcrypt.genSalt();
-    const hassedpassed = await bcrypt.hash(agencyDTO.password, salt);
-    agencyDTO.password = hassedpassed;
+  update(agencyDTO: AgencyDto, id): any {
     return this.agencyRepo.update(id, agencyDTO);
   }
 
+  searchaByName(AgencyName: string): any {
+    return this.agencyRepo.find({
+      where: {
+        AgencyName: Like(`%${AgencyName}%`),
+      },
+    });
+  }
+  deleteById(id: number): any {
+    return this.agencyRepo.delete(id);
+  }
+
   getAgencyById(id) {
-   var data= this.agencyRepo.findOneBy({ id });
-   return data;
+    var data = this.agencyRepo.findOneBy({ id });
+    return data;
   }
 
   SearchAgencyByName(AgencyName) {
@@ -80,14 +78,6 @@ export class AgencyService {
     return this.agencyRepo.delete(id);
   }
 
-  // async sendEmail(mydata) {
-  //     return await this.mailerService.sendMail({
-  //         to: mydata.email,
-  //         subject: mydata.subject,
-  //         text: mydata.text,
-  //     });
-
-  // }
   async sendEmail(mydata, file) {
     if (!mydata.email) {
       throw new Error('Recipient email address is missing');
@@ -125,6 +115,7 @@ export class AgencyService {
       },
     });
   }
+
 
   ChangeStatus(id, status) {
     return this.agencyRepo.update(id, {
