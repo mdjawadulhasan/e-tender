@@ -151,22 +151,14 @@ export class AdminController {
         return this.megisterService.deletemegisterById(id);
     }
 
-    @Put("/Megister/update/:id")
-    @UsePipes(new ValidationPipe())
-    async Megisterupdate(@Body() megister: MegisterDto, @Param('id') id: number) {
-        return this.megisterService.update(megister, id);
-    }
+
 
     
 
 
     //-Tender
 
-    @Post("/Tender/create")
-    @UsePipes(new ValidationPipe())
-    createTender(@Body() tenderdto: TenderForm): any {
-        return this.tenderService.insert(tenderdto);
-    }
+   
 
     @Put("/Tender/update:id")
     @UsePipes(new ValidationPipe())

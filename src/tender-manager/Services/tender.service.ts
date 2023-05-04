@@ -33,8 +33,12 @@ export class TenderService {
     }
 
     get(id: number): any {
-        return this.tenderRepo.findOneBy({ id });
+        return this.tenderRepo.findOne({
+            where: { id },
+            relations: ['Tendermanager', 'Agency', 'TenderAucton', 'feedBack', 'budgetRequestEntity']
+        });
     }
+
 
     deleteTenderById(id: number): any {
         return this.tenderRepo.delete(id);
