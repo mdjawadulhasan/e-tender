@@ -4,6 +4,7 @@ import { TenderAuctinForm } from "./DTOs/TenderAuction.dto";
 import { TenderService } from "./Services/tender.service";
 import { TenderAuctionService } from "./Services/tenderAuction.service";
 import { TendermanagerService } from "./Services/tendermanager.service";
+import { TenderAuctonEntity } from "./entities/TenderAuction.entity";
 
 
 @Controller("/Tenders")
@@ -184,7 +185,12 @@ export class TenderController {
     }
 
 
-
+    @Get('/BidByTender/:id')
+    async GetBudgetReqByAgencyId(
+      @Param('id', ParseIntPipe) id: number,
+    ): Promise<TenderAuctonEntity[]> {
+      return this.tenderauctionService.FindBidByTenderId(id);
+    }
 
 
 }

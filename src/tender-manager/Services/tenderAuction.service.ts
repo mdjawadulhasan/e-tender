@@ -57,6 +57,17 @@ export class TenderAuctionService {
       }
     
 
+      async FindBidByTenderId(
+        tenderId: number,
+      ): Promise<TenderAuctonEntity[]> {
+        return this.tenderAuctonRepo.find({
+          where: { Tender: { id: tenderId } },
+          relations: {
+            Tender: true,
+          },
+        });
+      }
+
 
 
 }
