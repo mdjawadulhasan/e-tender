@@ -32,27 +32,34 @@ export class AdminController {
         return this.adminService.getTadminProfile(id);
     }
 
+    @Get("/viewprofilebyemail/:email")
+    getUserByemail(@Param("email") email: string): any {
+        return this.adminService.getTadminProfilebyemail(email);
+    }
+
     @Get('/getimage/:name')
     getImages(@Param('name') name, @Res() res) {
         res.sendFile(name, { root: './Images' })
     }
 
-    @Put("/update/:id")
+    @Put("/update")
     @UsePipes(new ValidationPipe())
-    async update(@Body() admindto: AdminForm, @Param('id') id: number) {
-        return this.adminService.update(admindto, id);
+    async update(@Body() admindto: AdminForm) {
+        return this.adminService.update(admindto, admindto.id);
     }
 
+    
 
-    @Delete('/delete/:id')
-    async deleteAdminById(@Param('id') id: number): Promise<void> {
-        return this.adminService.deleteAdminById(id);
+
+    @Delete("/delete/:id")
+    deleteAdminById(@Param("id", ParseIntPipe) id: number): any {
+        return this.tendermanagerService.deleteById(id);
     }
 
 
     @Post("/signup")
     @UsePipes(new ValidationPipe())
-    @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
+    @UseInterceptors(FileInterceptor('myfile', { dest: 'tmp/' }))
     async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: AdminForm) {
 
 
@@ -69,20 +76,22 @@ export class AdminController {
     }
 
 
-    @Get('/signin')
-    async signin(@Session() session, @Body() mydto: AdminForm) {
+    @Post('/signin')
+    async signin(@Session() session, @Body('email') email: string, @Body('password') password: string) {
+      
 
-        var id = await this.adminService.signin(mydto);
-        if (id) {
+       var b=await this.adminService.signin(email, password);
+       if (b) {
+           session.email = email;
+           return session.email;
+       } else {        
+           return 0;
+       }
+   }
 
-            session.adminid = id;
-            return { message: "Login Success !" };
-        }
-        else {
-            return { message: "invalid credentials" };
-        }
 
-    }
+
+    
 
     @Get('/signout')
     signout(@Session() session, @Res() res: Response) {
@@ -123,7 +132,7 @@ export class AdminController {
 
     @Get("/Megister/getall")
     getAlluser(@Session() session) {
-        return this.adminService.FindMegisterByAdminId(session.adminid);
+        return this.megisterService.get();
     }
 
     @Get("/Megister/all")
@@ -142,20 +151,14 @@ export class AdminController {
         return this.megisterService.deletemegisterById(id);
     }
 
-    @Put("/Megister/update/:id")
-    @UsePipes(new ValidationPipe())
-    async Megisterupdate(@Body() megister: MegisterDto, @Param('id') id: number) {
-        return this.megisterService.update(megister, id);
-    }
+
+
+    
 
 
     //-Tender
 
-    @Post("/Tender/create")
-    @UsePipes(new ValidationPipe())
-    createTender(@Body() tenderdto: TenderForm): any {
-        return this.tenderService.insert(tenderdto);
-    }
+   
 
     @Put("/Tender/update:id")
     @UsePipes(new ValidationPipe())
@@ -186,6 +189,12 @@ export class AdminController {
         return this.agencyService.get();
     }
 
+
+    @Get('/Agency/getimage/:name')
+    getAgencyImages(@Param('name') name, @Res() res) {
+        res.sendFile(name, { root: './Images' })
+    }
+
     @Get('/Agency/FindAgencyByid/:id')
     getAgencyById(@Param("id", ParseIntPipe) id: number): any {
         return this.agencyService.getAgencyById(id);
@@ -203,6 +212,15 @@ export class AdminController {
 
     }
 
+    @Get("/Agency/Block/:id")
+    BlockAgency(@Param("id", ParseIntPipe) id: number): any {
+        return this.agencyService.ChangeStatus(id, 0);
+    }
+
+    @Get("/Agency/Active/:id")
+    ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
+        return this.agencyService.ChangeStatus(id, 1);
+    }
     //--Tender Manager
 
     @Get("/TenderManager/viewprofile/:id")
@@ -226,16 +244,36 @@ export class AdminController {
         return this.tenderService.getTotalTendersByStatus(0);
     }
 
-    //Tender Reports
+
     @Get("Tender/Reports/Ongoing")
     getonGoingTenderReports(): any {
         return this.tenderService.getTotalTendersByStatus(1);
     }
 
-    //Tender Reports
+   
     @Get("Tender/Reports/Completed")
     getCompletedTenderReports(): any {
         return this.tenderService.getTotalTendersByStatus(3);
     }
+
+
+  
+    @Get("Tendermanager/totalcount")
+    getTendermanagerCount(): any {
+        return this.tendermanagerService.TendermanagerCount();
+    }
+
+    
+    @Get("Agency/totalcount")
+    getAgencyCount(): any {
+        return this.agencyService.getAgencyCount();
+    }
+
+    @Get("Magister/totalcount")
+    getMagisterCount(): any {
+        return this.megisterService.getMagisterCount();
+    }
+    
+
 
 }

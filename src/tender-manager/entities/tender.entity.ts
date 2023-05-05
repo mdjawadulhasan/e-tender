@@ -28,11 +28,11 @@ export class TenderEntity extends BaseEntity {
   @Column()
   LocationYCoordinate: string;
 
-  @Column()
-  Tenderbudget: number;
-
   @Column({ nullable: true })
   ProjectStartDate: Date;
+
+  @Column({ nullable: true })
+  Tenderbudget: number;
 
   @Column({ nullable: true })
   ProjectCmplttDate: Date;

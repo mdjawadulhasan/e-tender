@@ -44,13 +44,16 @@ export class MegisterService {
     return this.megisterRepo.update(id, Tmdto);
   }
 
-
   deleteById(id: number): any {
     return this.megisterRepo.delete(id);
   }
-  async signin(Email: string, password: string) {
-    const mydata = await this.megisterRepo.findOneBy({ Email: Email });
-    const isMatch = await bcrypt.compare(password, mydata.password);
+
+  async signin(mydto) {
+    const mydata = await this.megisterRepo.findOneBy({ email: mydto.Email });
+    const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+
+    if (typeof isMatch !== 'undefined') {
+    }
     if (isMatch) {
       return 1;
     } else {
@@ -66,9 +69,14 @@ export class MegisterService {
     });
   }
 
-  getProfilebyemail(Email): any {
-    var data = this.megisterRepo.findOneBy({ Email });
+  getProfilebyemail(email): any {
+    var data = this.megisterRepo.findOneBy({ email });
     console.log(data);
     return data;
+  }
+
+  getMagisterCount(): any {
+    const count = this.megisterRepo.count();
+    return count;
   }
 }

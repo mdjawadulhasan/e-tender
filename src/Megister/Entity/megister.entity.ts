@@ -13,7 +13,7 @@ export class MegisterEntity extends BaseEntity {
     @Column()
     password: string;
     @Column()
-    Email: string;
+    email: string;
     @Column({nullable:true})
     ImgfileName: string;  //file
 

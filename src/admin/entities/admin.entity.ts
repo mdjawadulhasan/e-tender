@@ -14,6 +14,12 @@ export class AdminEntity extends BaseEntity {
     email: string;
 
     @Column({nullable:true})
+    area:string;
+
+    @Column({nullable:true})
+    address:string;
+
+    @Column({nullable:true})
     password: string;
 
     @Column({nullable:true})

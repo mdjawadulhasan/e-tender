@@ -15,51 +15,51 @@ export class TenderController {
 
     //-----------Tender CRUD
 
-    @Post("/create")
+    @Post("/create") //
     @UsePipes(new ValidationPipe())
     createTender(@Body() tenderdto: TenderForm): any {
         return this.tenderService.insert(tenderdto);
     }
 
-    @Put("/update")
+    @Put("/update") //
     @UsePipes(new ValidationPipe())
     async updateTender(@Body() tdto: TenderForm) {
 
         return this.tenderService.update(tdto, tdto.id);
     }
 
-    @Delete("/delete/:id")
+    @Delete("/delete/:id") //
     deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
         return this.tenderService.deleteTenderById(id);
     }
 
-    @Get("/all")
+    @Get("/all") //
     getAllTender(): any {
         return this.tenderService.getAll();
     }
 
-    @Get("/viewTender/:id")
+    @Get("/viewTender/:id") //
     getUserByID(@Param("id", ParseIntPipe) id: number): any {
         return this.tenderService.get(id);
     }
 
-    @Get("/Available")
+    @Get("/Available") //
     getAvailableTender(): any {
         return this.tenderService.getCustom(0);
     }
 
-    @Get("/Assigned")
+    @Get("/Assigned") //
     getAssignedTender(): any {
         return this.tenderService.getCustom(1);
     }
 
-    @Get("/Blocked")
+    @Get("/Blocked") //
     getBlockedTender(): any {
         return this.tenderService.getCustom(2);
     }
 
 
-    @Get("/Completed")
+    @Get("/Completed") //
     getCompletedTender(): any {
         return this.tenderService.getCustom(3);
     }
@@ -75,13 +75,13 @@ export class TenderController {
         return this.tenderService.ChangeStatus(id, 2);
     }
 
-    @Get("/Active/:id")
-    ActiveTender(@Param("id", ParseIntPipe) id: number): any {
-        return this.tenderService.ChangeStatus(id, 1);
-    }
+    // @Get("/Active/:id")
+    // ActiveTender(@Param("id", ParseIntPipe) id: number): any {
+    //     return this.tenderService.ChangeStatus(id, 1);
+    // }
 
     //search all tenders
-    @Get('/allavailable/search-by-name/:name')
+    @Get('search-by-name/:name')
     searchallByName(@Param('name') name: string): any {
         return this.tenderService.searchallByName(name);
     }
@@ -178,11 +178,13 @@ export class TenderController {
         return this.tenderauctionService.sortBid(id);
     }
 
-    @Get("/Approvebid/:id/:agencyid")
-    Approvebid(@Param("id", ParseIntPipe) id: number, @Param("agencyid", ParseIntPipe) agencyid: number): any {
+    
+    @Get("/Approvebid/:id/:agencyid/:bid")
+    Approvebid(@Param("id", ParseIntPipe) id: number, @Param("agencyid", ParseIntPipe) agencyid: number, @Param("bid") bid: number): any {
         this.tenderauctionService.deleteBidByTenderId(id);
-        return this.tenderService.Approvebid(id, agencyid);
+        return this.tenderService.Approvebid(id, agencyid, bid);
     }
+    
 
 
     @Get('/BidByTender/:id')

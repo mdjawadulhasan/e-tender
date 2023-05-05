@@ -1,23 +1,5 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Res,
-  Session,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors,
-  UsePipes,
-} from '@nestjs/common';
-import {
-  ParseBoolPipe,
-  ParseIntPipe,
-  ValidationPipe,
-} from '@nestjs/common/pipes';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res, Session, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
+import { ParseBoolPipe, ParseIntPipe, ValidationPipe } from '@nestjs/common/pipes';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MegisterDto } from './Dtos/megister.dto';
 import { MegisterService } from './Services/megister.servces';
@@ -32,39 +14,37 @@ import { AgencyService } from 'src/Agency/Services/agency.service';
 import { FeedBackDto } from './Dtos/FeedBack.dto';
 import { FeedbackService } from './Services/FeedBack.service';
 
-@Controller('megister')
+
+@Controller("megister")
 export class MegisterController {
-  constructor(
-    private readonly fdService: FeedbackService,
-    private readonly agencyService: AgencyService,
-    private tenderService: TenderService,
-    private readonly megisterService: MegisterService,
-    private readonly BudgetReqService: BudgetReqService,
-  ) {}
+  constructor(private readonly fdService: FeedbackService, private readonly agencyService: AgencyService, private tenderService: TenderService, private readonly megisterService: MegisterService, private readonly BudgetReqService: BudgetReqService) { }
+
 
   @UseGuards(SessionGuard)
-  @Get('/index')
+  @Get("/index")
   getAdmin(@Session() session): any {
     console.log(session.mgstid);
     return this.megisterService.getIndex();
   }
 
-  @Get('/viewprofile/:id')
-  getUserByID(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/viewprofile/:id")
+  getUserByID(@Param("id", ParseIntPipe) id: number): any {
     return this.megisterService.getProfile(id);
   }
 
-  @Post('/signup')
+  @Get('/getimage/:name')
+  getImages(@Param('name') name, @Res() res) {
+      res.sendFile(name, { root: './Images' })
+  }
+
+  @Post("/signup")
   @UsePipes(new ValidationPipe())
-  @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
-  async create(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() tmdto: MegisterDto,
-  ) {
+  @UseInterceptors(FileInterceptor('myfile', { dest: 'tmp/' }))
+  async create(@UploadedFile() file: Express.Multer.File, @Body() tmdto: MegisterDto) {
+
+
     if (file) {
-      const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(
-        file.originalname,
-      )}`;
+      const filename = `${moment().format('YYYYMMDDHHmmss')}${extname(file.originalname)}`;
       tmdto.ImgfileName = filename;
       const tmpFilePath = file.path; // temporary path of the uploaded file
       const destFilePath = `Images/${filename}`;
@@ -74,20 +54,20 @@ export class MegisterController {
     return await this.megisterService.insert(tmdto);
   }
 
-  @Post('/signin')
-  async signin(
-    @Session() session,
-    @Body('Email') Email: string,
-    @Body('password') password: string,
-  ) {
-    console.log(Email, password);
-    var b = await this.megisterService.signin(Email, password);
-    if (b) {
-      session.Email = Email;
-      return session.Email;
-    } else {
-      return 0;
+
+  @Get('/signin')
+  async signin(@Session() session, @Body() mydto: MegisterDto) {
+
+    var id = await this.megisterService.signin(mydto);
+    if (id) {
+
+      session.mgstid = id;
+      return { message: "Login Success !" };
     }
+    else {
+      return { message: "invalid credentials" };
+    }
+
   }
 
   @Get('/signout')
@@ -96,23 +76,18 @@ export class MegisterController {
       if (err) {
         throw new Error('Failed to destroy session');
       }
-      res.setHeader('Set-Cookie', [
-        'connect.sid=; Max-Age=-1; Path=/; HttpOnly',
-      ]);
+      res.setHeader('Set-Cookie', ['connect.sid=; Max-Age=-1; Path=/; HttpOnly']);
       res.status(200).json({ message: 'Logged out successfully' });
     });
   }
 
-  @Put('/update')
+
+  @Put("/update/:id")
   @UsePipes(new ValidationPipe())
-  async update(@Body() megisterDto: MegisterDto) {
-    return this.megisterService.update(megisterDto, megisterDto.id);
+  async update(@Body() admindto: MegisterDto, @Param('id') id: number) {
+    return this.megisterService.update(admindto, id);
   }
 
-  @Delete('/delete/:id')
-  deleteMegisterById(@Param('id', ParseIntPipe) id: number): any {
-    return this.megisterService.deleteById(id);
-  }
 
   @Post('/sendemail')
   sendEmail(@Body() mydata) {
@@ -121,46 +96,51 @@ export class MegisterController {
 
   //Budget Request Update
 
-  @Get('/BudgetReq/all')
+  @Get("/BudgetReq/all")
   getAllTender(): any {
     return this.BudgetReqService.getAll();
   }
 
-  @Get('/BudgetReq/view/:id')
-  GetBudgetReqById(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/BudgetReq/view/:id")
+  GetBudgetReqById(@Param("id", ParseIntPipe) id: number): any {
     return this.BudgetReqService.get(id);
   }
 
-  @Get('/BudgetReq/Accept/:id')
-  AcceptBudgetReq(@Param('id', ParseIntPipe) id: number): any {
+
+  @Get("/BudgetReq/Accept/:id")
+  AcceptBudgetReq(@Param("id", ParseIntPipe) id: number): any {
     return this.BudgetReqService.ChangeStatus(id, 1);
   }
 
-  @Get('/BudgetReq/Delete/:id')
-  DeleteBudgetReq(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/BudgetReq/Delete/:id")
+  DeleteBudgetReq(@Param("id", ParseIntPipe) id: number): any {
     return this.BudgetReqService.ChangeStatus(id, 2);
   }
 
-  @Get('/AuctionBids/:id')
-  ShowBid(@Param('id', ParseIntPipe) id: number): any {
+
+  @Get("/AuctionBids/:id")
+  ShowBid(@Param("id", ParseIntPipe) id: number): any {
     return this.tenderService.FindTenderAuctionsByTenderId(id);
   }
 
-  //Agency
+
+
   @Get('/Agency/search/:AgencyName')
-  SearchAgencyByName(@Param('AgencyName') AgencyName: string): any {
+  SearchAgencyByName(@Param("AgencyName") AgencyName: string): any {
     return this.agencyService.SearchAgencyByName(AgencyName);
   }
 
-  @Get('/Agency/Block/:id')
-  BlockAgency(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/Agency/Block/:id")
+  BlockAgency(@Param("id", ParseIntPipe) id: number): any {
     return this.agencyService.ChangeStatus(id, 2);
   }
 
-  @Get('/Agency/Active/:id')
-  ActiveAgency(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/Agency/Active/:id")
+  ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
     return this.agencyService.ChangeStatus(id, 1);
   }
+
+
 
   //Feedbacks
   @Get('/Completed /search-by-name/:name')
@@ -173,42 +153,32 @@ export class MegisterController {
     return this.tenderService.searchByLocation(location, 3);
   }
 
+
   //CRUD
-  @Post('/Feedback/create')
+  @Post("/Feedback/create")
   @UsePipes(new ValidationPipe())
   createTender(@Body() fdto: FeedBackDto): any {
     return this.fdService.insert(fdto);
   }
 
-  @Put('/Feedback/update/:id')
+  @Put("/Feedback/update:id")
   @UsePipes(new ValidationPipe())
   async updateTender(@Body() tdto: FeedBackDto, @Param('id') id: number) {
     return this.fdService.update(tdto, id);
   }
 
-  @Delete('/Feedback/delete/:id')
-  deleteTenderById(@Param('id', ParseIntPipe) id: number): any {
+  @Delete("/Feedback/delete/:id")
+  deleteTenderById(@Param("id", ParseIntPipe) id: number): any {
     return this.fdService.deleteById(id);
   }
 
-  @Get('/Feedback/all')
+  @Get("/Feedback/all")
   getAllFeedback(): any {
     return this.fdService.getAll();
   }
 
-  @Get('/Feedback/:id')
-  getFeedbackByID(@Param('id', ParseIntPipe) id: number): any {
+  @Get("/Feedback/:id")
+  getFeedbackByID(@Param("id", ParseIntPipe) id: number): any {
     return this.fdService.get(id);
-  }
-
-  @Get('/getimage/:name')
-  getImages(@Param('name') name, @Res() res) {
-    // console.log(name);
-    res.sendFile(name, { root: './Images' });
-  }
-
-  @Get('/viewprofilebyemail/:Email')
-  getUserByemail(@Param('Email') Email: string): any {
-    return this.megisterService.getProfilebyemail(Email);
   }
 }

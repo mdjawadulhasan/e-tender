@@ -25,6 +25,11 @@ export class AdminService {
         return this.adminRepo.findOneBy({ id });
     }
 
+    getTadminProfilebyemail(email): any {
+
+        return this.adminRepo.findOneBy({ email });
+    }
+
 
     async sendEmail(mydata) {
         return await this.mailerService.sendMail({
@@ -47,9 +52,9 @@ export class AdminService {
     }
 
 
-    async signin(mydto) {
-        const mydata = await this.adminRepo.findOneBy({ email: mydto.email });
-        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+    async signin(aemail, apassword) {
+        const mydata = await this.adminRepo.findOneBy({ email: aemail });
+        const isMatch = await bcrypt.compare(apassword, mydata.password);
 
 
         if (typeof isMatch !== 'undefined') {
@@ -63,26 +68,12 @@ export class AdminService {
     }
 
 
-
-
-
-    async update(admindto: AdminForm, id) {
-
-        const salt = await bcrypt.genSalt();
-        const hassedpassed = await bcrypt.hash(admindto.password, salt);
-        admindto.password = hassedpassed;
+    update(admindto: AdminForm, id): any {
         return this.adminRepo.update(id, admindto);
     }
 
 
-    // async updateAdminIsActive(id: number, isActive: boolean): Promise<void> {
-    //     const tender = await this.adminRepo.findOneBy({ id });
-    //     if (!tender) {
-    //         throw new Error(`Tender with id ${id} not found`);
-    //     }
-    //     tender.isActive = isActive;
-    //     await this.adminRepo.save(tender);
-    // }
+   
 
     async deleteAdminById(id: number): Promise<void> {
         const admin: AdminForm = await this.adminRepo.findOneBy({ id });

@@ -29,12 +29,16 @@ export class TenderService {
     getAll(): any {
         return this.tenderRepo.find({
             relations: ['Tendermanager', 'Agency', 'TenderAucton', 'feedBack', 'budgetRequestEntity']
-          });
+        });
     }
 
     get(id: number): any {
-        return this.tenderRepo.findOneBy({ id });
+        return this.tenderRepo.findOne({
+            where: { id },
+            relations: ['Tendermanager', 'Agency', 'TenderAucton', 'feedBack', 'budgetRequestEntity']
+        });
     }
+
 
     deleteTenderById(id: number): any {
         return this.tenderRepo.delete(id);
@@ -52,7 +56,7 @@ export class TenderService {
     searchallByName(name: string): any {
         return this.tenderRepo.find({
             where: {
-                Tendername: Like(`%${name}%`)   
+                Tendername: Like(`%${name}%`)
             }
         });
     }
@@ -87,13 +91,12 @@ export class TenderService {
 
 
     FindTenderAuctionsByTenderId(id): any {
-        return this.tenderRepo.find(({
+        return this.tenderRepo.find({
             where: { id: id },
-            relations: {
-                TenderAucton: true,
-            },
-        }))
+            relations: ['TenderAucton', 'TenderAucton.Agency'],
+        });
     }
+
 
     ChangeStatus(id, status) {
         return this.tenderRepo.update(id, {
@@ -101,12 +104,14 @@ export class TenderService {
         })
     }
 
-    Approvebid(id, agencyid) {
+    Approvebid(id, agencyid, bid) {
         return this.tenderRepo.update(id, {
             Status: 1,
-            Agency: agencyid
-        })
+            Agency: agencyid,
+            Tenderbudget: bid
+        });
     }
+
 
 
 
@@ -119,8 +124,8 @@ export class TenderService {
     async getTotalTenderscompletedByAgencyID(status: number, agencyId: number): Promise<number> {
         const count = await this.tenderRepo.count({ where: { Status: status, Agency: { id: agencyId } } });
         return count;
-      }
-    
+    }
+
 
 
 
