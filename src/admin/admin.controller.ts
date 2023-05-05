@@ -212,7 +212,6 @@ export class AdminController {
 
     }
 
-
     @Get("/Agency/Block/:id")
     BlockAgency(@Param("id", ParseIntPipe) id: number): any {
         return this.agencyService.ChangeStatus(id, 0);
