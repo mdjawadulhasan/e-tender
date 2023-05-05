@@ -69,10 +69,10 @@ export class TenderController {
         return this.tendermanagerService.FindTenderByManagerId(id);
     }
 
-    // @Get("/Block/:id")
-    // BlockTender(@Param("id", ParseIntPipe) id: number): any {
-    //     return this.tenderService.ChangeStatus(id, 2);
-    // }
+    @Get("/Block/:id")
+    BlockTender(@Param("id", ParseIntPipe) id: number): any {
+        return this.tenderService.ChangeStatus(id, 2);
+    }
 
     // @Get("/Active/:id")
     // ActiveTender(@Param("id", ParseIntPipe) id: number): any {

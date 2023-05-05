@@ -30,6 +30,8 @@ export class AgencyController {
     return this.agencyService.getAgencyById(id);
   }
 
+
+
   @Post("/signup")
   @UsePipes(new ValidationPipe())
   @UseInterceptors(FileInterceptor('file', { dest: 'tmp/' }))
@@ -163,6 +165,8 @@ export class AgencyController {
       return this.tenderauctionService.get(id);
   }
 
+
+  
 
 }
 

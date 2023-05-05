@@ -189,6 +189,12 @@ export class AdminController {
         return this.agencyService.get();
     }
 
+
+    @Get('/Agency/getimage/:name')
+    getAgencyImages(@Param('name') name, @Res() res) {
+        res.sendFile(name, { root: './Images' })
+    }
+
     @Get('/Agency/FindAgencyByid/:id')
     getAgencyById(@Param("id", ParseIntPipe) id: number): any {
         return this.agencyService.getAgencyById(id);
@@ -206,6 +212,16 @@ export class AdminController {
 
     }
 
+
+    @Get("/Agency/Block/:id")
+    BlockAgency(@Param("id", ParseIntPipe) id: number): any {
+        return this.agencyService.ChangeStatus(id, 0);
+    }
+
+    @Get("/Agency/Active/:id")
+    ActiveAgency(@Param("id", ParseIntPipe) id: number): any {
+        return this.agencyService.ChangeStatus(id, 1);
+    }
     //--Tender Manager
 
     @Get("/TenderManager/viewprofile/:id")

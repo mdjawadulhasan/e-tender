@@ -26,6 +26,11 @@ export class TendermanagerController {
         return this.tendermanagerService.getTmanagerProfile(id);
     }
 
+    @Get("/all")
+    getall(): any {
+        return this.tendermanagerService.getall();
+    }
+
     @Get("/viewprofilebyemail/:email")
     getUserByemail(@Param("email") email: string): any {
         return this.tendermanagerService.getTmanagerProfilebyemail(email);
