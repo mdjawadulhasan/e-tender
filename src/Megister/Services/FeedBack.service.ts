@@ -1,39 +1,33 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { FeedBackDto } from "../Dtos/FeedBack.dto";
-import { FeedBackEntity } from "../Entity/FeedBack.entity";
-
-
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FeedBackDto } from '../Dtos/FeedBack.dto';
+import { FeedBackEntity } from '../Entity/FeedBack.entity';
 
 @Injectable()
 export class FeedbackService {
+  constructor(
+    @InjectRepository(FeedBackEntity)
+    private FeedBackRepo: Repository<FeedBackEntity>,
+  ) {}
 
+  FeedbackCreate(fedDTO: FeedBackDto) {
+    return this.FeedBackRepo.save(fedDTO);
+  }
 
-    constructor(
-        @InjectRepository(FeedBackEntity)
-        private FeedBackRepo: Repository<FeedBackEntity>,
-    ) { }
+  update(Tmdto: FeedBackDto, id): any {
+    return this.FeedBackRepo.update(id, Tmdto);
+  }
 
-    insert(Tmdto: FeedBackDto) {
+  getAll(): any {
+    return this.FeedBackRepo.find();
+  }
 
-        return this.FeedBackRepo.save(Tmdto);
-    }
+  get(id: number): any {
+    return this.FeedBackRepo.findOneBy({ id });
+  }
 
-    update(Tmdto: FeedBackDto, id): any {
-        return this.FeedBackRepo.update(id, Tmdto);
-    }
-
-    getAll(): any {
-        return this.FeedBackRepo.find();
-    }
-
-    get(id: number): any {
-        return this.FeedBackRepo.findOneBy({ id });
-    }
-
-    deleteById(id: number): any {
-        return this.FeedBackRepo.delete(id);
-    }
-
+  deleteById(id: number): any {
+    return this.FeedBackRepo.delete(id);
+  }
 }

@@ -174,11 +174,12 @@ export class MegisterController {
   }
 
   //CRUD
-  @Post('/Feedback/create')
+  @Post('/Feedback/Create')
   @UsePipes(new ValidationPipe())
   createTender(@Body() fdto: FeedBackDto): any {
-    return this.fdService.insert(fdto);
+    return this.fdService.FeedbackCreate(fdto);
   }
+
 
   @Put('/Feedback/update/:id')
   @UsePipes(new ValidationPipe())
